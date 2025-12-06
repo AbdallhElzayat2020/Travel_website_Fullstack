@@ -11,6 +11,9 @@ use App\Http\Controllers\Dashboard\{
     RoleController,
     ContactController,
     SubscriberController,
+    SliderController,
+    TestimonialController,
+    FaqController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -42,6 +45,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     // Subscribers Routes
     Route::resource('subscribers', SubscriberController::class)->only(['index', 'destroy']);
     Route::patch('subscribers/{subscriber}/toggle-status', [SubscriberController::class, 'toggleStatus'])->name('subscribers.toggle-status');
+
+    // Sliders Routes
+    Route::resource('sliders', SliderController::class);
+
+    // Testimonials Routes
+    Route::resource('testimonials', TestimonialController::class);
+
+    // FAQs Routes
+    Route::resource('faqs', FaqController::class);
 });
 
 

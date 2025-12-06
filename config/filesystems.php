@@ -65,6 +65,24 @@ return [
             'report' => false,
         ],
 
+        'sliders' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/sliders'),
+            'url' => env('APP_URL') . '/uploads/sliders',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'testimonials' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/testimonials'),
+            'url' => env('APP_URL') . '/uploads/testimonials',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

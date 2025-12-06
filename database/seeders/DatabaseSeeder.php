@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
             SubCategorySeeder::class,
             ContactSeeder::class,
             SubscriberSeeder::class,
+            SliderSeeder::class,
+            TestimonialSeeder::class,
+            FaqSeeder::class,
         ]);
     }
 }

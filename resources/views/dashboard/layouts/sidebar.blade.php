@@ -94,8 +94,35 @@
         @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.subscribers.*'], 'active') }}">
                 <a href="{{ route('admin.subscribers.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-users-group"></i>
+                    <i class="menu-icon tf-icons ti ti-users"></i>
                     <div data-i18n="Subscribers">Subscribers</div>
+                </a>
+            </li>
+        @endif
+
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.sliders.*'], 'active') }}">
+                <a href="{{ route('admin.sliders.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-photo"></i>
+                    <div data-i18n="Sliders">Sliders</div>
+                </a>
+            </li>
+        @endif
+
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.testimonials.*'], 'active') }}">
+                <a href="{{ route('admin.testimonials.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-message-circle"></i>
+                    <div data-i18n="Testimonials">Testimonials</div>
+                </a>
+            </li>
+        @endif
+
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.faqs.*'], 'active') }}">
+                <a href="{{ route('admin.faqs.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-help"></i>
+                    <div data-i18n="FAQs">FAQs</div>
                 </a>
             </li>
         @endif
