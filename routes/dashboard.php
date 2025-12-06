@@ -9,6 +9,8 @@ use App\Http\Controllers\Dashboard\{
     ProfileController as DashboardProfileController,
     UserController,
     RoleController,
+    ContactController,
+    SubscriberController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -31,6 +33,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     // Roles Routes
     Route::resource('roles', RoleController::class);
+
+    // Contacts Routes
+    Route::resource('contacts', ContactController::class)->only(['index', 'show', 'destroy']);
+    Route::post('contacts/{id}/mark-read', [ContactController::class, 'markAsRead'])->name('contacts.mark-read');
+    Route::post('contacts/{id}/mark-unread', [ContactController::class, 'markAsUnread'])->name('contacts.mark-unread');
+
+    // Subscribers Routes
+    Route::resource('subscribers', SubscriberController::class)->only(['index', 'destroy']);
+    Route::patch('subscribers/{subscriber}/toggle-status', [SubscriberController::class, 'toggleStatus'])->name('subscribers.toggle-status');
 });
 
 

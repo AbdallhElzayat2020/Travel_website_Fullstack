@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Website\HomeController;
 
 
-Route::get('/', [\App\Http\Controllers\Website\HomeController::class,'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

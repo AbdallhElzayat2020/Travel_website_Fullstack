@@ -79,5 +79,26 @@
             </li>
         @endif
 
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.contacts.*'], 'active') }}">
+                <a href="{{ route('admin.contacts.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-mail"></i>
+                    <div data-i18n="Contacts">Contacts</div>
+                    @if(isset($unreadContactsCount) && $unreadContactsCount > 0)
+                        <span class="badge rounded-pill bg-label-danger ms-auto">{{ $unreadContactsCount }}</span>
+                    @endif
+                </a>
+            </li>
+        @endif
+
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.subscribers.*'], 'active') }}">
+                <a href="{{ route('admin.subscribers.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-users-group"></i>
+                    <div data-i18n="Subscribers">Subscribers</div>
+                </a>
+            </li>
+        @endif
+
     </ul>
 </aside>
