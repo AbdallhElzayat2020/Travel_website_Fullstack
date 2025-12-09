@@ -39,6 +39,7 @@ class BlogController extends Controller
         try {
             $validated = $request->validate([
                 'title' => 'required|string|max:255|unique:blogs,title',
+                'slug' => 'nullable|string|max:255|unique:blogs,slug|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 'short_description' => 'nullable|string',
                 'description' => 'nullable|string',
                 'meta_title' => 'nullable|string|max:255',
@@ -62,6 +63,9 @@ class BlogController extends Controller
             // Generate slug if not provided
             if (empty($validated['slug'])) {
                 $validated['slug'] = Str::slug($validated['title']);
+            } else {
+                // Ensure slug is properly formatted
+                $validated['slug'] = Str::slug($validated['slug']);
             }
 
             // Handle boolean fields

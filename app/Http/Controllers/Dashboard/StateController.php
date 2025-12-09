@@ -42,6 +42,9 @@ class StateController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        } else {
+            // Ensure slug is properly formatted
+            $validated['slug'] = Str::slug($validated['slug']);
         }
 
         State::create($validated);
@@ -79,13 +82,16 @@ class StateController extends Controller
         $validated = $request->validate([
             'country_id' => 'required|exists:countries,id',
             'name' => 'required|string|max:255|unique:states,name,' . $id,
-            'slug' => 'nullable|string|max:255|unique:states,slug,' . $id,
+            'slug' => 'nullable|string|max:255|unique:states,slug,' . $id . '|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
             'status' => 'required|in:active,inactive',
             'sort_order' => 'nullable|integer|min:0',
         ]);
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        } else {
+            // Ensure slug is properly formatted
+            $validated['slug'] = Str::slug($validated['slug']);
         }
 
         $state->update($validated);

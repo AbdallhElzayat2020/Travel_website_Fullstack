@@ -52,6 +52,9 @@ class SubCategoryController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        } else {
+            // Ensure slug is properly formatted
+            $validated['slug'] = Str::slug($validated['slug']);
         }
 
         SubCategory::create($validated);
@@ -89,7 +92,7 @@ class SubCategoryController extends Controller
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
-            'slug' => 'nullable|string|max:255|unique:sub_categories,slug,' . $id,
+            'slug' => 'nullable|string|max:255|unique:sub_categories,slug,' . $id . '|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
@@ -107,6 +110,9 @@ class SubCategoryController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        } else {
+            // Ensure slug is properly formatted
+            $validated['slug'] = Str::slug($validated['slug']);
         }
 
         $subCategory->update($validated);

@@ -346,6 +346,16 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="slug" class="form-label">Slug</label>
+                                        <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
+                                            value="{{ old('slug') }}" placeholder="Auto-generated from title if left empty">
+                                        <small class="text-muted">Leave empty to auto-generate from title, or enter custom slug</small>
+                                        @error('slug')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="short_description" class="form-label">Short Description</label>
                                         <textarea class="form-control @error('short_description') is-invalid @enderror" id="short_description"
                                             name="short_description" rows="3">{{ old('short_description') }}</textarea>

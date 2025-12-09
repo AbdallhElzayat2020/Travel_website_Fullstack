@@ -46,7 +46,15 @@
                     </div>
                 </div>
 
-
+                <div class="mb-3">
+                    <label for="slug" class="form-label">Slug</label>
+                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
+                        value="{{ old('slug', $subCategory->slug) }}" placeholder="Auto-generated from name if left empty">
+                    <small class="text-muted">Leave empty to auto-generate from name, or enter custom slug</small>
+                    @error('slug')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>

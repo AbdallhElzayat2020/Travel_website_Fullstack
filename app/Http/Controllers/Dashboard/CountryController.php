@@ -34,6 +34,7 @@ class CountryController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:countries,name',
+            'slug' => 'nullable|string|max:255|unique:countries,slug|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
             'code' => 'nullable|string|max:3|unique:countries,code',
             'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
@@ -48,6 +49,9 @@ class CountryController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        } else {
+            // Ensure slug is properly formatted
+            $validated['slug'] = Str::slug($validated['slug']);
         }
 
         Country::create($validated);
@@ -83,7 +87,7 @@ class CountryController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:countries,name,' . $id,
-            'slug' => 'nullable|string|max:255|unique:countries,slug,' . $id,
+            'slug' => 'nullable|string|max:255|unique:countries,slug,' . $id . '|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
             'code' => 'nullable|string|max:3|unique:countries,code,' . $id,
             'flag' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
@@ -101,6 +105,9 @@ class CountryController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        } else {
+            // Ensure slug is properly formatted
+            $validated['slug'] = Str::slug($validated['slug']);
         }
 
         $country->update($validated);

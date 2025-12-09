@@ -38,6 +38,16 @@
                     </div>
                 </div>
 
+                <div class="mb-3">
+                    <label for="slug" class="form-label">Slug</label>
+                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
+                        value="{{ old('slug') }}" placeholder="Auto-generated from name if left empty">
+                    <small class="text-muted">Leave empty to auto-generate from name, or enter custom slug</small>
+                    @error('slug')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="status" class="form-label">Status <span class="text-danger">*</span></label>

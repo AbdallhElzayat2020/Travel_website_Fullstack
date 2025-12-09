@@ -15,8 +15,8 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="country_id" class="form-label">Country <span class="text-danger">*</span></label>
-                        <select class="form-select @error('country_id') is-invalid @enderror" id="country_id" name="country_id"
-                            required>
+                        <select class="form-select @error('country_id') is-invalid @enderror" id="country_id"
+                            name="country_id" required>
                             <option value="">Select Country</option>
                             @foreach($countries as $country)
                                 <option value="{{ $country->id }}" {{ old('country_id', $state->country_id) == $country->id ? 'selected' : '' }}>
@@ -37,6 +37,16 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="slug" class="form-label">Slug</label>
+                    <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
+                        value="{{ old('slug', $state->slug) }}" placeholder="Auto-generated from name if left empty">
+                    <small class="text-muted">Leave empty to auto-generate from name, or enter custom slug</small>
+                    @error('slug')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="row">
@@ -76,4 +86,3 @@
         </div>
     </div>
 @endsection
-
