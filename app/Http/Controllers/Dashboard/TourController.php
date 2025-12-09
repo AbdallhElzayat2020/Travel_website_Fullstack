@@ -44,7 +44,8 @@ class TourController extends Controller
         // Don't load sub categories and states initially - they will be loaded via AJAX
         $subCategories = collect();
         $states = collect();
-        return view('dashboard.tours.create', compact('categories', 'subCategories', 'countries', 'states'));
+        $availableVariants = TourVariant::active()->orderBy('sort_order')->get();
+        return view('dashboard.tours.create', compact('categories', 'subCategories', 'countries', 'states', 'availableVariants'));
     }
 
     /**
@@ -162,22 +163,12 @@ class TourController extends Controller
                 }
             }
 
-            // Handle tour variants
-            if ($request->has('tour_variants') && is_array($request->tour_variants)) {
-                foreach ($request->tour_variants as $index => $variantData) {
-                    if (!empty($variantData['title'])) {
-                        TourVariant::create([
-                            'tour_id' => $tour->id,
-                            'title' => $variantData['title'],
-                            'description' => $variantData['description'] ?? null,
-                            'additional_duration' => $variantData['additional_duration'] ?? 0,
-                            'additional_duration_type' => $variantData['additional_duration_type'] ?? 'days',
-                            'additional_price' => $variantData['additional_price'] ?? 0,
-                            'status' => $variantData['status'] ?? 'active',
-                            'sort_order' => $variantData['sort_order'] ?? $index,
-                        ]);
-                    }
-                }
+            // Handle tour variants (from available variants checkboxes)
+            if ($request->has('selected_variants') && is_array($request->selected_variants)) {
+                $tour->variants()->sync($request->selected_variants);
+            } else {
+                // If no variants selected, detach all
+                $tour->variants()->detach();
             }
 
             // Handle seasonal prices
@@ -245,7 +236,7 @@ class TourController extends Controller
             'tourImages' => function ($query) {
                 $query->orderBy('sort_order');
             },
-            'tourVariants' => function ($query) {
+            'variants' => function ($query) {
                 $query->orderBy('sort_order');
             },
             'seasonalPrices.priceItems' => function ($query) {
@@ -270,7 +261,7 @@ class TourController extends Controller
             'tourImages' => function ($query) {
                 $query->orderBy('sort_order');
             },
-            'tourVariants' => function ($query) {
+            'variants' => function ($query) {
                 $query->orderBy('sort_order');
             },
             'seasonalPrices' => function ($query) {
@@ -282,8 +273,9 @@ class TourController extends Controller
         $subCategories = SubCategory::where('category_id', $tour->category_id)->active()->orderBy('name')->get();
         $countries = Country::active()->orderBy('name')->get();
         $states = State::where('country_id', $tour->country_id)->active()->orderBy('name')->get();
+        $availableVariants = TourVariant::active()->orderBy('sort_order')->get();
 
-        return view('dashboard.tours.edit', compact('tour', 'categories', 'subCategories', 'countries', 'states'));
+        return view('dashboard.tours.edit', compact('tour', 'categories', 'subCategories', 'countries', 'states', 'availableVariants'));
     }
 
     /**
@@ -480,44 +472,12 @@ class TourController extends Controller
                 }
             }
 
-            // Handle deleted variants
-            if ($request->has('deleted_variants') && is_array($request->deleted_variants)) {
-                TourVariant::whereIn('id', $request->deleted_variants)->delete();
-            }
-
-            // Handle tour variants (update existing and create new)
-            if ($request->has('tour_variants') && is_array($request->tour_variants)) {
-                foreach ($request->tour_variants as $index => $variantData) {
-                    if (!empty($variantData['title'])) {
-                        // Check if it's an existing variant (has id) or new one (starts with 'new-')
-                        if (isset($variantData['id']) && is_numeric($variantData['id'])) {
-                            // Update existing variant
-                            TourVariant::where('id', $variantData['id'])
-                                ->where('tour_id', $tour->id)
-                                ->update([
-                                    'title' => $variantData['title'],
-                                    'description' => $variantData['description'] ?? null,
-                                    'additional_duration' => $variantData['additional_duration'] ?? 0,
-                                    'additional_duration_type' => $variantData['additional_duration_type'] ?? 'days',
-                                    'additional_price' => $variantData['additional_price'] ?? 0,
-                                    'status' => $variantData['status'] ?? 'active',
-                                    'sort_order' => $variantData['sort_order'] ?? $index,
-                                ]);
-                        } elseif (is_string($index) && strpos($index, 'new-') === 0) {
-                            // Create new variant
-                            TourVariant::create([
-                                'tour_id' => $tour->id,
-                                'title' => $variantData['title'],
-                                'description' => $variantData['description'] ?? null,
-                                'additional_duration' => $variantData['additional_duration'] ?? 0,
-                                'additional_duration_type' => $variantData['additional_duration_type'] ?? 'days',
-                                'additional_price' => $variantData['additional_price'] ?? 0,
-                                'status' => $variantData['status'] ?? 'active',
-                                'sort_order' => $variantData['sort_order'] ?? $index,
-                            ]);
-                        }
-                    }
-                }
+            // Handle tour variants (from available variants checkboxes)
+            if ($request->has('selected_variants') && is_array($request->selected_variants)) {
+                $tour->variants()->sync($request->selected_variants);
+            } else {
+                // If no variants selected, detach all
+                $tour->variants()->detach();
             }
 
             // Handle deleted seasonal price items

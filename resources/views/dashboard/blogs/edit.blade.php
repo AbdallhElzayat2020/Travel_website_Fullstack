@@ -254,7 +254,7 @@
                             @method('PUT')
 
                             <!-- Basic Information Section -->
-                            <div class="section-card">
+                            <div class="section-card mt-3">
                                 <div class="section-header info">
                                     <h6>
                                         <i class="ti ti-info-circle"></i>

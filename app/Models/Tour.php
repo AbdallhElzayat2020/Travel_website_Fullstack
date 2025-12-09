@@ -120,11 +120,21 @@ class Tour extends Model
     }
 
     /**
-     * Get the tour variants for the tour.
+     * Get the tour variants for the tour (old relationship - kept for backward compatibility).
      */
     public function tourVariants()
     {
         return $this->hasMany(TourVariant::class)->orderBy('sort_order');
+    }
+
+    /**
+     * Get the standalone tour variants that belong to this tour via pivot table.
+     */
+    public function variants()
+    {
+        return $this->belongsToMany(TourVariant::class, 'tour_tour_variant', 'tour_id', 'tour_variant_id')
+            ->withTimestamps()
+            ->orderBy('sort_order');
     }
 
     /**

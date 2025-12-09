@@ -54,7 +54,7 @@
 
         @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
             <li
-                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*', 'admin.countries.*', 'admin.states.*'], 'active open') }}">
+                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*', 'admin.countries.*', 'admin.states.*', 'admin.tour-variants.*'], 'active open') }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons ti ti-plane"></i>
                     <div data-i18n="Tours">Tours</div>
@@ -76,6 +76,12 @@
                         <a href="{{ route('admin.states.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-map-pin"></i>
                             <div data-i18n="States">States</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tour-variants.*'], 'active') }}">
+                        <a href="{{ route('admin.tour-variants.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-box"></i>
+                            <div data-i18n="Tour Variants">Tour Variants</div>
                         </a>
                     </li>
                 </ul>

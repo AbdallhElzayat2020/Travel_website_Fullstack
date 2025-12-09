@@ -18,6 +18,7 @@ use App\Http\Controllers\Dashboard\{
     StateController,
     TourController,
     BlogController,
+    TourVariantController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -72,6 +73,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     // Blogs Routes
     Route::resource('blogs', BlogController::class);
+
+    // Tour Variants Routes
+    Route::resource('tour-variants', TourVariantController::class);
 });
 
 

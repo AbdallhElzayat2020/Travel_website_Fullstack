@@ -2,6 +2,10 @@
 
 @section('title', 'Create Tour')
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 @push('css')
 <style>
     body {
@@ -630,17 +634,53 @@
                                     </h6>
                                 </div>
                                 <div class="section-body">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <p class="text-muted mb-0">Add optional variants like extra days, services, or upgrades with additional time and price</p>
-                                        <button type="button" class="btn btn-sm btn-primary" id="addVariantBtn">
-                                            <i class="ti ti-plus me-1"></i>
-                                            Add Variant
-                                        </button>
-                                    </div>
+                                    <p class="text-muted mb-3">Select available variants to add to this tour. You can manage variants from <a href="{{ route('admin.tour-variants.index') }}" target="_blank" class="text-primary">Tour Variants</a> page.</p>
 
-                                    <div id="tourVariantsContainer">
-                                        <p class="text-muted mb-0 text-center py-4">No variants added yet. Click "Add Variant" to add optional add-ons.</p>
-                                    </div>
+                                    @if($availableVariants && $availableVariants->count() > 0)
+                                        <div class="row">
+                                            @foreach($availableVariants as $variant)
+                                                <div class="col-md-6 mb-3">
+                                                    <div class="card" style="background: #252836; border: 1px solid #3a3d4a;">
+                                                        <div class="card-body">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="selected_variants[]" value="{{ $variant->id }}" id="variant_{{ $variant->id }}">
+                                                                <label class="form-check-label w-100" for="variant_{{ $variant->id }}">
+                                                                    <div class="d-flex align-items-start gap-2">
+                                                                        @if($variant->image)
+                                                                            <img src="{{ asset('uploads/tour-variants/' . $variant->image) }}" alt="{{ $variant->title }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 6px;">
+                                                                        @endif
+                                                                        <div class="flex-grow-1">
+                                                                            <strong style="color: #e4e6eb;">{{ $variant->title }}</strong>
+                                                                            @if($variant->description)
+                                                                                <p class="text-muted mb-1" style="font-size: 0.85rem;">{{ Str::limit($variant->description, 80) }}</p>
+                                                                            @endif
+                                                                            <div class="d-flex gap-3 mt-2">
+                                                                                @if($variant->additional_duration > 0)
+                                                                                    <small class="text-muted">
+                                                                                        <i class="ti ti-clock"></i> +{{ $variant->additional_duration }} {{ $variant->additional_duration_type }}
+                                                                                    </small>
+                                                                                @endif
+                                                                                @if($variant->additional_price > 0)
+                                                                                    <small class="text-muted">
+                                                                                        <i class="ti ti-currency-pound"></i> +{{ number_format($variant->additional_price, 2) }} EGP
+                                                                                    </small>
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div class="alert alert-info">
+                                            <i class="ti ti-info-circle me-2"></i>
+                                            No variants available. <a href="{{ route('admin.tour-variants.create') }}" target="_blank" class="text-primary">Create a variant</a> first.
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 

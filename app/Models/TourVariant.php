@@ -10,9 +10,9 @@ class TourVariant extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'tour_id',
         'title',
         'description',
+        'image',
         'additional_duration',
         'additional_duration_type',
         'additional_price',
@@ -27,11 +27,12 @@ class TourVariant extends Model
     ];
 
     /**
-     * Get the tour that owns the variant.
+     * Get the tours that use this variant.
      */
-    public function tour()
+    public function tours()
     {
-        return $this->belongsTo(Tour::class);
+        return $this->belongsToMany(Tour::class, 'tour_tour_variant', 'tour_variant_id', 'tour_id')
+            ->withTimestamps();
     }
 
     /**

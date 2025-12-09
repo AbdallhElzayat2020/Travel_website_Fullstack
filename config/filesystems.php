@@ -110,6 +110,15 @@ return [
             'report' => false,
         ],
 
+        'tour_variants' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/tour-variants'),
+            'url' => env('APP_URL') . '/uploads/tour-variants',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

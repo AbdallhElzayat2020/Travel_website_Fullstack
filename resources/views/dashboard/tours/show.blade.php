@@ -699,16 +699,16 @@
                         @endif
 
                         <!-- Tour Variants -->
-                        @if($tour->tourVariants && $tour->tourVariants->count() > 0)
+                        @if($tour->variants && $tour->variants->count() > 0)
                             <div class="section-card">
                                 <div class="section-header variants">
                                     <h6>
                                         <i class="ti ti-adjustments"></i>
-                                        Tour Variants / Add-ons ({{ $tour->tourVariants->count() }})
+                                        Tour Variants / Add-ons ({{ $tour->variants->count() }})
                                     </h6>
                                 </div>
                                 <div class="section-body">
-                                    @foreach($tour->tourVariants as $variant)
+                                    @foreach($tour->variants as $variant)
                                         <div class="variant-card">
                                             <h6>
                                                 <i class="ti ti-adjustments"></i>
