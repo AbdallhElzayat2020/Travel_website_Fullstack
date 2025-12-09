@@ -157,5 +157,14 @@
             </li>
         @endif
 
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.blogs.*'], 'active') }}">
+                <a href="{{ route('admin.blogs.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-news"></i>
+                    <div data-i18n="Blogs">Blogs</div>
+                </a>
+            </li>
+        @endif
+
     </ul>
 </aside>

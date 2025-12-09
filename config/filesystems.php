@@ -101,6 +101,15 @@ return [
             'report' => false,
         ],
 
+        'blogs' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/blogs'),
+            'url' => env('APP_URL') . '/uploads/blogs',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

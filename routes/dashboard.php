@@ -17,6 +17,7 @@ use App\Http\Controllers\Dashboard\{
     CountryController,
     StateController,
     TourController,
+    BlogController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -68,6 +69,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('tours/get-states-by-country', [TourController::class, 'getStatesByCountry'])->name('tours.get-states-by-country');
     Route::get('tours/get-subcategories-by-category', [TourController::class, 'getSubCategoriesByCategory'])->name('tours.get-subcategories-by-category');
     Route::resource('tours', TourController::class);
+
+    // Blogs Routes
+    Route::resource('blogs', BlogController::class);
 });
 
 
