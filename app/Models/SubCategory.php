@@ -52,4 +52,12 @@ class SubCategory extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * Scope a query to only include active sub categories.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
 }

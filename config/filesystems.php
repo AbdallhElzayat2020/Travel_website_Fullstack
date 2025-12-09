@@ -83,6 +83,24 @@ return [
             'report' => false,
         ],
 
+        'countries' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/countries'),
+            'url' => env('APP_URL') . '/uploads/countries',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
+        'tours' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/tours'),
+            'url' => env('APP_URL') . '/uploads/tours',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

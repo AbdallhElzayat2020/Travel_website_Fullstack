@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Contact;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrapFive();
         // Share unread contacts count with all views
         View::composer('dashboard.layouts.sidebar', function ($view) {
             $unreadContactsCount = Contact::where('is_read', false)->count();

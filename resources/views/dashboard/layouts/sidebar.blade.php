@@ -52,6 +52,36 @@
             </li>
         @endif
 
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li
+                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*', 'admin.countries.*', 'admin.states.*'], 'active open') }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons ti ti-plane"></i>
+                    <div data-i18n="Tours">Tours</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*'], 'active') }}">
+                        <a href="{{ route('admin.tours.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-plane"></i>
+                            <div data-i18n="Tours">Tours</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.countries.*'], 'active') }}">
+                        <a href="{{ route('admin.countries.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-world"></i>
+                            <div data-i18n="Countries">Countries</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.states.*'], 'active') }}">
+                        <a href="{{ route('admin.states.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-map-pin"></i>
+                            <div data-i18n="States">States</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endif
+
         @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('users.manage') || auth()->user()->hasPermission('roles.manage'))
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.users.*', 'admin.roles.*'], 'active open') }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">

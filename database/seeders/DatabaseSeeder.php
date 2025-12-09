@@ -26,6 +26,10 @@ class DatabaseSeeder extends Seeder
             SliderSeeder::class,
             TestimonialSeeder::class,
             FaqSeeder::class,
+            CountrySeeder::class,
+            StateSeeder::class,
+            TourSeeder::class,
+            TourDaySeeder::class,
         ]);
     }
 }

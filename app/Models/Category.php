@@ -59,4 +59,12 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class)->where('status', 'active')->orderBy('sort_order');
     }
+
+    /**
+     * Scope a query to only include active categories.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
 }

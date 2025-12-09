@@ -14,6 +14,9 @@ use App\Http\Controllers\Dashboard\{
     SliderController,
     TestimonialController,
     FaqController,
+    CountryController,
+    StateController,
+    TourController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -54,6 +57,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     // FAQs Routes
     Route::resource('faqs', FaqController::class);
+
+    // Countries Routes
+    Route::resource('countries', CountryController::class);
+
+    // States Routes
+    Route::resource('states', StateController::class);
+
+    // Tours Routes
+    Route::get('tours/get-states-by-country', [TourController::class, 'getStatesByCountry'])->name('tours.get-states-by-country');
+    Route::get('tours/get-subcategories-by-category', [TourController::class, 'getSubCategoriesByCategory'])->name('tours.get-subcategories-by-category');
+    Route::resource('tours', TourController::class);
 });
 
 
