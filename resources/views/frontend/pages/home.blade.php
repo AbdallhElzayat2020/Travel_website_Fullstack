@@ -2,50 +2,51 @@
 @section('title', 'Home Page')
 
 @section('content')
-    <section
-        class="bg-cover bg-center bg-no-repeat py-20 md:py-[130px] mx-4 md:mx-6 rounded-[32px] flex flex-col items-center justify-center text-white mb-[60px] md:mb-24"
-        style="background-image: url('./assets/images/hero-banner.png')">
-        <div class="px-4 md:px-0 wrapper">
-            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4">
-                Millions of experiences. <br />
-                One simple search.
-            </h1>
-            <p class="mb-4 md:mb-10 text-lg font-semibold">Find what makes you happy anytime, anywhere</p>
-            <div
-                class="bg-white rounded-2xl md:rounded-[200px] p-4 md:pl-8 md:flex items-center md:space-x-6 mx-auto lg:min-w-[820px]">
-                <div class="relative flex-1 group">
-                    <div class="flex items-center mb-4 md:mb-0">
-                        <span class="iconify text-dark-grey" data-icon="ep:location" data-width="24"
-                            data-height="24"></span>
-                        <div>
-                            <p class="mb-1 text-sm font-semibold text-black py-1 px-4">Where to?</p>
-                            <select
-                                class="py-1 px-4 appearance-none cursor-pointer w-full text-dark-grey font-medium focus-visible:outline-none">
-                                <option class="px-4" value="0">Search a place or actitivity</option>
-                                <option class="px-4" value="bali">Bali</option>
-                                <option class="px-4" value="bangkok">Bangkok</option>
-                                <option class="px-4" value="cancun">Cancun</option>
-                            </select>
+    <section class="mx-4 md:mx-6 mb-[60px] md:mb-24">
+        <div class="swiper hero-swiper rounded-[32px] overflow-hidden">
+            <div class="swiper-wrapper">
+                @forelse($sliders as $slider)
+                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center text-white"
+                        style="background-image: url('{{ asset('uploads/sliders/' . $slider->image) }}')">
+                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center">
+                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center">
+                                {!! nl2br(e($slider->title)) !!}
+                            </h1>
+                            @if($slider->description)
+                                <p class="mb-4 md:mb-10 text-lg font-semibold text-center">
+                                    {{ $slider->description }}
+                                </p>
+                            @endif
+                            @if($slider->link && $slider->button_text)
+                                <a href="{{ $slider->link }}"
+                                    class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#50d8c8] hover:-translate-y-1">
+                                    {{ $slider->button_text }}
+                                </a>
+                            @endif
                         </div>
                     </div>
-                </div>
-                <div class="w-px h-10 bg-light-grey hidden md:block"></div>
-                <div class="relative flex-1 group">
-                    <div class="flex items-center mb-4 md:mb-0">
-                        <span class="iconify text-dark-grey" data-icon="formkit:date" data-width="22"
-                            data-height="22"></span>
-                        <div>
-                            <p class="mb-1 text-sm font-semibold text-black py-1 px-4">When?</p>
-                            <input type="text" id="date_range" name="date_range" placeholder="Select dates"
-                                class="text-dark-grey py-1 px-4 w-full font-medium outline-none">
+                @empty
+                    <!-- Default Slide if no sliders -->
+                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center text-white"
+                        style="background-image: url('{{ asset('assets/frontend/assets/images/hero-banner.png') }}')">
+                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center">
+                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center">
+                                Discover amazing destinations. <br />
+                                Create unforgettable memories.
+                            </h1>
+                            <p class="mb-4 md:mb-10 text-lg font-semibold text-center">Your next adventure is just one click
+                                away</p>
                         </div>
                     </div>
-                </div>
-                <button
-                    class="flex-shrink-0 p-3 rounded-full bg-green-zomp w-full md:w-auto flex items-center justify-center transition duration-200 hover:-translate-y-[5px]">
-                    <span class="text-white iconify" data-icon="iconoir:search" data-width="24" data-height="24"></span>
-                </button>
+                @endforelse
             </div>
+            <!-- Navigation buttons -->
+            <div class="swiper-button-next hero-swiper-next !text-white !w-12 !h-12 !mt-0 rounded-full p-2 bg-white/20 backdrop-blur-sm transition duration-200 hover:!bg-white/30"
+                style="--swiper-navigation-size: 20px"></div>
+            <div class="swiper-button-prev hero-swiper-prev !text-white !w-12 !h-12 !mt-0 rounded-full p-2 bg-white/20 backdrop-blur-sm transition duration-200 hover:!bg-white/30"
+                style="--swiper-navigation-size: 20px"></div>
+            <!-- Pagination -->
+            <div class="swiper-pagination hero-swiper-pagination !bottom-6"></div>
         </div>
     </section>
 
@@ -930,3 +931,28 @@
         </div>
     </section>
 @endsection
+
+@push('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Hero Swiper Initialization
+            new Swiper(".hero-swiper", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: ".hero-swiper-next",
+                    prevEl: ".hero-swiper-prev",
+                },
+                pagination: {
+                    el: ".hero-swiper-pagination",
+                    clickable: true,
+                },
+            });
+        });
+    </script>
+@endpush

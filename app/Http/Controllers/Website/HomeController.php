@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,7 +13,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.pages.home');
+        $sliders = Slider::active()
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('frontend.pages.home', compact('sliders'));
     }
 
     /**
