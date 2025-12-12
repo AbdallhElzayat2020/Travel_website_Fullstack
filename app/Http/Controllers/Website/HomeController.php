@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
+use App\Models\Tour;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -17,7 +18,23 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        return view('frontend.pages.home', compact('sliders'));
+        $offerTours = Tour::active()
+            ->where('has_offer', true)
+            ->where('status', 'active')
+            ->where(function ($q) {
+                $q->whereNull('offer_start_date')
+                    ->orWhere('offer_start_date', '<=', now());
+            })
+            ->where(function ($q) {
+                $q->whereNull('offer_end_date')
+                    ->orWhere('offer_end_date', '>=', now());
+            })
+            ->orderBy('sort_order')
+            ->latest()
+            ->take(2)
+            ->get();
+
+        return view('frontend.pages.home', compact('sliders', 'offerTours'));
     }
 
     /**

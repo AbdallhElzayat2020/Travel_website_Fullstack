@@ -12,12 +12,12 @@
                             <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center">
                                 {!! nl2br(e($slider->title)) !!}
                             </h1>
-                            @if($slider->description)
+                            @if ($slider->description)
                                 <p class="mb-4 md:mb-10 text-lg font-semibold text-center">
                                     {{ $slider->description }}
                                 </p>
                             @endif
-                            @if($slider->link && $slider->button_text)
+                            @if ($slider->link && $slider->button_text)
                                 <a href="{{ $slider->link }}"
                                     class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#50d8c8] hover:-translate-y-1">
                                     {{ $slider->button_text }}
@@ -50,29 +50,34 @@
         </div>
     </section>
 
+    {{-- icons section --}}
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                 <div class="text-center items">
-                    <img src="./assets/images/features-01.svg" alt="" class="w-[72px] h-auto mx-auto mb-6">
+                    <img src="{{ asset('assets/frontend/assets/images/features-01.svg') }}" alt=""
+                        class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Discover the possibilities</h4>
                     <p class="text-dark-grey">With nearly half a million attractions, <br /> hotels & more, you're sure
                         to find joy.</p>
                 </div>
                 <div class="text-center items">
-                    <img src="./assets/images/features-02.svg" alt="" class="w-[72px] h-auto mx-auto mb-6">
+                    <img src="{{ asset('assets/frontend/assets/images/features-02.svg') }}" alt=""
+                        class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Enjoy deals & delights</h4>
                     <p class="text-dark-grey">Quality activities. Great prices. Plus, <br /> earn credits to save more.
                     </p>
                 </div>
                 <div class="text-center items">
-                    <img src="./assets/images/features-03.svg" alt="" class="w-[72px] h-auto mx-auto mb-6">
+                    <img src="{{ asset('assets/frontend/assets/images/features-03.svg') }}" alt=""
+                        class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Exploring made easy</h4>
                     <p class="text-dark-grey">Book last minute, skip lines & get free <br /> cancellation for easier
                         exploring.</p>
                 </div>
                 <div class="text-center items">
-                    <img src="./assets/images/features-04.svg" alt="" class="w-[72px] h-auto mx-auto mb-6">
+                    <img src="{{ asset('assets/frontend/assets/images/features-04.svg') }}" alt=""
+                        class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Travel you can trust</h4>
                     <p class="text-dark-grey">Read reviews & get reliable customer <br /> support. We're with you at
                         every step.</p>
@@ -80,7 +85,9 @@
             </div>
         </div>
     </section>
+    {{-- icons section --}}
 
+    {{-- Top destination section --}}
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="flex items-center justify-between mb-10">
@@ -98,7 +105,7 @@
                     <div class="swiper-wrapper">
                         <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
                             <a href="tour-destination.html">
-                                <img src="./assets/images/top-destination/01.png" alt=""
+                                <img src="{{ asset('assets/frontend/assets/images/destination-01.png') }}" alt=""
                                     class="absolute inset-0 z-0 object-cover w-full h-full" />
                             </a>
                             <div
@@ -118,7 +125,7 @@
                         </div>
                         <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
                             <a href="tour-destination.html">
-                                <img src="./assets/images/top-destination/02.png" alt=""
+                                <img src="{{ asset('assets/frontend/assets/images/destination-02.png') }}" alt=""
                                     class="absolute inset-0 z-0 object-cover w-full h-full" />
                             </a>
                             <div
@@ -138,7 +145,7 @@
                         </div>
                         <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
                             <a href="tour-destination.html">
-                                <img src="./assets/images/top-destination/03.png" alt=""
+                                <img src="{{ asset('assets/frontend/assets/images/destination-03.png') }}" alt=""
                                     class="absolute inset-0 z-0 object-cover w-full h-full" />
                             </a>
                             <div
@@ -158,7 +165,7 @@
                         </div>
                         <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
                             <a href="tour-destination.html">
-                                <img src="./assets/images/top-destination/04.png" alt=""
+                                <img src="{{ asset('assets/frontend/assets/images/destination-04.png') }}" alt=""
                                     class="absolute inset-0 z-0 object-cover w-full h-full" />
                             </a>
                             <div
@@ -178,7 +185,7 @@
                         </div>
                         <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
                             <a href="tour-destination.html">
-                                <img src="./assets/images/top-destination/02.png" alt=""
+                                <img src="{{ asset('assets/frontend/assets/images/destination-05.png') }}" alt=""
                                     class="absolute inset-0 z-0 object-cover w-full h-full" />
                             </a>
                             <div
@@ -207,50 +214,57 @@
             </div>
         </div>
     </section>
+    {{-- Top destination section --}}
 
-    <section class="mb-[60px] md:mb-24">
-        <div class="container">
-            <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Offers to inspire you</h2>
-            <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-                <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
-                    style="background-image: url('./assets/images/inspire-01.png');">
-                    <div class="absolute inset-0 rounded-2xl md:rounded-3xl"
-                        style="background: linear-gradient(134deg, #11A191 18%, #01AA9000 100%);"></div>
-                    <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
-                        <div>
-                            <h2 class="text-white font-bold text-[32px] leading-[1.3] mb-4">South Bali (Kuta, Canggu,
-                                Uluwatu, Jimbaran)</h2>
-                            <p class="text-white mb-[60px]">Travel hassle-free within Bali, visit popular attractions,
-                                or do water activities!</p>
+    {{-- Offers section --}}
+    @if(isset($offerTours) && $offerTours->count())
+        <section class="mb-[60px] md:mb-24">
+            <div class="container">
+                <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Offers to inspire you</h2>
+                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+                    @foreach($offerTours as $tour)
+                        @php
+                            $offerCover = $tour->cover_image
+                                ? asset('uploads/tours/' . $tour->cover_image)
+                                : asset('assets/frontend/assets/images/inspire-01.png');
+                        @endphp
+                        <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
+                            style="background-image: url('{{ $offerCover }}');">
+                            <div class="absolute inset-0 rounded-2xl md:rounded-3xl"
+                                style="background: linear-gradient(134deg, #11A191 18%, #01AA9000 100%);"></div>
+                            <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
+                                <div>
+                                    <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
+                                        {!! $tour->title  !!}
+                                    </h2>
+                                    @if($tour->short_description)
+                                        <p class="text-white text-base mb-[40px] line-clamp-3">
+                                            {!! $tour->short_description !!}
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    @if($tour->price_before_discount)
+                                        <span class="text-white line-through text-base">
+                                            ${{ number_format($tour->price_before_discount, 2) }}
+                                        </span>
+                                    @endif
+                                    @if($tour->price_after_discount)
+                                        <span class="text-lg font-bold text-white">
+                                            ${{ number_format($tour->price_after_discount, 2) }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
-                        <a href="trip-ideas.html"
-                            class="block w-max text-green-zomp capitalize p-4 bg-white rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp">
-                            See all activities
-                        </a>
-                    </div>
-                </div>
-
-                <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
-                    style="background-image: url('./assets/images/inspire-02.png');">
-                    <div
-                        class="absolute inset-0 rounded-2xl md:rounded-3xl bg-gradient-to-r from-[#322153]/80 to-transparent">
-                    </div>
-                    <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
-                        <div>
-                            <h2 class="text-white font-bold text-[32px] leading-[1.3] mb-4">Beyond the City</h2>
-                            <p class="text-white mb-[60px]">Discover the wonders that lie outside the walls of Da Nang
-                                with these exciting tours of surrounding areas</p>
-                        </div>
-                        <a href="trip-ideas.html"
-                            class="block w-max text-green-zomp capitalize p-4 bg-white rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp">
-                            See all activities
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
+    {{-- Offers section --}}
 
+    {{-- Popular activities Section --}}
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Popular activities</h2>
@@ -260,7 +274,8 @@
                     <div class="bg-white border rounded-2xl border-light-grey">
                         <div class="relative overflow-hidden rounded-t-2xl">
                             <a href="tours-details-style-01.html">
-                                <img src="./assets/images/tours/01.png" alt="Universal Studios Singapore Special Ticket"
+                                <img src="{{ asset('assets/frontend/assets/images/blogs/01.png') }}"
+                                    alt="Universal Studios Singapore Special Ticket"
                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
                                 <span
                                     class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
@@ -313,7 +328,8 @@
                     <div class="bg-white border rounded-2xl border-light-grey">
                         <div class="relative overflow-hidden rounded-t-2xl">
                             <a href="tours-details-style-01.html">
-                                <img src="./assets/images/tours/02.png" alt="Borobudur Sunrise Experience with Local Guide"
+                                <img src="{{ asset('assets/frontend/assets/images/blogs/02.png') }}"
+                                    alt="Borobudur Sunrise Experience with Local Guide"
                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
                                 <span
                                     class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
@@ -365,7 +381,8 @@
                     <div class="bg-white border rounded-2xl border-light-grey">
                         <div class="relative overflow-hidden rounded-t-2xl">
                             <a href="tours-details-style-01.html">
-                                <img src="./assets/images/tours/03.png" alt="Phi Phi Island Speedboat Tour"
+                                <img src="{{ asset('assets/frontend/assets/images/blogs/03.png') }}"
+                                    alt="Phi Phi Island Speedboat Tour"
                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
 
                             </a>
@@ -414,7 +431,7 @@
                     <div class="bg-white border rounded-2xl border-light-grey">
                         <div class="relative overflow-hidden rounded-t-2xl">
                             <a href="tours-details-style-01.html">
-                                <img src="./assets/images/tours/04.png"
+                                <img src="{{ asset('assets/frontend/assets/images/blogs/04.png') }}"
                                     alt="Kuala Lumpur City &amp; Batu Caves Full Day Tour"
                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
                                 <span
@@ -470,7 +487,8 @@
                     <div class="bg-white border rounded-2xl border-light-grey">
                         <div class="relative overflow-hidden rounded-t-2xl">
                             <a href="tours-details-style-01.html">
-                                <img src="./assets/images/tours/05.png" alt="El Nido Island Hopping Adventure"
+                                <img src="{{ asset('assets/frontend/assets/images/blogs/05.png') }}"
+                                    alt="El Nido Island Hopping Adventure"
                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
 
                             </a>
@@ -523,7 +541,8 @@
                     <div class="bg-white border rounded-2xl border-light-grey">
                         <div class="relative overflow-hidden rounded-t-2xl">
                             <a href="tours-details-style-01.html">
-                                <img src="./assets/images/tours/06.png" alt="Sapa Trekking &amp; Homestay Experience"
+                                <img src="{{ asset('assets/frontend/assets/images/blogs/06.png') }}"
+                                    alt="Sapa Trekking &amp; Homestay Experience"
                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
                                 <span
                                     class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
@@ -577,7 +596,8 @@
                     <div class="bg-white border rounded-2xl border-light-grey">
                         <div class="relative overflow-hidden rounded-t-2xl">
                             <a href="tours-details-style-01.html">
-                                <img src="./assets/images/tours/07.png" alt="Tokyo Highlights &amp; Mt. Fuji Day Trip"
+                                <img src="{{ asset('assets/frontend/assets/images/blogs/07.png') }}"
+                                    alt="Tokyo Highlights &amp; Mt. Fuji Day Trip"
                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
 
                             </a>
@@ -628,7 +648,8 @@
                     <div class="bg-white border rounded-2xl border-light-grey">
                         <div class="relative overflow-hidden rounded-t-2xl">
                             <a href="tours-details-style-01.html">
-                                <img src="./assets/images/tours/08.png" alt="Maldives Resort &amp; Snorkeling Package"
+                                <img src="{{ asset('assets/frontend/assets/images/blogs/08.png') }}"
+                                    alt="Maldives Resort &amp; Snorkeling Package"
                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
                                 <span
                                     class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
@@ -681,11 +702,13 @@
             </div>
         </div>
     </section>
+    {{-- Popular activities Section --}}
 
+    {{-- Subscribe Section --}}
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="bg-cover bg-center rounded-2xl px-6 py-12 lg:pl-[108px] lg:pr-10 lg:pt-[120px] lg:pb-[90px] text-white"
-                style="background-image: url('./assets/images/subscribe-bg.png')">
+                style="background-image: url('{{ asset('assets/frontend/assets/images/subscribe-bg.png') }}')">
                 <div class="p-6 md:p-10 bg-darker-grey bg-opacity-90 rounded-2xl w-full lg:w-fit">
                     <h2 class="text-2xl md:text-[40px] font-bold mb-4">Subscribe & Get 20% off</h2>
                     <p class="text-white-grey mb-8 max-w-full md:max-w-[540px] text-sm md:text-base">
@@ -704,42 +727,54 @@
             </div>
         </div>
     </section>
+    {{-- Subscribe Section --}}
 
-
+    {{-- Gallery Section --}}
     <section class="mb-[60px] md:mb-24">
         <div class="swiper gallerySwiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/01.png" alt="Gallery 1" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/01.png') }}" alt="Gallery 1"
+                        class="object-cover w-full h-auto" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/02.png" alt="Gallery 2" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/02.png') }}" alt="Gallery 2"
+                        class="object-cover w-full h-auto" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/03.png" alt="Gallery 3" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/03.png') }}" alt="Gallery 3"
+                        class="object-cover w-full h-auto" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/04.png" alt="Gallery 4" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/04.png') }}" alt="Gallery 4"
+                        class="object-cover w-full h-auto" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/05.png" alt="Gallery 5" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/05.png') }}" alt="Gallery 5"
+                        class="object-cover w-full h-auto" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/06.png" alt="Gallery 6" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/06.png') }}" alt="Gallery 6"
+                        class="object-cover w-full h-auto" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/07.png" alt="Gallery 7" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/07.png') }}" alt="Gallery 7"
+                        class="object-cover w-full h-auto" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/08.png" alt="Gallery 8" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/08.png') }}" alt="Gallery 8"
+                        class="object-cover w-full h-auto" />
                 </div>
                 <div class="swiper-slide">
-                    <img src="./assets/images/list-gallery/09.png" alt="Gallery 9" class="object-cover w-full h-auto" />
+                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/09.png') }}" alt="Gallery 9"
+                        class="object-cover w-full h-auto" />
                 </div>
             </div>
         </div>
     </section>
+    {{-- Gallery Section --}}
 
+    {{-- Blogs section --}}
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="flex items-center justify-between mb-10">
@@ -759,7 +794,7 @@
 
                             <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
                                 <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="./assets/images/blogs/01.png"
+                                    <img src="{{ asset('assets/frontend/assets/images/blogs/01.png') }}"
                                         alt="10 Hidden Gems in Southeast Asia You Must Visit"
                                         class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
                                 </div>
@@ -788,7 +823,7 @@
 
                             <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
                                 <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="./assets/images/blogs/02.png"
+                                    <img src="{{ asset('assets/frontend/assets/images/blogs/02.png') }}"
                                         alt="Street Food Guide: Authentic Flavors of Vietnam"
                                         class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
                                 </div>
@@ -815,7 +850,8 @@
 
                             <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
                                 <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="./assets/images/blogs/03.png" alt="How to Travel Asia on $30 a Day"
+                                    <img src="{{ asset('assets/frontend/assets/images/blogs/03.png') }}"
+                                        alt="How to Travel Asia on $30 a Day"
                                         class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
                                 </div>
                                 <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
@@ -842,15 +878,17 @@
 
                             <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
                                 <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="./assets/images/blogs/04.png"
+                                    <img src="{{ asset('assets/frontend/assets/images/blogs/04.png') }}"
                                         alt="Capturing the Perfect Sunset: Best Spots in Bali"
                                         class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
                                 </div>
-                                <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
+                                <div class="border border-light-grey  border-t-0 rounded-b-2xl p-4 pb-9">
                                     <div class="mb-2">
                                         <a href="blogs-category.html" class="block"><span
                                                 class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Nature</span><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Photography</span></a>
+                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">
+                                                Photography</span>
+                                        </a>
                                     </div>
                                     <h4
                                         class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
@@ -930,6 +968,8 @@
             </div>
         </div>
     </section>
+    {{-- Blogs section --}}
+
 @endsection
 
 @push('js')
