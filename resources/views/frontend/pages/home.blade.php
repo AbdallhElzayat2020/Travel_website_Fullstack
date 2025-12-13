@@ -716,12 +716,15 @@
                         off at our
                         online shop. Every week you’ll receive expert advice, tips, exclusive offers, and much more.
                     </p>
-                    <form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                        <input type="email" placeholder="Your email address"
+                    <form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
+                        action="{{ route('subscribe') }}" method="POST">
+                        @csrf
+                        <input type="email" name="email" placeholder="Your email address" required
                             class="flex-1 text-dark-grey font-normal py-3 px-6 rounded-full focus:outline-none" />
                         <button type="submit"
                             class="bg-green-zomp py-3 px-6 text-white font-semibold rounded-full whitespace-nowrap transition duration-200 hover:-translate-y-[5px] hover:bg-[#50d8c8]">Sign
-                            Up</button>
+                            Up
+                        </button>
                     </form>
                 </div>
             </div>
@@ -730,48 +733,26 @@
     {{-- Subscribe Section --}}
 
     {{-- Gallery Section --}}
-    <section class="mb-[60px] md:mb-24">
-        <div class="swiper gallerySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/01.png') }}" alt="Gallery 1"
-                        class="object-cover w-full h-auto" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/02.png') }}" alt="Gallery 2"
-                        class="object-cover w-full h-auto" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/03.png') }}" alt="Gallery 3"
-                        class="object-cover w-full h-auto" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/04.png') }}" alt="Gallery 4"
-                        class="object-cover w-full h-auto" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/05.png') }}" alt="Gallery 5"
-                        class="object-cover w-full h-auto" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/06.png') }}" alt="Gallery 6"
-                        class="object-cover w-full h-auto" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/07.png') }}" alt="Gallery 7"
-                        class="object-cover w-full h-auto" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/08.png') }}" alt="Gallery 8"
-                        class="object-cover w-full h-auto" />
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/09.png') }}" alt="Gallery 9"
-                        class="object-cover w-full h-auto" />
+    @if(isset($homeGalleries) && $homeGalleries->count())
+        <section class="mb-[60px] md:mb-24">
+            <div class="swiper gallerySwiper">
+                <div class="swiper-wrapper">
+                    @foreach($homeGalleries as $gallery)
+                        @php
+                            $cover = $gallery->cover_image
+                                ? asset('uploads/galleries/' . $gallery->cover_image)
+                                : asset('assets/frontend/assets/images/gallery-placeholder.png');
+                        @endphp
+                        <div class="swiper-slide">
+                            <a href="{{ route('galleries.show', $gallery->slug) }}">
+                                <img src="{{ $cover }}" alt="{{ $gallery->title }}" class="object-cover w-full h-auto" />
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
     {{-- Gallery Section --}}
 
     {{-- Blogs section --}}
@@ -790,172 +771,46 @@
             <div class="relative">
                 <div class="swiper blog-index-swiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-
-                            <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
-                                <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="{{ asset('assets/frontend/assets/images/blogs/01.png') }}"
-                                        alt="10 Hidden Gems in Southeast Asia You Must Visit"
-                                        class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
-                                </div>
-                                <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
-                                    <div class="mb-2">
-                                        <a href="blogs-category.html" class="block"><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Travel</span><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Adventure</span></a>
+                        @forelse($blogs as $blog)
+                            @php
+                                $blogCover = $blog->cover_image
+                                    ? asset('uploads/blogs/' . $blog->cover_image)
+                                    : asset('assets/frontend/assets/images/blogs/01.png');
+                                $blogDate = $blog->published_at ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y') : '';
+                            @endphp
+                            <div class="swiper-slide">
+                                <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
+                                    <div class="overflow-hidden rounded-t-2xl">
+                                        <img src="{{ $blogCover }}" alt="{{ $blog->title }}"
+                                            class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
                                     </div>
-                                    <h4
-                                        class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
-                                        <a href="blogs-details.html" class="block">10 Hidden Gems in Southeast Asia
-                                            You
-                                            Must Visit</a>
-                                    </h4>
-                                    <span class="block text-dark-grey text-sm mb-2">July 5, 2024</span>
-                                    <p class="text-dark-grey text-sm line-clamp-2">Discover the most breathtaking
-                                        hidden
-                                        destinations across Southeast Asia, from secluded beaches in Philippines to
-                                        mystical temples in Cambodia. Perfect for adventurous travelers seeking unique
-                                        experiences.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="swiper-slide">
-
-                            <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
-                                <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="{{ asset('assets/frontend/assets/images/blogs/02.png') }}"
-                                        alt="Street Food Guide: Authentic Flavors of Vietnam"
-                                        class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
-                                </div>
-                                <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
-                                    <div class="mb-2">
-                                        <a href="blogs-category.html" class="block"><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Food</span><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Culture</span></a>
+                                    <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
+                                        <h4
+                                            class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
+                                            <a href="{{ url('blogs/' . $blog->slug) }}" class="block">
+                                                {{ $blog->title }}
+                                            </a>
+                                        </h4>
+                                        @if($blogDate)
+                                            <span class="block text-dark-grey text-sm mb-2">{{ $blogDate }}</span>
+                                        @endif
+                                        @if($blog->short_description)
+                                            <p class="text-dark-grey text-sm line-clamp-2">
+                                                {{ \Illuminate\Support\Str::limit(strip_tags($blog->short_description), 140) }}
+                                            </p>
+                                        @endif
                                     </div>
-                                    <h4
-                                        class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
-                                        <a href="blogs-details.html" class="block">Street Food Guide: Authentic
-                                            Flavors
-                                            of Vietnam</a>
-                                    </h4>
-                                    <span class="block text-dark-grey text-sm mb-2">July 3, 2024</span>
-                                    <p class="text-dark-grey text-sm line-clamp-2">Explore the vibrant street food
-                                        culture of Vietnam, from pho and banh mi to lesser-known local delicacies. A
-                                        comprehensive guide for food lovers and cultural enthusiasts.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="swiper-slide">
-
-                            <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
-                                <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="{{ asset('assets/frontend/assets/images/blogs/03.png') }}"
-                                        alt="How to Travel Asia on $30 a Day"
-                                        class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
-                                </div>
-                                <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
-                                    <div class="mb-2">
-                                        <a href="blogs-category.html" class="block"><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Budget
-                                                Travel</span><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Tips</span></a>
+                                </article>
+                            </div>
+                        @empty
+                            <div class="swiper-slide">
+                                <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
+                                    <div class="p-6 text-center text-dark-grey">
+                                        No blog posts available yet.
                                     </div>
-                                    <h4
-                                        class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
-                                        <a href="blogs-details.html" class="block">How to Travel Asia on $30 a
-                                            Day</a>
-                                    </h4>
-                                    <span class="block text-dark-grey text-sm mb-2">July 1, 2024</span>
-                                    <p class="text-dark-grey text-sm line-clamp-2">Practical tips and strategies for
-                                        budget-conscious travelers. Learn how to maximize your travel experience in Asia
-                                        without breaking the bank, including accommodation, transportation, and dining
-                                        hacks.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="swiper-slide">
-
-                            <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
-                                <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="{{ asset('assets/frontend/assets/images/blogs/04.png') }}"
-                                        alt="Capturing the Perfect Sunset: Best Spots in Bali"
-                                        class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
-                                </div>
-                                <div class="border border-light-grey  border-t-0 rounded-b-2xl p-4 pb-9">
-                                    <div class="mb-2">
-                                        <a href="blogs-category.html" class="block"><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Nature</span><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">
-                                                Photography</span>
-                                        </a>
-                                    </div>
-                                    <h4
-                                        class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
-                                        <a href="blogs-details.html" class="block">Capturing the Perfect Sunset: Best
-                                            Spots in Bali</a>
-                                    </h4>
-                                    <span class="block text-dark-grey text-sm mb-2">June 28, 2024</span>
-                                    <p class="text-dark-grey text-sm line-clamp-2">A photographer&#039;s guide to the
-                                        most stunning sunset locations in Bali. Includes timing, camera settings, and
-                                        insider tips for capturing Instagram-worthy shots.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="swiper-slide">
-
-                            <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
-                                <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="./assets/images/blogs/05.png"
-                                        alt="Solo Female Travel in Thailand: Safety Tips &amp; Experiences"
-                                        class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
-                                </div>
-                                <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
-                                    <div class="mb-2">
-                                        <a href="blogs-category.html" class="block"><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Solo
-                                                Travel</span><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Safety</span></a>
-                                    </div>
-                                    <h4
-                                        class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
-                                        <a href="blogs-details.html" class="block">Solo Female Travel in Thailand:
-                                            Safety Tips &amp; Experiences</a>
-                                    </h4>
-                                    <span class="block text-dark-grey text-sm mb-2">June 25, 2024</span>
-                                    <p class="text-dark-grey text-sm line-clamp-2">Essential safety tips and personal
-                                        experiences for women traveling alone in Thailand. Covering accommodation,
-                                        transportation, cultural considerations, and must-visit destinations.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="swiper-slide">
-
-                            <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
-                                <div class="overflow-hidden rounded-t-2xl">
-                                    <img src="./assets/images/blogs/06.png"
-                                        alt="Ancient Temples of Angkor: A Complete Guide"
-                                        class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
-                                </div>
-                                <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
-                                    <div class="mb-2">
-                                        <a href="blogs-category.html" class="block"><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">Culture</span><span
-                                                class="inline-block text-dark-grey font-semibold text-sm bg-light-grey py-1 px-2 rounded-md mr-1 last:mr-0 transition duration-200 hover:text-white hover:bg-green-zomp">History</span></a>
-                                    </div>
-                                    <h4
-                                        class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
-                                        <a href="blogs-details.html" class="block">Ancient Temples of Angkor: A
-                                            Complete
-                                            Guide</a>
-                                    </h4>
-                                    <span class="block text-dark-grey text-sm mb-2">June 22, 2024</span>
-                                    <p class="text-dark-grey text-sm line-clamp-2">Explore the magnificent temple
-                                        complex of Angkor Wat and surrounding sites. Historical insights, best visiting
-                                        times, and photography tips for this UNESCO World Heritage site.</p>
-                                </div>
-                            </article>
-                        </div>
+                                </article>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
                 <div class="swiper-pagination blog-index-pagination !-bottom-11 sm:hidden"></div>

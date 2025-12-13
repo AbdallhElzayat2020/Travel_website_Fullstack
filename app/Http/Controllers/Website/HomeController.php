@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Website;
 
-use App\Http\Controllers\Controller;
-use App\Models\Slider;
+use App\Models\Blog;
 use App\Models\Tour;
+use App\Models\Slider;
+use App\Models\Subscriber;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -34,7 +37,54 @@ class HomeController extends Controller
             ->take(2)
             ->get();
 
-        return view('frontend.pages.home', compact('sliders', 'offerTours'));
+        $blogs = Blog::active()
+            ->published()
+            ->orderBy('sort_order')
+            ->latest('published_at')
+            ->take(6)
+            ->get();
+
+        $homeGalleries = Gallery::active()
+            ->published()
+            ->homepage()
+            ->orderBy('sort_order')
+            ->latest('published_at')
+            ->take(9)
+            ->get();
+
+        return view('frontend.pages.home', compact('sliders', 'offerTours', 'blogs', 'homeGalleries'));
+    }
+
+    /**
+     * Handle newsletter subscription.
+     */
+    public function subscribe(Request $request)
+    {
+        $data = $request->validate([
+            'email' => 'required|email|max:255',
+            'name' => 'nullable|string|max:255',
+        ]);
+
+        $existing = Subscriber::withTrashed()->where('email', $data['email'])->first();
+
+        if ($existing) {
+            $existing->restore();
+            $existing->update([
+                'name' => $data['name'] ?? $existing->name,
+                'is_active' => true,
+                'subscribed_at' => now(),
+                'unsubscribed_at' => null,
+            ]);
+        } else {
+            Subscriber::create([
+                'email' => $data['email'],
+                'name' => $data['name'] ?? null,
+                'is_active' => true,
+                'subscribed_at' => now(),
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Subscribed successfully!');
     }
 
     /**

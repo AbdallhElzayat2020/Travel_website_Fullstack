@@ -4,7 +4,9 @@
     data-theme="theme-default" data-assets-path="{{ asset('assets/dashboard/assets') }}/"
     data-template="vertical-menu-template">
 
+
 @include('dashboard.layouts.head')
+
 
 <body>
     <!-- Layout wrapper -->

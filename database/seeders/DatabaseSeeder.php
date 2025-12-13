@@ -30,7 +30,9 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             TourSeeder::class,
             TourDaySeeder::class,
+            TourVariantSeeder::class,
             BlogSeeder::class,
+            GallerySeeder::class,
         ]);
     }
 }

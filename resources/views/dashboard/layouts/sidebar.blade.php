@@ -164,6 +164,13 @@
         @endif
 
         @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.galleries.*'], 'active') }}">
+                <a href="{{ route('admin.galleries.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-photo"></i>
+                    <div data-i18n="Galleries">Galleries</div>
+                </a>
+            </li>
+
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.blogs.*'], 'active') }}">
                 <a href="{{ route('admin.blogs.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-news"></i>

@@ -19,6 +19,7 @@ use App\Http\Controllers\Dashboard\{
     TourController,
     BlogController,
     TourVariantController,
+    GalleryController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -50,6 +51,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     // Subscribers Routes
     Route::resource('subscribers', SubscriberController::class)->only(['index', 'destroy']);
     Route::patch('subscribers/{subscriber}/toggle-status', [SubscriberController::class, 'toggleStatus'])->name('subscribers.toggle-status');
+
+    // Galleries Routes
+    Route::resource('galleries', GalleryController::class);
 
     // Sliders Routes
     Route::resource('sliders', SliderController::class);

@@ -56,7 +56,7 @@
                         About Us
                     </a>
                 </li>
-                <li class="relative group nav-father">
+                {{-- <li class="relative group nav-father">
                     <div
                         class="inline-flex items-center gap-1 py-2 cursor-pointer transition-all duration-200 hover:text-green-zomp">
                         <a href="#" class="hover:text-green-zomp">Page</a>
@@ -101,7 +101,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             </ul>
         </nav>
     </div>
