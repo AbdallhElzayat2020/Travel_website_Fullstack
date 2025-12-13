@@ -41,7 +41,7 @@
             <div class="row mb-4">
                 <div class="col-md-12">
                     <div class="alert {{ $contact->is_read ? 'alert-success' : 'alert-warning' }}" role="alert">
-                        <strong>Status:</strong> 
+                        <strong>Status:</strong>
                         @if($contact->is_read)
                             <span class="badge bg-label-success">Read</span>
                             @if($contact->read_at)

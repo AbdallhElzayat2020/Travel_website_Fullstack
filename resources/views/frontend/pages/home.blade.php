@@ -1,5 +1,18 @@
 @extends('frontend.layouts.master')
-@section('title', 'Home Page')
+@php
+    $homePage = \App\Models\Page::getBySlug('home');
+    $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home Page';
+@endphp
+@section('meta_title', $metaTitle)
+@if($homePage && $homePage->meta_description)
+@section('meta_description', $homePage->meta_description)
+@endif
+@if($homePage && $homePage->meta_author)
+@section('meta_author', $homePage->meta_author)
+@endif
+@if($homePage && $homePage->meta_keywords)
+@section('meta_keywords', $homePage->meta_keywords)
+@endif
 
 @section('content')
     <section class="mx-4 md:mx-6 mb-[60px] md:mb-24">
@@ -217,12 +230,12 @@
     {{-- Top destination section --}}
 
     {{-- Offers section --}}
-    @if(isset($offerTours) && $offerTours->count())
+    @if (isset($offerTours) && $offerTours->count())
         <section class="mb-[60px] md:mb-24">
             <div class="container">
                 <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Offers to inspire you</h2>
                 <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-                    @foreach($offerTours as $tour)
+                    @foreach ($offerTours as $tour)
                         @php
                             $offerCover = $tour->cover_image
                                 ? asset('uploads/tours/' . $tour->cover_image)
@@ -235,21 +248,21 @@
                             <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
                                 <div>
                                     <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
-                                        {!! $tour->title  !!}
+                                        {!! $tour->title !!}
                                     </h2>
-                                    @if($tour->short_description)
+                                    @if ($tour->short_description)
                                         <p class="text-white text-base mb-[40px] line-clamp-3">
                                             {!! $tour->short_description !!}
                                         </p>
                                     @endif
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    @if($tour->price_before_discount)
+                                    @if ($tour->price_before_discount)
                                         <span class="text-white line-through text-base">
                                             ${{ number_format($tour->price_before_discount, 2) }}
                                         </span>
                                     @endif
-                                    @if($tour->price_after_discount)
+                                    @if ($tour->price_after_discount)
                                         <span class="text-lg font-bold text-white">
                                             ${{ number_format($tour->price_after_discount, 2) }}
                                         </span>
@@ -265,443 +278,129 @@
     {{-- Offers section --}}
 
     {{-- Popular activities Section --}}
-    <section class="mb-[60px] md:mb-24">
-        <div class="container">
-            <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Popular activities</h2>
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    @if (isset($activeTours) && $activeTours->count() > 0)
+        <section class="mb-[60px] md:mb-24">
+            <div class="container">
+                <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Popular activities</h2>
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    @forelse($activeTours as $tour)
+                        @php
+                            $coverImage = $tour->cover_image
+                                ? asset('uploads/tours/' . $tour->cover_image)
+                                : asset('assets/frontend/assets/images/blogs/01.png');
 
-                <article class="relative overflow-hidden transition duration-200">
-                    <div class="bg-white border rounded-2xl border-light-grey">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <a href="tours-details-style-01.html">
-                                <img src="{{ asset('assets/frontend/assets/images/blogs/01.png') }}"
-                                    alt="Universal Studios Singapore Special Ticket"
-                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-                                <span
-                                    class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
-                                    Sale</span>
-                            </a>
+                            $isOnSale = $tour->has_offer && $tour->isOfferActive();
+                            $currentPrice =
+                                $isOnSale && $tour->price_after_discount ? $tour->price_after_discount : $tour->price;
+                            $oldPrice = $isOnSale && $tour->price_before_discount ? $tour->price_before_discount : null;
+
+                            // Location
+                            $locationParts = [];
+                            if ($tour->category) {
+                                $locationParts[] = $tour->category->name;
+                            }
+                            if ($tour->country) {
+                                $locationParts[] = $tour->country->name;
+                            }
+                            $location = implode(', ', $locationParts);
+
+                            // Duration
+                            $durationText =
+                                $tour->duration .
+                                ' ' .
+                                ($tour->duration_type === 'days'
+                                    ? ($tour->duration == 1
+                                        ? 'day'
+                                        : 'days')
+                                    : ($tour->duration == 1
+                                        ? 'hour'
+                                        : 'hours'));
+                            if ($tour->duration_type === 'days' && $tour->duration > 1) {
+                                $nights = $tour->duration - 1;
+                                $durationText =
+                                    $tour->duration . ' days ' . $nights . ' ' . ($nights == 1 ? 'night' : 'nights');
+                            }
+                        @endphp
+                        <article class="relative overflow-hidden transition duration-200">
+                            <div class="bg-white border rounded-2xl border-light-grey">
+                                <div class="relative overflow-hidden rounded-t-2xl">
+                                    <a href="#">
+                                        <img src="{{ $coverImage }}" alt="{{ $tour->title }}"
+                                            class="object-cover w-full h-auto transition duration-300 hover:scale-105">
+                                        @if ($isOnSale)
+                                            <span
+                                                class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
+                                                Sale</span>
+                                        @endif
+                                    </a>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
+                                        <span class="text-sm text-dark-grey">{{ $location ?: 'Location' }}</span>
+                                    </div>
+
+                                    <h4
+                                        class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
+                                        <a href="#">{{ $tour->title }}</a>
+                                    </h4>
+
+                                    <div class="flex items-center mb-2 text-orange-yellow">
+                                        <span class="iconify" data-icon="mdi:star"></span>
+                                        <span class="iconify" data-icon="mdi:star">
+                                        </span>
+                                        <span class="iconify" data-icon="mdi:star"></span>
+                                        <span class="iconify" data-icon="mdi:star"></span>
+                                        <span class="iconify" data-icon="mdi:star"></span>
+                                    </div>
+
+                                    @if ($tour->category)
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <a href="#"
+                                                class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag transition hover:bg-green-zomp hover:text-white">
+                                                {{ $tour->category->name }}
+                                            </a>
+                                            @if ($tour->show_on_homepage)
+                                                <a href="#"
+                                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">
+                                                    Featured
+                                                </a>
+                                            @endif
+                                        </div>
+                                    @endif
+
+                                    <div class="h-px my-4 border-t border-light-grey"></div>
+
+                                    @if ($oldPrice)
+                                        <div class="mb-1 text-sm font-bold line-through text-grey">
+                                            ${{ number_format($oldPrice, 2) }}</div>
+                                    @endif
+
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="flex items-center gap-1">
+                                            <span>From</span>
+                                            <span
+                                                class="text-base font-bold text-green-zomp">${{ number_format($currentPrice, 2) }}</span>
+                                        </span>
+                                        <span class="flex items-center gap-1">
+                                            <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
+                                                data-height="15"></span>
+                                            <div class="text-sm text-dark-grey">{{ $durationText }}</div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="col-span-full text-center py-10">
+                            <p class="text-dark-grey">No tours available at the moment.</p>
                         </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
-                                <span class="text-sm text-dark-grey">Theme park, Singapore</span>
-                            </div>
-
-                            <h4
-                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                <a href="tours-details-style-01.html">Universal Studios Singapore Special Ticket</a>
-                            </h4>
-
-                            <div class="flex items-center mb-2 text-orange-yellow">
-                                <span class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="iconify" data-icon="mdi:star"></span><span
-                                    class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="ml-2 text-dark-grey">(200 reviews)</span>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2"><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">Featured</a><a
-                                    href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-best-seller transition hover:bg-green-zomp hover:text-white">Best
-                                    seller</a></div>
-
-                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-                            <div class="mb-1 text-sm font-bold line-through text-grey">$80.50</div>
-
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="flex items-center gap-1">
-                                    <span>From</span>
-                                    <span class="text-base font-bold text-green-zomp">$60.50</span>
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                        data-height="15"></span>
-                                    <div class="text-sm text-dark-grey">3 days 2 nights</div>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="relative overflow-hidden transition duration-200">
-                    <div class="bg-white border rounded-2xl border-light-grey">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <a href="tours-details-style-01.html">
-                                <img src="{{ asset('assets/frontend/assets/images/blogs/02.png') }}"
-                                    alt="Borobudur Sunrise Experience with Local Guide"
-                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-                                <span
-                                    class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
-                                    Sale</span>
-                            </a>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
-                                <span class="text-sm text-dark-grey">Cultural tour, Indonesia</span>
-                            </div>
-
-                            <h4
-                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                <a href="tours-details-style-01.html">Borobudur Sunrise Experience with Local Guide</a>
-                            </h4>
-
-                            <div class="flex items-center mb-2 text-orange-yellow">
-                                <span class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="iconify" data-icon="mdi:star"></span><span
-                                    class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star-half-full"></span><span class="ml-2 text-dark-grey">(145
-                                    reviews)</span>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2"><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">Featured</a>
-                            </div>
-
-                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-                            <div class="mb-1 text-sm font-bold line-through text-grey">$59.00</div>
-
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="flex items-center gap-1">
-                                    <span>From</span>
-                                    <span class="text-base font-bold text-green-zomp">$45.00</span>
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                        data-height="15"></span>
-                                    <div class="text-sm text-dark-grey">1 day</div>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="relative overflow-hidden transition duration-200">
-                    <div class="bg-white border rounded-2xl border-light-grey">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <a href="tours-details-style-01.html">
-                                <img src="{{ asset('assets/frontend/assets/images/blogs/03.png') }}"
-                                    alt="Phi Phi Island Speedboat Tour"
-                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-
-                            </a>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
-                                <span class="text-sm text-dark-grey">Island, Thailand</span>
-                            </div>
-
-                            <h4
-                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                <a href="tours-details-style-01.html">Phi Phi Island Speedboat Tour</a>
-                            </h4>
-
-                            <div class="flex items-center mb-2 text-orange-yellow">
-                                <span class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="iconify" data-icon="mdi:star"></span><span
-                                    class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star-half-full"></span><span class="ml-2 text-dark-grey">(320
-                                    reviews)</span>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2"><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">Featured</a>
-                            </div>
-
-                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="flex items-center gap-1">
-                                    <span>From</span>
-                                    <span class="text-base font-bold text-green-zomp">$55.00</span>
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                        data-height="15"></span>
-                                    <div class="text-sm text-dark-grey">1 day</div>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="relative overflow-hidden transition duration-200">
-                    <div class="bg-white border rounded-2xl border-light-grey">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <a href="tours-details-style-01.html">
-                                <img src="{{ asset('assets/frontend/assets/images/blogs/04.png') }}"
-                                    alt="Kuala Lumpur City &amp; Batu Caves Full Day Tour"
-                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-                                <span
-                                    class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
-                                    Sale</span>
-                            </a>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
-                                <span class="text-sm text-dark-grey">City tour, Malaysia</span>
-                            </div>
-
-                            <h4
-                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                <a href="tours-details-style-01.html">Kuala Lumpur City &amp; Batu Caves Full Day
-                                    Tour</a>
-                            </h4>
-
-                            <div class="flex items-center mb-2 text-orange-yellow">
-                                <span class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="iconify" data-icon="mdi:star"></span><span
-                                    class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star-half-full"></span><span class="ml-2 text-dark-grey">(89
-                                    reviews)</span>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2"><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-cultural transition hover:bg-green-zomp hover:text-white">Cultural</a><a
-                                    href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-popular transition hover:bg-green-zomp hover:text-white">Popular</a>
-                            </div>
-
-                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-                            <div class="mb-1 text-sm font-bold line-through text-grey">$42.00</div>
-
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="flex items-center gap-1">
-                                    <span>From</span>
-                                    <span class="text-base font-bold text-green-zomp">$35.00</span>
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                        data-height="15"></span>
-                                    <div class="text-sm text-dark-grey">1 day</div>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="relative overflow-hidden transition duration-200">
-                    <div class="bg-white border rounded-2xl border-light-grey">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <a href="tours-details-style-01.html">
-                                <img src="{{ asset('assets/frontend/assets/images/blogs/05.png') }}"
-                                    alt="El Nido Island Hopping Adventure"
-                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-
-                            </a>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
-                                <span class="text-sm text-dark-grey">Beach, Philippines</span>
-                            </div>
-
-                            <h4
-                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                <a href="tours-details-style-01.html">El Nido Island Hopping Adventure</a>
-                            </h4>
-
-                            <div class="flex items-center mb-2 text-orange-yellow">
-                                <span class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="iconify" data-icon="mdi:star"></span><span
-                                    class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star-half-full"></span><span class="ml-2 text-dark-grey">(276
-                                    reviews)</span>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2"><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">Featured</a><a
-                                    href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-best-seller transition hover:bg-green-zomp hover:text-white">Best
-                                    seller</a><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-adventure transition hover:bg-green-zomp hover:text-white">Adventure</a>
-                            </div>
-
-                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="flex items-center gap-1">
-                                    <span>From</span>
-                                    <span class="text-base font-bold text-green-zomp">$68.00</span>
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                        data-height="15"></span>
-                                    <div class="text-sm text-dark-grey">2 days 1 night</div>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="relative overflow-hidden transition duration-200">
-                    <div class="bg-white border rounded-2xl border-light-grey">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <a href="tours-details-style-01.html">
-                                <img src="{{ asset('assets/frontend/assets/images/blogs/06.png') }}"
-                                    alt="Sapa Trekking &amp; Homestay Experience"
-                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-                                <span
-                                    class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
-                                    Sale</span>
-                            </a>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
-                                <span class="text-sm text-dark-grey">Mountain, Vietnam</span>
-                            </div>
-
-                            <h4
-                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                <a href="tours-details-style-01.html">Sapa Trekking &amp; Homestay Experience</a>
-                            </h4>
-
-                            <div class="flex items-center mb-2 text-orange-yellow">
-                                <span class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="iconify" data-icon="mdi:star"></span><span
-                                    class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star-half-full"></span><span class="ml-2 text-dark-grey">(152
-                                    reviews)</span>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2"><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-adventure transition hover:bg-green-zomp hover:text-white">Adventure</a><a
-                                    href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-cultural transition hover:bg-green-zomp hover:text-white">Cultural</a>
-                            </div>
-
-                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-                            <div class="mb-1 text-sm font-bold line-through text-grey">$95.00</div>
-
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="flex items-center gap-1">
-                                    <span>From</span>
-                                    <span class="text-base font-bold text-green-zomp">$85.00</span>
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                        data-height="15"></span>
-                                    <div class="text-sm text-dark-grey">3 days 2 nights</div>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="relative overflow-hidden transition duration-200">
-                    <div class="bg-white border rounded-2xl border-light-grey">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <a href="tours-details-style-01.html">
-                                <img src="{{ asset('assets/frontend/assets/images/blogs/07.png') }}"
-                                    alt="Tokyo Highlights &amp; Mt. Fuji Day Trip"
-                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-
-                            </a>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
-                                <span class="text-sm text-dark-grey">City, Japan</span>
-                            </div>
-
-                            <h4
-                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                <a href="tours-details-style-01.html">Tokyo Highlights &amp; Mt. Fuji Day Trip</a>
-                            </h4>
-
-                            <div class="flex items-center mb-2 text-orange-yellow">
-                                <span class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="iconify" data-icon="mdi:star"></span><span
-                                    class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star-half-full"></span><span class="ml-2 text-dark-grey">(412
-                                    reviews)</span>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2"><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">Featured</a><a
-                                    href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-popular transition hover:bg-green-zomp hover:text-white">Popular</a>
-                            </div>
-
-                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="flex items-center gap-1">
-                                    <span>From</span>
-                                    <span class="text-base font-bold text-green-zomp">$120.00</span>
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                        data-height="15"></span>
-                                    <div class="text-sm text-dark-grey">1 day</div>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-                <article class="relative overflow-hidden transition duration-200">
-                    <div class="bg-white border rounded-2xl border-light-grey">
-                        <div class="relative overflow-hidden rounded-t-2xl">
-                            <a href="tours-details-style-01.html">
-                                <img src="{{ asset('assets/frontend/assets/images/blogs/08.png') }}"
-                                    alt="Maldives Resort &amp; Snorkeling Package"
-                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-                                <span
-                                    class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
-                                    Sale</span>
-                            </a>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
-                                <span class="text-sm text-dark-grey">Beach, Maldives</span>
-                            </div>
-
-                            <h4
-                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                <a href="tours-details-style-01.html">Maldives Resort &amp; Snorkeling Package</a>
-                            </h4>
-
-                            <div class="flex items-center mb-2 text-orange-yellow">
-                                <span class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star"></span><span class="iconify" data-icon="mdi:star"></span><span
-                                    class="iconify" data-icon="mdi:star"></span><span class="iconify"
-                                    data-icon="mdi:star-half-full"></span><span class="ml-2 text-dark-grey">(95
-                                    reviews)</span>
-                            </div>
-
-                            <div class="flex flex-wrap items-center gap-2"><a href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-luxury transition hover:bg-green-zomp hover:text-white">Luxury</a><a
-                                    href="tours.html"
-                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-best-seller transition hover:bg-green-zomp hover:text-white">Best
-                                    seller</a></div>
-
-                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-                            <div class="mb-1 text-sm font-bold line-through text-grey">$420.00</div>
-
-                            <div class="flex items-center justify-between gap-2">
-                                <span class="flex items-center gap-1">
-                                    <span>From</span>
-                                    <span class="text-base font-bold text-green-zomp">$350.00</span>
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                        data-height="15"></span>
-                                    <div class="text-sm text-dark-grey">5 days 4 nights</div>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </article>
+                    @endforelse
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
+
     {{-- Popular activities Section --}}
 
     {{-- Subscribe Section --}}
@@ -733,11 +432,11 @@
     {{-- Subscribe Section --}}
 
     {{-- Gallery Section --}}
-    @if(isset($homeGalleries) && $homeGalleries->count())
+    @if (isset($homeGalleries) && $homeGalleries->count())
         <section class="mb-[60px] md:mb-24">
             <div class="swiper gallerySwiper">
                 <div class="swiper-wrapper">
-                    @foreach($homeGalleries as $gallery)
+                    @foreach ($homeGalleries as $gallery)
                         @php
                             $cover = $gallery->cover_image
                                 ? asset('uploads/galleries/' . $gallery->cover_image)
@@ -776,7 +475,9 @@
                                 $blogCover = $blog->cover_image
                                     ? asset('uploads/blogs/' . $blog->cover_image)
                                     : asset('assets/frontend/assets/images/blogs/01.png');
-                                $blogDate = $blog->published_at ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y') : '';
+                                $blogDate = $blog->published_at
+                                    ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y')
+                                    : '';
                             @endphp
                             <div class="swiper-slide">
                                 <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
@@ -787,14 +488,14 @@
                                     <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
                                         <h4
                                             class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
-                                            <a href="{{ url('blogs/' . $blog->slug) }}" class="block">
+                                            <a href="{{ route('blogs.show', $blog->slug) }}" class="block">
                                                 {{ $blog->title }}
                                             </a>
                                         </h4>
-                                        @if($blogDate)
+                                        @if ($blogDate)
                                             <span class="block text-dark-grey text-sm mb-2">{{ $blogDate }}</span>
                                         @endif
-                                        @if($blog->short_description)
+                                        @if ($blog->short_description)
                                             <p class="text-dark-grey text-sm line-clamp-2">
                                                 {{ \Illuminate\Support\Str::limit(strip_tags($blog->short_description), 140) }}
                                             </p>

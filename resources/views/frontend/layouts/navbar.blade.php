@@ -15,7 +15,7 @@
             <ul
                 class="flex flex-wrap lg:flex-nowrap items-center justify-end gap-4 lg:gap-8 xl:gap-10 text-sm sm:text-base font-semibold text-black">
                 <li class="nav-father">
-                    <a href="#"
+                    <a href="{{ route('home') }}"
                         class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
                         Home
                     </a>
@@ -45,15 +45,21 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('blogs.index') }}"
                         class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
                         Blog
                     </a>
                 </li>
                 <li>
-                    <a href="#"
+                    <a href="{{ route('about-us') }}"
                         class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
                         About Us
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('contact-us') }}"
+                        class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
+                        Contact Us
                     </a>
                 </li>
                 {{-- <li class="relative group nav-father">

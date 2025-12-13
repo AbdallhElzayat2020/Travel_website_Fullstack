@@ -52,7 +52,14 @@ class HomeController extends Controller
             ->take(9)
             ->get();
 
-        return view('frontend.pages.home', compact('sliders', 'offerTours', 'blogs', 'homeGalleries'));
+        $activeTours = Tour::active()
+            ->with(['category', 'subCategory', 'country', 'state'])
+            ->orderBy('sort_order')
+            ->latest()
+            ->take(8)
+            ->get();
+
+        return view('frontend.pages.home', compact('sliders', 'offerTours', 'blogs', 'homeGalleries', 'activeTours'));
     }
 
     /**

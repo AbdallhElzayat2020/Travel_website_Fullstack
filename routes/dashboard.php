@@ -20,6 +20,7 @@ use App\Http\Controllers\Dashboard\{
     BlogController,
     TourVariantController,
     GalleryController,
+    PageController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -80,6 +81,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     // Tour Variants Routes
     Route::resource('tour-variants', TourVariantController::class);
+
+    // Pages SEO Routes
+    Route::get('pages', [PageController::class, 'index'])->name('pages.index');
+    Route::get('pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
+    Route::put('pages/{page}', [PageController::class, 'update'])->name('pages.update');
 });
 
 

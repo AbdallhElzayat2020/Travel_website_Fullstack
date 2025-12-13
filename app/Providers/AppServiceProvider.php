@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useTailwind();
         Paginator::useBootstrapFive();
         // Share unread contacts count with all views
         View::composer('dashboard.layouts.sidebar', function ($view) {

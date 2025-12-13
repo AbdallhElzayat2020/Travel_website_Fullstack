@@ -24,6 +24,18 @@
     <!-- Daterangepicker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <title>@yield('title')</title>
+    <title>@hasSection('meta_title')@yield('meta_title')@else Travel Website @endif</title>
+    @hasSection('meta_title')
+        <meta name="title" content="@yield('meta_title')">
+    @endif
+    @hasSection('meta_description')
+        <meta name="description" content="@yield('meta_description')">
+    @endif
+    @hasSection('meta_author')
+        <meta name="author" content="@yield('meta_author')">
+    @endif
+    @hasSection('meta_keywords')
+        <meta name="keywords" content="@yield('meta_keywords')">
+    @endif
     @stack('css')
 </head>

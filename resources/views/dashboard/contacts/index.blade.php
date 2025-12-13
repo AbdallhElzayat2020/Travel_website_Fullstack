@@ -24,8 +24,6 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Subject</th>
-                            <th>Category</th>
-                            <th>Sub Category</th>
                             <th>Status</th>
                             <th>Date</th>
                             <th>Actions</th>
@@ -33,7 +31,8 @@
                     </thead>
                     <tbody>
                         @forelse($contacts as $contact)
-                            <tr class="{{ $contact->is_read ? '' : 'table-warning' }}" style="{{ $contact->is_read ? '' : 'background-color: #fff3cd !important;' }}">
+                            <tr class="{{ $contact->is_read ? '' : 'table-warning' }}"
+                                style="{{ $contact->is_read ? '' : 'background-color: #fff3cd !important;' }}">
                                 <td>{{ $contact->id }}</td>
                                 <td>
                                     <strong>{{ $contact->name }}</strong>
@@ -44,20 +43,6 @@
                                 <td>{{ $contact->email }}</td>
                                 <td>{{ $contact->phone ?? 'N/A' }}</td>
                                 <td>{{ $contact->subject ?? 'N/A' }}</td>
-                                <td>
-                                    @if($contact->category)
-                                        <span class="badge bg-label-info">{{ $contact->category->name }}</span>
-                                    @else
-                                        <span class="text-muted">N/A</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($contact->subCategory)
-                                        <span class="badge bg-label-secondary">{{ $contact->subCategory->name }}</span>
-                                    @else
-                                        <span class="text-muted">N/A</span>
-                                    @endif
-                                </td>
                                 <td>
                                     @if($contact->is_read)
                                         <span class="badge bg-label-success">Read</span>
@@ -113,4 +98,3 @@
         </div>
     </div>
 @endsection
-

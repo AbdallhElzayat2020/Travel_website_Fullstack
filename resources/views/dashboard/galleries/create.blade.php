@@ -35,9 +35,9 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea name="description" rows="3"
-                        class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control summernote @error('description') is-invalid @enderror" id="description"
+                        name="description">{{ old('description') }}</textarea>
                     @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -96,3 +96,84 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        // Initialize Summernote
+        console.log('=== GALLERY CREATE PAGE ===');
+        console.log('jQuery available:', typeof $ !== 'undefined');
+        console.log('Summernote available:', typeof $.fn.summernote !== 'undefined');
+
+        $(document).ready(function () {
+            if (typeof $.fn.summernote !== 'undefined') {
+                console.log('Initializing Summernote...');
+
+                // Initialize Summernote for description
+                $('#description').summernote({
+                    height: 300,
+                    tooltip: false,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+                    ],
+                    placeholder: 'Write your content here...',
+                    tabsize: 2,
+                    focus: false,
+                    dialogsInBody: true,
+                    popover: {
+                        image: [
+                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                            ['remove', ['removeMedia']]
+                        ],
+                        link: [
+                            ['link', ['linkDialogShow', 'unlink']]
+                        ],
+                        table: [
+                            ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                            ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+                        ],
+                        air: [
+                            ['color', ['color']],
+                            ['font', ['bold', 'underline', 'clear']]
+                        ]
+                    }
+                });
+
+                // Fix Summernote dropdowns
+                $(document).on('click', '.note-btn-group .dropdown-toggle', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var $this = $(this);
+                    var $group = $this.closest('.note-btn-group');
+                    var $menu = $group.find('.note-dropdown-menu');
+                    // Close other dropdowns
+                    $('.note-btn-group').not($group).removeClass('open');
+                    $('.note-dropdown-menu').not($menu).removeClass('open').hide();
+                    // Toggle current dropdown
+                    $group.toggleClass('open');
+                    $menu.toggleClass('open').toggle();
+                });
+
+                // Close dropdowns when clicking outside
+                $(document).on('click', function (e) {
+                    if (!$(e.target).closest('.note-btn-group').length) {
+                        $('.note-btn-group').removeClass('open');
+                        $('.note-dropdown-menu').removeClass('open').hide();
+                    }
+                });
+
+                console.log('Summernote initialized successfully!');
+            } else {
+                console.error('Summernote is not available!');
+            }
+        });
+    </script>
+@endpush
