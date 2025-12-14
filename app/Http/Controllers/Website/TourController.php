@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Http\Controllers\Website;
+
+use App\Http\Controllers\Controller;
+use App\Models\Tour;
+use App\Models\Faq;
+use App\Models\Testimonial;
+
+class TourController extends Controller
+{
+    public function show(string $slug)
+    {
+        $tour = Tour::active()
+            ->with([
+                'category',
+                'subCategory',
+                'state',
+                'tourDays' => function ($query) {
+                    $query->orderBy('day_number')->orderBy('sort_order');
+                },
+                'tourImages' => function ($query) {
+                    $query->orderBy('sort_order');
+                },
+                'variants' => function ($query) {
+                    $query->where('status', 'active')->orderBy('sort_order');
+                },
+                'seasonalPrices' => function ($query) {
+                    $query->where('status', 'active')
+                        ->with(['priceItems' => function ($q) {
+                            $q->orderBy('sort_order');
+                        }])
+                        ->orderBy('sort_order');
+                },
+            ])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        // Get related tours (same category or recent)
+        $relatedTours = Tour::active()
+            ->where('id', '!=', $tour->id)
+            ->where(function ($query) use ($tour) {
+                $query->where('category_id', $tour->category_id)
+                    ->orWhere('country_id', $tour->country_id);
+            })
+            ->orderBy('sort_order')
+            ->latest()
+            ->take(8)
+            ->get();
+
+        // Get FAQs for the tour page
+        $faqs = Faq::where('status', 'active')
+            ->orderBy('sort_order')
+            ->orderBy('created_at', 'desc')
+            ->take(3)
+            ->get();
+
+        // Get testimonials/reviews
+        $testimonials = Testimonial::active()
+            ->orderBy('sort_order')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Calculate average rating
+        $averageRating = $testimonials->count() > 0
+            ? round($testimonials->avg('rating'), 1)
+            : 0;
+
+        return view('frontend.pages.tour-details', compact('tour', 'relatedTours', 'faqs', 'testimonials', 'averageRating'));
+    }
+}

@@ -49,7 +49,7 @@ class HomeController extends Controller
             ->orderBy('month', 'asc')
             ->get();
 
-        return view('dashboard.pages.index', compact(
+        return view('dashboard.home.index', compact(
             'totalCategories',
             'activeCategories',
             'totalSubCategories',

@@ -248,7 +248,10 @@
                             <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
                                 <div>
                                     <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
-                                        {!! $tour->title !!}
+                                        <a href="{{ route('tours.show', $tour->slug) }}"
+                                            class="hover:text-green-zomp transition duration-200">
+                                            {!! $tour->title !!}
+                                        </a>
                                     </h2>
                                     @if ($tour->short_description)
                                         <p class="text-white text-base mb-[40px] line-clamp-3">
@@ -267,6 +270,10 @@
                                             ${{ number_format($tour->price_after_discount, 2) }}
                                         </span>
                                     @endif
+                                    <a href="{{ route('tours.show', $tour->slug) }}"
+                                        class="ml-auto border border-white text-sm text-white font-semibold py-2 px-4 rounded-[200px] transition duration-200 hover:bg-green-zomp hover:border-green-zomp">
+                                        View Details
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -342,7 +349,7 @@
 
                                     <h4
                                         class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                        <a href="#">{{ $tour->title }}</a>
+                                        <a href="{{ route('tours.show', $tour->slug) }}">{{ $tour->title }}</a>
                                     </h4>
 
                                     <div class="flex items-center mb-2 text-orange-yellow">
@@ -518,7 +525,7 @@
             </div>
 
             <div class="flex justify-center mt-14 sm:mt-10">
-                <a href="blogs.html"
+                <a href="{{ route('blogs.index') }}"
                     class="text-green-zomp py-4 px-6 rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp capitalize">See
                     all stories</a>
             </div>

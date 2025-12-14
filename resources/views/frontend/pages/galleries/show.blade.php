@@ -23,7 +23,7 @@
 
             @if($gallery->description)
                 <div class="prose max-w-none text-dark-grey">
-                    {!! nl2br(e($gallery->description)) !!}
+                    {!! $gallery->description!!}
                 </div>
             @endif
         </div>
