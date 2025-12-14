@@ -14,7 +14,9 @@
                             <h3 class="mb-0">{{ $totalCategories }}</h3>
                         </div>
                         <div class="avatar avatar-lg bg-label-primary">
-                            <i class="ti ti-folder ti-md"></i>
+                            <span class="avatar-initial rounded bg-label-primary">
+                                <i class="ti ti-folder ti-md"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -30,7 +32,9 @@
                             <h3 class="mb-0">{{ $activeCategories }}</h3>
                         </div>
                         <div class="avatar avatar-lg bg-label-success">
-                            <i class="ti ti-check ti-md"></i>
+                            <span class="avatar-initial rounded bg-label-success">
+                                <i class="ti ti-check ti-md"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -46,7 +50,9 @@
                             <h3 class="mb-0">{{ $totalSubCategories }}</h3>
                         </div>
                         <div class="avatar avatar-lg bg-label-info">
-                            <i class="ti ti-folder-plus ti-md"></i>
+                            <span class="avatar-initial rounded bg-label-info">
+                                <i class="ti ti-folder-plus ti-md"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -62,7 +68,9 @@
                             <h3 class="mb-0">{{ $totalUsers }}</h3>
                         </div>
                         <div class="avatar avatar-lg bg-label-warning">
-                            <i class="ti ti-users ti-md"></i>
+                            <span class="avatar-initial rounded bg-label-warning">
+                                <i class="ti ti-users ti-md"></i>
+                            </span>
                         </div>
                     </div>
                 </div>

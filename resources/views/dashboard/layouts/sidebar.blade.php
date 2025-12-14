@@ -175,7 +175,7 @@
         @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.bookings.*'], 'active') }}">
                 <a href="{{ route('admin.bookings.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-calendar-check"></i>
+                    <i class="menu-icon tf-icons ti ti-calendar-event"></i>
                     <div data-i18n="Booked Tours">Booked Tours</div>
                 </a>
             </li>
