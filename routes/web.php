@@ -8,6 +8,7 @@ use App\Http\Controllers\Website\{
     BlogController,
     ContactController,
     TourController,
+    BookingController,
 };
 
 
@@ -34,6 +35,8 @@ Route::get('/contact-us', [ContactController::class, 'index'])
     ->name('contact-us');
 Route::post('/contact-us', [ContactController::class, 'store'])
     ->name('contact-us.store');
+Route::post('/bookings', [BookingController::class, 'store'])
+    ->name('bookings.store');
 
 
 

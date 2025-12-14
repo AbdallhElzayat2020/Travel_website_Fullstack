@@ -41,5 +41,47 @@
     @hasSection('meta_keywords')
         <meta name="keywords" content="@yield('meta_keywords')">
     @endif
+    <style>
+        #announcement-bar {
+            position: relative;
+            z-index: 50;
+        }
+
+        .announcement-scroll {
+            display: inline-block;
+            animation: scroll-horizontal 30s linear infinite;
+        }
+
+        @keyframes scroll-horizontal {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .announcement-scroll:hover {
+            animation-play-state: paused;
+        }
+
+        /* Accommodation row hover styles */
+        .accommodation-row:hover {
+            background-color: #00AF87 !important;
+        }
+
+        .accommodation-row:hover .accommodation-name,
+        .accommodation-row:hover .accommodation-price,
+        .accommodation-row:hover .accommodation-desc {
+            color: white !important;
+        }
+
+        .accommodation-row.bg-green-zomp .accommodation-name,
+        .accommodation-row.bg-green-zomp .accommodation-price,
+        .accommodation-row.bg-green-zomp .accommodation-desc {
+            color: white !important;
+        }
+    </style>
     @stack('css')
 </head>

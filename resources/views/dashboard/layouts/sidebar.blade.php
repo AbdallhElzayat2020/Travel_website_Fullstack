@@ -164,6 +164,24 @@
         @endif
 
         @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.announcements.*'], 'active') }}">
+                <a href="{{ route('admin.announcements.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-speakerphone"></i>
+                    <div data-i18n="TopNav">TopNav</div>
+                </a>
+            </li>
+        @endif
+
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.bookings.*'], 'active') }}">
+                <a href="{{ route('admin.bookings.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-calendar-check"></i>
+                    <div data-i18n="Booked Tours">Booked Tours</div>
+                </a>
+            </li>
+        @endif
+
+        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.galleries.*'], 'active') }}">
                 <a href="{{ route('admin.galleries.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-photo"></i>

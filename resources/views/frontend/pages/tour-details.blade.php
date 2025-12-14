@@ -289,20 +289,20 @@
                                                             </thead>
                                                             <tbody>
                                                                 @foreach($seasonalPrice->priceItems as $item)
-                                                                    <tr class="hover:bg-green-zomp hover:text-white transition duration-200 cursor-pointer accommodation-row"
+                                                                    <tr class="accommodation-row transition duration-200 cursor-pointer hover:bg-green-zomp group"
                                                                         data-item-id="{{ $item->id }}" data-price="{{ $item->price_value }}"
                                                                         data-item-name="{{ $item->price_name }}"
                                                                         onclick="selectAccommodation({{ $item->id }}, {{ $item->price_value }}, '{{ $item->price_name }} - {{ $seasonalPrice->season_name }}')">
                                                                         <td
-                                                                            class="border border-light-grey px-4 py-3 text-dark-grey font-medium accommodation-name">
+                                                                            class="border border-light-grey px-4 py-3 text-dark-grey font-medium accommodation-name group-hover:text-white">
                                                                             {{ $item->price_name }}
                                                                         </td>
                                                                         <td
-                                                                            class="border border-light-grey px-4 py-3 text-green-zomp font-bold accommodation-price">
+                                                                            class="border border-light-grey px-4 py-3 text-green-zomp font-bold accommodation-price group-hover:text-white">
                                                                             ${{ number_format($item->price_value, 2) }}</td>
                                                                         @if($item->description)
                                                                             <td
-                                                                                class="border border-light-grey px-4 py-3 text-dark-grey accommodation-desc">
+                                                                                class="border border-light-grey px-4 py-3 text-dark-grey accommodation-desc group-hover:text-white">
                                                                                 {{ $item->description }}
                                                                             </td>
                                                                         @endif
@@ -318,26 +318,6 @@
                                 </div>
                             @endif
 
-                            @if($faqs->count() > 0)
-                                <div id="faqs" class="border border-white-grey rounded-2xl p-6 mt-6 bg-white mb-6">
-                                    <h3 class="text-black text-2xl font-semibold leading-[1.1] mb-6">Frequently Asked
-                                        Questions</h3>
-                                    <div class="accordion-style">
-                                        @foreach($faqs as $index => $faq)
-                                            <div
-                                                class="{{ $index === 0 ? 'pb-6' : 'py-6' }} border-b accordion-items border-light-grey last:border-none">
-                                                <h4
-                                                    class="accordion-title text-black text-xl font-bold [&.active]:text-green-zomp [&.active]:mb-3 flex items-center gap-4 justify-between cursor-pointer">
-                                                    {{ $faq->question }}
-                                                    <span class="text-black transition-all duration-200 iconify"
-                                                        data-icon="meteor-icons:angle-down" data-width="20" data-height="20"></span>
-                                                </h4>
-                                                <p class="accordion-brief text-dark-grey">{{ $faq->answer }}</p>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endif
                             <div id="reviews" class="border border-white-grey rounded-2xl p-6 md:p-10 mt-6 bg-white">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
                                     <h3 class="text-black text-2xl md:text-3xl font-bold leading-[1.1]">Reviews</h3>
@@ -507,96 +487,137 @@
                             </h4>
                             <div class="col-span-8">
                                 @php
+                                    $hasSeasonalPrices = $tour->seasonalPrices->count() > 0;
                                     $basePrice = $tour->has_offer && $tour->isOfferActive()
                                         ? ($tour->price_after_discount ?? $tour->price)
                                         : $tour->price;
-                                    $adultPrice = $basePrice;
-                                    $childrenPrice = $basePrice * 0.8; // 80% of adult price
                                 @endphp
                                 <div class="booking-form-wrapper">
-                                    <p class="text-black font-semibold mb-3">Select Date and Travelers</p>
-                                    <form action="" class="text-dark-grey" id="booking-form">
+                                    <p class="text-black font-semibold mb-3">Book This Tour</p>
+
+                                    @if(session('success'))
+                                        <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                                            <i class="fas fa-check-circle me-2"></i>
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+
+                                    @if($errors->any())
+                                        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                                            <strong class="block mb-2">Please fix the following errors:</strong>
+                                            <ul class="list-disc list-inside">
+                                                @foreach($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+
+                                    <form action="{{ route('bookings.store') }}" method="POST" class="text-dark-grey"
+                                        id="booking-form">
+                                        @csrf
+                                        <input type="hidden" name="tour_id" value="{{ $tour->id }}">
                                         <div class="mb-5">
                                             <input type="text" id="first_name" name="first_name" placeholder="First name"
-                                                class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none">
+                                                value="{{ old('first_name') }}"
+                                                class="w-full border {{ $errors->has('first_name') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
+                                            @error('first_name')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="mb-5">
                                             <input type="text" id="last_name" name="last_name" placeholder="Last name"
-                                                class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none">
+                                                value="{{ old('last_name') }}"
+                                                class="w-full border {{ $errors->has('last_name') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
+                                            @error('last_name')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="mb-5">
                                             <input type="email" id="email" name="email" placeholder="Email"
-                                                class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none">
+                                                value="{{ old('email') }}"
+                                                class="w-full border {{ $errors->has('email') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
+                                            @error('email')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                         <div class="mb-5">
-                                            <input type="number" id="phone" name="phone" placeholder="Phone"
-                                                class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none">
+                                            <input type="tel" id="phone" name="phone" placeholder="Phone"
+                                                value="{{ old('phone') }}"
+                                                class="w-full border {{ $errors->has('phone') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
+                                            @error('phone')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
                                         </div>
-                                        <div class="mb-5">
-                                            <input id="check_in" name="check_in" placeholder="Date check in"
-                                                class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none cursor-pointer">
-                                        </div>
-                                        <div class="mb-5">
-                                            <input id="check_out" name="check_out" placeholder="Date check out"
-                                                class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none cursor-pointer">
-                                        </div>
-                                        <p class="mb-5" id="total-nights">Total Night: <span id="nights-count">0</span></p>
-
-                                        @if($tour->seasonalPrices->count() > 0)
+                                        @if($hasSeasonalPrices)
                                             <div class="mb-5">
                                                 <label class="block mb-2 text-dark-grey font-semibold">Accommodation
                                                     Type</label>
                                                 <select id="accommodation_type" name="accommodation_type"
-                                                    class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none cursor-pointer">
+                                                    class="w-full border {{ $errors->has('accommodation_type_id') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none cursor-pointer">
                                                     <option value="">Select Accommodation Type</option>
                                                     @foreach($tour->seasonalPrices as $seasonalPrice)
                                                         @foreach($seasonalPrice->priceItems as $item)
                                                             <option value="{{ $item->id }}" data-price="{{ $item->price_value }}"
-                                                                data-season="{{ $seasonalPrice->season_name }}">
+                                                                data-season="{{ $seasonalPrice->season_name }}" {{ old('accommodation_type_id') == $item->id ? 'selected' : '' }}>
                                                                 {{ $item->price_name }} - {{ $seasonalPrice->season_name }}
                                                                 (${{ number_format($item->price_value, 2) }})
                                                             </option>
                                                         @endforeach
                                                     @endforeach
                                                 </select>
+                                                @error('accommodation_type_id')
+                                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                                @enderror
                                             </div>
                                         @endif
 
                                         @if($tour->variants->count() > 0)
                                             <p class="mb-2.5 font-semibold">Extra Options</p>
+                                            @php
+                                                $oldVariants = old('selected_variants', []);
+                                                // Convert to array if it's a JSON string
+                                                if (is_string($oldVariants)) {
+                                                    $oldVariants = json_decode($oldVariants, true) ?? [];
+                                                }
+                                                // Ensure it's an array
+                                                if (!is_array($oldVariants)) {
+                                                    $oldVariants = [];
+                                                }
+                                            @endphp
                                             @foreach($tour->variants as $variant)
                                                 <div class="mb-2.5">
                                                     <label class="flex items-center gap-2 text-dark-grey cursor-pointer">
                                                         <input type="checkbox" class="variant-checkbox w-4 h-4"
                                                             data-variant-id="{{ $variant->id }}"
-                                                            data-price="{{ $variant->additional_price }}"
-                                                            value="{{ $variant->id }}">
+                                                            data-price="{{ $variant->additional_price }}" value="{{ $variant->id }}"
+                                                            {{ in_array($variant->id, $oldVariants) ? 'checked' : '' }}>
                                                         <span>{{ $variant->title }}
                                                             (${{ number_format($variant->additional_price, 2) }})</span>
                                                     </label>
                                                 </div>
                                             @endforeach
+                                            @error('selected_variants')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
                                         @endif
 
-                                        <div class="mb-2.5 space-y-2 mt-4">
-                                            <label class="flex items-center">
-                                                <input type="number" id="children" name="children" value="0" min="0"
-                                                    class="quantity-input w-20 border border-light-grey rounded-lg py-1 px-4 outline-none cursor-pointer"
-                                                    data-price="{{ $childrenPrice }}" data-type="children" />
-                                                <span class="ml-2">Children x $<span
-                                                        class="children-price">{{ number_format($childrenPrice, 2) }}</span></span>
-                                            </label>
-                                            <label class="flex items-center">
-                                                <input type="number" id="adult" name="adult" value="0" min="0"
-                                                    class="quantity-input w-20 border border-light-grey rounded-lg py-1 px-4 outline-none cursor-pointer"
-                                                    data-price="{{ $adultPrice }}" data-type="adult" />
-                                                <span class="ml-2">Adult x $<span
-                                                        class="adult-price">{{ number_format($adultPrice, 2) }}</span></span>
-                                            </label>
-                                        </div>
+                                        @error('total_price')
+                                            <div class="mb-4">
+                                                <p class="text-sm text-red-600">{{ $message }}</p>
+                                            </div>
+                                        @enderror
+
                                         <p class="mb-5 font-semibold text-black">Total = $<span
-                                                id="total-price">{{ number_format($basePrice, 2) }}</span></p>
-                                        <input type="hidden" id="base-tour-price" value="{{ $basePrice }}">
+                                                id="total-price">{{ number_format($hasSeasonalPrices ? $basePrice : 0, 2) }}</span>
+                                        </p>
+                                        <input type="hidden" id="base-tour-price"
+                                            value="{{ $hasSeasonalPrices ? $basePrice : 0 }}">
+                                        <input type="hidden" id="accommodation-type-id" name="accommodation_type_id"
+                                            value="{{ old('accommodation_type_id') }}">
+                                        <input type="hidden" id="selected-variants" name="selected_variants" value="">
+                                        <input type="hidden" id="total-price-input" name="total_price"
+                                            value="{{ old('total_price', $hasSeasonalPrices ? $basePrice : 0) }}">
                                         <button type="submit"
                                             class="text-white font-semibold py-4 px-6 w-full bg-green-zomp rounded-[200px] transition duration-200 hover:bg-green-zomp-hover hover:-translate-y-[5px]">Booking
                                             Now</button>
@@ -1424,19 +1445,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Get base prices
-            const baseTourPrice = parseFloat(document.getElementById('base-tour-price')?.value || '{{ $basePrice }}');
-            const adultPrice = parseFloat('{{ $adultPrice }}');
-            const childrenPrice = parseFloat('{{ $childrenPrice }}');
+            const baseTourPrice = parseFloat(document.getElementById('base-tour-price')?.value || 0);
 
             // Get elements
-            const adultInput = document.getElementById('adult');
-            const childrenInput = document.getElementById('children');
             const variantCheckboxes = document.querySelectorAll('.variant-checkbox');
             const accommodationSelect = document.getElementById('accommodation_type');
             const totalPriceElement = document.getElementById('total-price');
-            const checkInInput = document.getElementById('check_in');
-            const checkOutInput = document.getElementById('check_out');
-            const nightsCountElement = document.getElementById('nights-count');
 
             // Calculate total price
             function calculateTotal() {
@@ -1450,13 +1464,6 @@
                     total += accommodationPrice;
                 }
 
-                // Calculate adult price
-                const adultCount = parseInt(adultInput?.value) || 0;
-                total += adultCount * adultPrice;
-
-                // Calculate children price
-                const childrenCount = parseInt(childrenInput?.value) || 0;
-                total += childrenCount * childrenPrice;
 
                 // Add variant prices
                 variantCheckboxes.forEach(function (checkbox) {
@@ -1470,43 +1477,54 @@
                 if (totalPriceElement) {
                     totalPriceElement.textContent = total.toFixed(2);
                 }
-            }
 
-            // Calculate nights
-            function calculateNights() {
-                if (checkInInput && checkOutInput && checkInInput.value && checkOutInput.value) {
-                    const checkIn = new Date(checkInInput.value);
-                    const checkOut = new Date(checkOutInput.value);
-                    const diffTime = Math.abs(checkOut - checkIn);
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    if (nightsCountElement) {
-                        nightsCountElement.textContent = diffDays > 0 ? diffDays : 0;
-                    }
-                } else {
-                    if (nightsCountElement) {
-                        nightsCountElement.textContent = '0';
-                    }
+                // Update hidden inputs for form submission
+                const totalPriceInput = document.getElementById('total-price-input');
+                if (totalPriceInput) {
+                    totalPriceInput.value = total.toFixed(2);
+                }
+
+                // Update accommodation type id
+                const accommodationTypeIdInput = document.getElementById('accommodation-type-id');
+                if (accommodationTypeIdInput && accommodationSelect && accommodationSelect.value) {
+                    accommodationTypeIdInput.value = accommodationSelect.value;
+                } else if (accommodationTypeIdInput) {
+                    accommodationTypeIdInput.value = '';
+                }
+
+                // Update selected variants
+                const selectedVariantsInput = document.getElementById('selected-variants');
+                if (selectedVariantsInput) {
+                    const selectedVariants = [];
+                    variantCheckboxes.forEach(function (checkbox) {
+                        if (checkbox.checked) {
+                            selectedVariants.push(checkbox.value);
+                        }
+                    });
+                    selectedVariantsInput.value = JSON.stringify(selectedVariants);
                 }
             }
 
-            // Event listeners
-            if (adultInput) {
-                adultInput.addEventListener('input', calculateTotal);
-                adultInput.addEventListener('change', calculateTotal);
-            }
 
-            if (childrenInput) {
-                childrenInput.addEventListener('input', calculateTotal);
-                childrenInput.addEventListener('change', calculateTotal);
-            }
+            // Event listeners
 
             variantCheckboxes.forEach(function (checkbox) {
                 checkbox.addEventListener('change', calculateTotal);
             });
 
             if (accommodationSelect) {
-                accommodationSelect.addEventListener('change', calculateTotal);
+                accommodationSelect.addEventListener('change', function () {
+                    calculateTotal();
+                    // Update accommodation type id when changed
+                    const accommodationTypeIdInput = document.getElementById('accommodation-type-id');
+                    if (accommodationTypeIdInput) {
+                        accommodationTypeIdInput.value = accommodationSelect.value || '';
+                    }
+                });
             }
+
+            // Initialize on page load
+            calculateTotal();
 
             // Function to select accommodation from table
             window.selectAccommodation = function (itemId, price, displayName) {
@@ -1517,33 +1535,42 @@
 
                     // Highlight selected row
                     document.querySelectorAll('.accommodation-row').forEach(function (row) {
-                        row.classList.remove('bg-green-zomp', 'text-white');
+                        row.classList.remove('bg-green-zomp');
                         const nameCell = row.querySelector('.accommodation-name');
                         const priceCell = row.querySelector('.accommodation-price');
                         const descCell = row.querySelector('.accommodation-desc');
 
                         if (row.getAttribute('data-item-id') == itemId) {
-                            row.classList.add('bg-green-zomp', 'text-white');
-                            if (nameCell) nameCell.classList.add('text-white');
-                            if (priceCell) priceCell.classList.remove('text-green-zomp');
-                            if (priceCell) priceCell.classList.add('text-white');
-                            if (descCell) descCell.classList.add('text-white');
+                            row.classList.add('bg-green-zomp');
+                            if (nameCell) {
+                                nameCell.classList.remove('text-dark-grey');
+                                nameCell.classList.add('text-white');
+                            }
+                            if (priceCell) {
+                                priceCell.classList.remove('text-green-zomp');
+                                priceCell.classList.add('text-white');
+                            }
+                            if (descCell) {
+                                descCell.classList.remove('text-dark-grey');
+                                descCell.classList.add('text-white');
+                            }
                         } else {
-                            if (nameCell) nameCell.classList.remove('text-white');
-                            if (nameCell) nameCell.classList.add('text-dark-grey');
-                            if (priceCell) priceCell.classList.remove('text-white');
-                            if (priceCell) priceCell.classList.add('text-green-zomp');
-                            if (descCell) descCell.classList.remove('text-white');
-                            if (descCell) descCell.classList.add('text-dark-grey');
+                            if (nameCell) {
+                                nameCell.classList.remove('text-white');
+                                nameCell.classList.add('text-dark-grey');
+                            }
+                            if (priceCell) {
+                                priceCell.classList.remove('text-white');
+                                priceCell.classList.add('text-green-zomp');
+                            }
+                            if (descCell) {
+                                descCell.classList.remove('text-white');
+                                descCell.classList.add('text-dark-grey');
+                            }
                         }
                     });
                 }
             };
-
-            if (checkInInput && checkOutInput) {
-                checkInInput.addEventListener('change', calculateNights);
-                checkOutInput.addEventListener('change', calculateNights);
-            }
 
             // Initialize Reviews Swiper
             if (typeof Swiper !== 'undefined') {
@@ -1563,41 +1590,66 @@
                 });
             }
 
-            // Initialize date pickers if using daterangepicker
-            if (typeof $ !== 'undefined' && $.fn.daterangepicker) {
-                if (checkInInput) {
-                    $(checkInInput).daterangepicker({
-                        singleDatePicker: true,
-                        autoUpdateInput: false,
-                        locale: {
-                            format: 'YYYY-MM-DD',
-                            cancelLabel: 'Clear'
-                        }
-                    });
-                    $(checkInInput).on('apply.daterangepicker', function (ev, picker) {
-                        $(this).val(picker.startDate.format('YYYY-MM-DD'));
-                        calculateNights();
-                    });
-                }
-
-                if (checkOutInput) {
-                    $(checkOutInput).daterangepicker({
-                        singleDatePicker: true,
-                        autoUpdateInput: false,
-                        locale: {
-                            format: 'YYYY-MM-DD',
-                            cancelLabel: 'Clear'
-                        }
-                    });
-                    $(checkOutInput).on('apply.daterangepicker', function (ev, picker) {
-                        $(this).val(picker.startDate.format('YYYY-MM-DD'));
-                        calculateNights();
-                    });
-                }
-            }
-
             // Initialize total
             calculateTotal();
+
+            // Handle form submission
+            const bookingForm = document.getElementById('booking-form');
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', function (e) {
+                    // Ensure all hidden fields are updated before submission
+                    calculateTotal();
+
+                    // Validate required fields
+                    const firstName = document.getElementById('first_name');
+                    const lastName = document.getElementById('last_name');
+                    const email = document.getElementById('email');
+                    const phone = document.getElementById('phone');
+
+                    let isValid = true;
+
+                    if (!firstName || !firstName.value.trim()) {
+                        isValid = false;
+                        if (firstName) {
+                            firstName.classList.add('border-red-500');
+                        }
+                    }
+
+                    if (!lastName || !lastName.value.trim()) {
+                        isValid = false;
+                        if (lastName) {
+                            lastName.classList.add('border-red-500');
+                        }
+                    }
+
+                    if (!email || !email.value.trim() || !email.validity.valid) {
+                        isValid = false;
+                        if (email) {
+                            email.classList.add('border-red-500');
+                        }
+                    }
+
+                    if (!phone || !phone.value.trim()) {
+                        isValid = false;
+                        if (phone) {
+                            phone.classList.add('border-red-500');
+                        }
+                    }
+
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert('Please fill in all required fields correctly.');
+                        return false;
+                    }
+
+                    // Show loading state
+                    const submitButton = bookingForm.querySelector('button[type="submit"]');
+                    if (submitButton) {
+                        submitButton.disabled = true;
+                        submitButton.textContent = 'Submitting...';
+                    }
+                });
+            }
         });
     </script>
 @endpush

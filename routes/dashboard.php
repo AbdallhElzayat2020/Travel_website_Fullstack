@@ -21,6 +21,8 @@ use App\Http\Controllers\Dashboard\{
     TourVariantController,
     GalleryController,
     PageController,
+    AnnouncementController,
+    BookingController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -65,6 +67,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     // FAQs Routes
     Route::resource('faqs', FaqController::class);
 
+    // Announcements Routes
+    Route::resource('announcements', AnnouncementController::class);
+
     // Countries Routes
     Route::resource('countries', CountryController::class);
 
@@ -86,6 +91,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('pages', [PageController::class, 'index'])->name('pages.index');
     Route::get('pages/{page}/edit', [PageController::class, 'edit'])->name('pages.edit');
     Route::put('pages/{page}', [PageController::class, 'update'])->name('pages.update');
+
+    // Bookings Routes
+    Route::get('bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::put('bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+    Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
 });
 
 
