@@ -107,6 +107,25 @@
         .accommodation-row.bg-green-zomp .accommodation-desc {
             color: white !important;
         }
+
+        /* Navbar dropdown items (applied to all dropdown <li>) */
+        .nav-dropdown li a {
+            display: block;
+            padding: 0.85rem 1.5rem;
+            background-color: #ffffff;
+            text-align: center;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-dropdown li a:hover {
+            background-color: #f2f4f4;
+            color: #846A4F;
+        }
+
+        /* Width for all navbar dropdown menus */
+        .nav-menu.nav-dropdown.divide-y.divide-light-grey {
+            width: 230px;
+        }
     </style>
     @stack('css')
 </head>

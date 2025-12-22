@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 
-@section('title', 'Edit Dahbia Cruise Page')
+@section('title', 'Edit Cruise Page')
 
 @push('css')
     <style>
@@ -110,17 +110,18 @@
                 </div>
             @endif
 
-            <form action="{{ route('admin.cruise-experiences.update', $experience->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.cruise-experiences.update', $experience->id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="mb-3">
                             <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
                             <input type="text" name="title" id="title"
-                                   class="form-control @error('title') is-invalid @enderror"
-                                   value="{{ old('title', $experience->title) }}" required>
+                                class="form-control @error('title') is-invalid @enderror"
+                                value="{{ old('title', $experience->title) }}" required>
                             @error('title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -129,9 +130,9 @@
                         <div class="mb-3">
                             <label for="slug" class="form-label">Slug</label>
                             <input type="text" name="slug" id="slug"
-                                   class="form-control @error('slug') is-invalid @enderror"
-                                   value="{{ old('slug', $experience->slug) }}"
-                                   placeholder="Auto-generated from title if left empty">
+                                class="form-control @error('slug') is-invalid @enderror"
+                                value="{{ old('slug', $experience->slug) }}"
+                                placeholder="Auto-generated from title if left empty">
                             @error('slug')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -140,7 +141,7 @@
                         <div class="mb-3">
                             <label for="short_description" class="form-label">Short Description</label>
                             <textarea name="short_description" id="short_description" rows="3"
-                                      class="form-control @error('short_description') is-invalid @enderror">{{ old('short_description', $experience->short_description) }}</textarea>
+                                class="form-control @error('short_description') is-invalid @enderror">{{ old('short_description', $experience->short_description) }}</textarea>
                             @error('short_description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -149,45 +150,45 @@
                         <div class="mb-3">
                             <label for="description" class="form-label">Program Content</label>
                             <textarea name="description" id="description" rows="6"
-                                      class="form-control @error('description') is-invalid @enderror summernote">{{ old('description', $experience->description) }}</textarea>
+                                class="form-control @error('description') is-invalid @enderror summernote">{{ old('description', $experience->description) }}</textarea>
                             @error('description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        @if($experience->images->count())
+                        @if ($experience->images->count())
                             <div class="mb-3">
                                 <label class="form-label">Existing Images</label>
                                 <div class="row g-3">
-                                    @foreach($experience->images as $image)
+                                    @foreach ($experience->images as $image)
                                         <div class="col-6 col-md-4 col-lg-3">
                                             <div class="position-relative experience-image-wrapper">
                                                 <img src="{{ asset('uploads/cruise-experiences/' . $image->image) }}"
-                                                     alt="Image {{ $loop->iteration }}"
-                                                     class="img-thumbnail mb-2 w-100"
-                                                     style="max-height: 140px; object-fit: cover;">
+                                                    alt="Image {{ $loop->iteration }}" class="img-thumbnail mb-2 w-100"
+                                                    style="max-height: 140px; object-fit: cover;">
                                                 <button type="button"
-                                                        class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1"
-                                                        onclick="markExperienceImageForDeletion({{ $image->id }}, this);">
+                                                    class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1"
+                                                    onclick="markExperienceImageForDeletion({{ $image->id }}, this);">
                                                     <i class="ti ti-trash"></i>
                                                 </button>
                                             </div>
                                             <div class="form-check text-center">
-                                                <input class="form-check-input" type="checkbox"
-                                                       name="deleted_images[]" value="{{ $image->id }}"
-                                                       id="del-img-{{ $image->id }}" style="display:none;">
+                                                <input class="form-check-input" type="checkbox" name="deleted_images[]"
+                                                    value="{{ $image->id }}" id="del-img-{{ $image->id }}"
+                                                    style="display:none;">
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
-                                <small class="text-muted d-block mt-1">Click the trash icon to mark an image for deletion, then save.</small>
+                                <small class="text-muted d-block mt-1">Click the trash icon to mark an image for deletion,
+                                    then save.</small>
                             </div>
                         @endif
 
                         <div class="mb-3">
                             <label class="form-label">Add New Images</label>
-                            <input type="file" id="experience_new_images_input" name="images[]" class="form-control @error('images.*') is-invalid @enderror" multiple
-                                   accept="image/*">
+                            <input type="file" id="experience_new_images_input" name="images[]"
+                                class="form-control @error('images.*') is-invalid @enderror" multiple accept="image/*">
                             <small class="text-muted">You can add more images to the gallery.</small>
                             @error('images.*')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -195,14 +196,19 @@
                             <div id="experienceNewImagesPreview" class="row g-2 mt-2"></div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-lg-4">
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="mb-3">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                            <select name="status" id="status"
-                                    class="form-select @error('status') is-invalid @enderror" required>
-                                <option value="active" {{ old('status', $experience->status) === 'active' ? 'selected' : '' }}>Active</option>
-                                <option value="inactive" {{ old('status', $experience->status) === 'inactive' ? 'selected' : '' }}>Inactive</option>
+                            <select name="status" id="status" class="form-select @error('status') is-invalid @enderror"
+                                required>
+                                <option value="active"
+                                    {{ old('status', $experience->status) === 'active' ? 'selected' : '' }}>Active</option>
+                                <option value="inactive"
+                                    {{ old('status', $experience->status) === 'inactive' ? 'selected' : '' }}>Inactive
+                                </option>
                             </select>
                             @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -212,8 +218,8 @@
                         <div class="mb-3">
                             <label for="sort_order" class="form-label">Sort Order</label>
                             <input type="number" name="sort_order" id="sort_order"
-                                   class="form-control @error('sort_order') is-invalid @enderror"
-                                   value="{{ old('sort_order', $experience->sort_order) }}" min="0">
+                                class="form-control @error('sort_order') is-invalid @enderror"
+                                value="{{ old('sort_order', $experience->sort_order) }}" min="0">
                             @error('sort_order')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -221,27 +227,74 @@
 
                         <div class="mb-3">
                             <label class="form-label">Related Tours</label>
-                            <select name="tour_ids[]" id="related_tours_select" class="form-select" multiple>
-                                @foreach($tours as $tour)
-                                    <option value="{{ $tour->id }}"
-                                        {{ in_array($tour->id, old('tour_ids', $selectedTourIds)) ? 'selected' : '' }}>
-                                        {{ $tour->title }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <small class="text-muted d-block mt-1">
-                                Select tours that are related to this cruise program. You can search and select multiple tours.
-                            </small>
+
+                            @if ($tours->count())
+                                <p class="text-muted mb-2">Select tours that are related to this cruise program. They will
+                                    be suggested at the bottom of the page.</p>
+                                <div class="row">
+                                    @foreach ($tours as $tour)
+                                        @php
+                                            $cover = $tour->cover_image
+                                                ? asset('uploads/tours/' . $tour->cover_image)
+                                                : asset('assets/frontend/assets/images/destination-01.png');
+                                            $price = $tour->current_price ?? $tour->price;
+                                            $isChecked = in_array($tour->id, old('tour_ids', $selectedTourIds));
+                                        @endphp
+                                        <div class="col-12 col-md-6 col-xl-4 mb-3">
+                                            <div class="card h-100"
+                                                style="background: #252836; border: 1px solid #3a3d4a; border-radius: 12px;">
+                                                <div class="card-body">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="tour_ids[]"
+                                                            value="{{ $tour->id }}"
+                                                            id="related_tour_{{ $tour->id }}"
+                                                            {{ $isChecked ? 'checked' : '' }}>
+                                                        <label class="form-check-label w-100"
+                                                            for="related_tour_{{ $tour->id }}">
+                                                            <div class="d-flex align-items-start gap-3">
+                                                                <img src="{{ $cover }}" alt="{{ $tour->title }}"
+                                                                    style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;">
+                                                                <div class="flex-grow-1">
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-items-start mb-1">
+                                                                        <strong
+                                                                            style="color:#e4e6eb;">{{ \Illuminate\Support\Str::limit($tour->title, 40) }}</strong>
+                                                                        <span class="badge bg-label-success">
+                                                                            {{ number_format($price, 2) }} EGP
+                                                                        </span>
+                                                                    </div>
+                                                                    @if ($tour->short_description)
+                                                                        <p class="text-muted mb-0"
+                                                                            style="font-size: 0.85rem;">
+                                                                            {{ \Illuminate\Support\Str::limit(strip_tags($tour->short_description), 80) }}
+                                                                        </p>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="alert alert-info">
+                                    <i class="ti ti-info-circle me-1"></i>
+                                    No tours available yet. Create tours first to link them here.
+                                </div>
+                            @endif
+
                             @error('tour_ids.*')
-                                <div class="text-danger small">{{ $message }}</div>
+                                <div class="text-danger small mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="meta_title" class="form-label">Meta Title</label>
                             <input type="text" name="meta_title" id="meta_title"
-                                   class="form-control @error('meta_title') is-invalid @enderror"
-                                   value="{{ old('meta_title', $experience->meta_title) }}" maxlength="60">
+                                class="form-control @error('meta_title') is-invalid @enderror"
+                                value="{{ old('meta_title', $experience->meta_title) }}" maxlength="60">
                             @error('meta_title')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -250,8 +303,7 @@
                         <div class="mb-3">
                             <label for="meta_description" class="form-label">Meta Description</label>
                             <textarea name="meta_description" id="meta_description" rows="3"
-                                      class="form-control @error('meta_description') is-invalid @enderror"
-                                      maxlength="160">{{ old('meta_description', $experience->meta_description) }}</textarea>
+                                class="form-control @error('meta_description') is-invalid @enderror" maxlength="160">{{ old('meta_description', $experience->meta_description) }}</textarea>
                             @error('meta_description')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -260,8 +312,9 @@
                         <div class="mb-3">
                             <label for="meta_keywords" class="form-label">Meta Keywords</label>
                             <input type="text" name="meta_keywords" id="meta_keywords"
-                                   class="form-control @error('meta_keywords') is-invalid @enderror"
-                                   value="{{ old('meta_keywords', $experience->meta_keywords) }}" placeholder="keyword1, keyword2">
+                                class="form-control @error('meta_keywords') is-invalid @enderror"
+                                value="{{ old('meta_keywords', $experience->meta_keywords) }}"
+                                placeholder="keyword1, keyword2">
                             @error('meta_keywords')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -288,8 +341,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             if (typeof $.fn.summernote !== 'undefined') {
@@ -313,21 +364,12 @@
                 });
             }
 
-            // Enhance related tours multi select
-            if (typeof $.fn.select2 !== 'undefined') {
-                $('#related_tours_select').select2({
-                    placeholder: 'Search and select related tours',
-                    allowClear: true,
-                    width: '100%'
-                });
-            }
-
             // Preview newly selected gallery images
             const newImagesInput = document.getElementById('experience_new_images_input');
             const newImagesPreview = document.getElementById('experienceNewImagesPreview');
 
             if (newImagesInput && newImagesPreview) {
-                newImagesInput.addEventListener('change', function (e) {
+                newImagesInput.addEventListener('change', function(e) {
                     newImagesPreview.innerHTML = '';
                     const files = Array.from(e.target.files || []);
 
@@ -335,7 +377,7 @@
 
                     files.forEach(file => {
                         const reader = new FileReader();
-                        reader.onload = function (ev) {
+                        reader.onload = function(ev) {
                             const col = document.createElement('div');
                             col.className = 'col-4 col-md-3';
                             col.innerHTML = `
@@ -352,8 +394,10 @@
             }
 
             // Helper to confirm delete of existing image (no extra form inside update form)
-            window.markExperienceImageForDeletion = function (imageId, btn) {
-                if (!confirm('Are you sure you want to delete this image? It will be removed after saving changes.')) {
+            window.markExperienceImageForDeletion = function(imageId, btn) {
+                if (!confirm(
+                        'Are you sure you want to delete this image? It will be removed after saving changes.'
+                        )) {
                     return;
                 }
 

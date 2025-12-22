@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 
-@section('title', 'Dahbia Cruises')
+@section('title', 'Cruises')
 
 @php
     use Illuminate\Support\Str;
@@ -9,7 +9,7 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Dahbia Nile Cruises</h5>
+            <h5 class="mb-0">Cruises Page</h5>
             <a href="{{ route('admin.cruise-experiences.create') }}" class="btn btn-primary">
                 <i class="ti ti-plus me-1"></i>
                 Add New Cruise Page

@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 
-@section('title', 'Create Dahbia Cruise Page')
+@section('title', 'Create Cruise Page')
 
 @push('css')
     <style>
@@ -107,7 +107,7 @@
                 @csrf
 
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="mb-3">
                             <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
                             <input type="text" name="title" id="title"
@@ -160,7 +160,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-12">
                         <div class="mb-3">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select name="status" id="status" class="form-select @error('status') is-invalid @enderror"
@@ -186,19 +186,59 @@
 
                         <div class="mb-3">
                             <label class="form-label">Related Tours</label>
-                            <select name="tour_ids[]" id="related_tours_select" class="form-select" multiple>
-                                @foreach ($tours as $tour)
-                                    <option value="{{ $tour->id }}"
-                                        {{ in_array($tour->id, old('tour_ids', [])) ? 'selected' : '' }}>
-                                        {{ $tour->title }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <small class="text-muted d-block mt-1">
-                                Select tours that are related to this cruise program. You can search and select multiple tours.
-                            </small>
+
+                            @if($tours->count())
+                                <p class="text-muted mb-2">Select tours that are related to this cruise program. They will be suggested at the bottom of the page.</p>
+                                <div class="row">
+                                    @foreach($tours as $tour)
+                                        @php
+                                            $cover = $tour->cover_image
+                                                ? asset('uploads/tours/' . $tour->cover_image)
+                                                : asset('assets/frontend/assets/images/destination-01.png');
+                                            $price = $tour->current_price ?? $tour->price;
+                                        @endphp
+                                        <div class="col-12 col-md-6 col-xl-4 mb-3">
+                                            <div class="card h-100" style="background: #252836; border: 1px solid #3a3d4a; border-radius: 12px;">
+                                                <div class="card-body">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                               name="tour_ids[]" value="{{ $tour->id }}"
+                                                               id="related_tour_{{ $tour->id }}"
+                                                                {{ in_array($tour->id, old('tour_ids', [])) ? 'checked' : '' }}>
+                                                        <label class="form-check-label w-100" for="related_tour_{{ $tour->id }}">
+                                                            <div class="d-flex align-items-start gap-3">
+                                                                <img src="{{ $cover }}" alt="{{ $tour->title }}"
+                                                                     style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;">
+                                                                <div class="flex-grow-1">
+                                                                    <div class="d-flex justify-content-between align-items-start mb-1">
+                                                                        <strong style="color:#e4e6eb;">{{ \Illuminate\Support\Str::limit($tour->title, 40) }}</strong>
+                                                                        <span class="badge bg-label-success">
+                                                                            {{ number_format($price, 2) }} EGP
+                                                                        </span>
+                                                                    </div>
+                                                                    @if($tour->short_description)
+                                                                        <p class="text-muted mb-0" style="font-size: 0.85rem;">
+                                                                            {{ \Illuminate\Support\Str::limit(strip_tags($tour->short_description), 80) }}
+                                                                        </p>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @else
+                                <div class="alert alert-info">
+                                    <i class="ti ti-info-circle me-1"></i>
+                                    No tours available yet. Create tours first to link them here.
+                                </div>
+                            @endif
+
                             @error('tour_ids.*')
-                                <div class="text-danger small">{{ $message }}</div>
+                                <div class="text-danger small mt-1">{{ $message }}</div>
                             @enderror
                         </div>
 
@@ -254,8 +294,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function() {
             if (typeof $.fn.summernote !== 'undefined') {
@@ -276,15 +314,6 @@
                     placeholder: 'Write full program details here...',
                     tabsize: 2,
                     dialogsInBody: true
-                });
-            }
-
-            // Enhance related tours multi select (similar UX to tours filters)
-            if (typeof $.fn.select2 !== 'undefined') {
-                $('#related_tours_select').select2({
-                    placeholder: 'Search and select related tours',
-                    allowClear: true,
-                    width: '100%'
                 });
             }
 

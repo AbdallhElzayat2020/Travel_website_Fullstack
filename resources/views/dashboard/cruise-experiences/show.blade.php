@@ -1,11 +1,11 @@
 @extends('dashboard.layouts.master')
 
-@section('title', 'Dahbia Cruise Details')
+@section('title', 'Cruise Details')
 
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Dahbia Cruise Details</h5>
+            <h5 class="mb-0">Cruise Details</h5>
             <div class="d-flex gap-2">
                 <a href="{{ route('admin.cruise-experiences.edit', $experience->id) }}" class="btn btn-label-primary">
                     <i class="ti ti-edit me-1"></i>

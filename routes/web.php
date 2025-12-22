@@ -8,6 +8,7 @@ use App\Http\Controllers\Website\{
     BlogController,
     ContactController,
     TourController,
+    CruiseExperienceController,
     BookingController,
 };
 
@@ -27,6 +28,10 @@ Route::get('/blogs/{slug}', [BlogController::class, 'show'])
     ->name('blogs.show');
 Route::get('/tours/{slug}', [TourController::class, 'show'])
     ->name('tours.show');
+Route::get('/nile-cruises', [CruiseExperienceController::class, 'index'])
+    ->name('nile-cruises.index');
+Route::get('/nile-cruises/{slug}', [CruiseExperienceController::class, 'show'])
+    ->name('nile-cruises.show');
 Route::get('/about-us', [PageController::class, 'about'])
     ->name('about-us');
 Route::get('/faqs', [PageController::class, 'faqs'])
