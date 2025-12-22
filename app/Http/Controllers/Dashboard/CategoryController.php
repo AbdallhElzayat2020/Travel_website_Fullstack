@@ -39,6 +39,13 @@ class CategoryController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
             'sort_order' => 'nullable|integer|min:0',
+            'grid_columns' => 'nullable|string|in:2,3,4',
+            'custom_css' => 'nullable|string',
+            'header_background_color' => 'nullable|string|max:7',
+            'header_text_color' => 'nullable|string|max:7',
+            'card_style' => 'nullable|string|in:default,modern,classic',
+            'show_breadcrumb' => 'nullable|boolean',
+            'show_description' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('image')) {
@@ -53,6 +60,10 @@ class CategoryController extends Controller
             // Ensure slug is properly formatted
             $validated['slug'] = Str::slug($validated['slug']);
         }
+
+        // Handle checkboxes
+        $validated['show_breadcrumb'] = $request->has('show_breadcrumb');
+        $validated['show_description'] = $request->has('show_description');
 
         Category::create($validated);
 
@@ -92,6 +103,13 @@ class CategoryController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
             'sort_order' => 'nullable|integer|min:0',
+            'grid_columns' => 'nullable|string|in:2,3,4',
+            'custom_css' => 'nullable|string',
+            'header_background_color' => 'nullable|string|max:7',
+            'header_text_color' => 'nullable|string|max:7',
+            'card_style' => 'nullable|string|in:default,modern,classic',
+            'show_breadcrumb' => 'nullable|boolean',
+            'show_description' => 'nullable|boolean',
         ]);
 
         if ($request->hasFile('image')) {
@@ -109,6 +127,10 @@ class CategoryController extends Controller
             // Ensure slug is properly formatted
             $validated['slug'] = Str::slug($validated['slug']);
         }
+
+        // Handle checkboxes
+        $validated['show_breadcrumb'] = $request->has('show_breadcrumb');
+        $validated['show_description'] = $request->has('show_description');
 
         $category->update($validated);
 

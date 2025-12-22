@@ -4,11 +4,29 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tour;
+use App\Models\Category;
 use App\Models\Faq;
 use App\Models\Testimonial;
 
 class TourController extends Controller
 {
+    /**
+     * Display tours by category slug.
+     */
+    public function byCategory(string $slug)
+    {
+        $category = Category::active()->where('slug', $slug)->firstOrFail();
+
+        $tours = Tour::active()
+            ->where('category_id', $category->id)
+            ->with(['category', 'subCategory', 'country', 'state'])
+            ->orderBy('sort_order')
+            ->latest()
+            ->paginate(12);
+
+        return view('frontend.pages.tours.category', compact('category', 'tours'));
+    }
+
     public function show(string $slug)
     {
         $tour = Tour::active()

@@ -209,8 +209,33 @@ class TourSeeder extends Seeder
             ],
         ];
 
-        foreach ($tours as $tourData) {
-            Tour::create($tourData);
+        // Ensure upload directory exists
+        $uploadDir = public_path('uploads/tours');
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
         }
+
+        $sourceDir = public_path('assets/frontend/assets/images');
+        $tourImages = ['destination-01.png', 'destination-02.png', 'destination-03.png', 'destination-04.png', 'destination-05.png', 'destination-06.png'];
+
+        foreach ($tours as $index => $tourData) {
+            $tour = Tour::firstOrCreate(
+                ['slug' => $tourData['slug']],
+                $tourData
+            );
+
+            // Add cover image if it doesn't exist
+            if (!$tour->cover_image && isset($tourImages[$index % count($tourImages)])) {
+                $imageName = $tourImages[$index % count($tourImages)];
+                $sourcePath = $sourceDir . '/' . $imageName;
+                if (file_exists($sourcePath)) {
+                    $destinationPath = $uploadDir . '/' . $imageName;
+                    copy($sourcePath, $destinationPath);
+                    $tour->update(['cover_image' => $imageName]);
+                }
+            }
+        }
+
+        $this->command->info('Tours seeded successfully!');
     }
 }

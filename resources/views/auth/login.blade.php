@@ -64,7 +64,7 @@
                     <!-- Logo -->
                     <div class="app-brand justify-content-center mb-4 mt-2">
                         <a href="{{ route('home') }}" class="app-brand-link gap-2">
-                            <img src="{{ asset('assets/frontend/img/logo.ico') }}" alt="Logo" width="100">
+                            <img src="{{ asset('assets/frontend/assets/images/logo_mm.png') }}" alt="Logo" width="100">
                         </a>
                     </div>
                     <!-- /Logo -->

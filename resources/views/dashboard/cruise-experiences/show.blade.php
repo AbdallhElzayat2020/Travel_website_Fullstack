@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 
-@section('title', 'Cruise Details')
+@section('title', 'Dahbia Cruise Details')
 
 @section('content')
     <div class="card">

@@ -24,7 +24,9 @@
             </li>
         @endif
 
-        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('categories.view') || auth()->user()->hasPermission('sub-categories.view'))
+        @if (auth()->user()->isAdmin() ||
+                auth()->user()->hasPermission('categories.view') ||
+                auth()->user()->hasPermission('sub-categories.view'))
             <li
                 class="menu-item {{ \App\Helpers\setSidebarActive(['admin.categories.*', 'admin.sub-categories.*'], 'active open') }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -60,6 +62,13 @@
                     <div data-i18n="Tours">Tours</div>
                 </a>
                 <ul class="menu-sub">
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.cruise-experiences.*'], 'active') }}">
+                        <a href="{{ route('admin.cruise-experiences.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-ship"></i>
+                            <div data-i18n="Dahbia Cruises">Dahbia Cruises</div>
+                        </a>
+                    </li>
+
                     <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*'], 'active') }}">
                         <a href="{{ route('admin.tours.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons ti ti-plane"></i>
@@ -88,8 +97,11 @@
             </li>
         @endif
 
-        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('users.manage') || auth()->user()->hasPermission('roles.manage'))
-            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.users.*', 'admin.roles.*'], 'active open') }}">
+        @if (auth()->user()->isAdmin() ||
+                auth()->user()->hasPermission('users.manage') ||
+                auth()->user()->hasPermission('roles.manage'))
+            <li
+                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.users.*', 'admin.roles.*'], 'active open') }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons ti ti-shield-lock"></i>
                     <div data-i18n="Users & Roles">Users & Roles</div>
@@ -123,7 +135,7 @@
                 <a href="{{ route('admin.contacts.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-mail"></i>
                     <div data-i18n="Contacts">Contacts</div>
-                    @if(isset($unreadContactsCount) && $unreadContactsCount > 0)
+                    @if (isset($unreadContactsCount) && $unreadContactsCount > 0)
                         <span class="badge rounded-pill bg-label-danger ms-auto">{{ $unreadContactsCount }}</span>
                     @endif
                 </a>
@@ -192,12 +204,7 @@
                 </a>
             </li>
 
-            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.cruise-experiences.*'], 'active') }}">
-                <a href="{{ route('admin.cruise-experiences.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-ship"></i>
-                    <div data-i18n=" Cruises"> Cruises</div>
-                </a>
-            </li>
+
 
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.blogs.*'], 'active') }}">
                 <a href="{{ route('admin.blogs.index') }}" class="menu-link">

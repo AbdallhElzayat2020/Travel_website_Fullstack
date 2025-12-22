@@ -18,7 +18,7 @@ class GallerySeeder extends Seeder
                 'title' => 'Island Paradise',
                 'slug' => 'island-paradise',
                 'description' => 'Crystal clear waters, white sands, and unforgettable sunsets.',
-                'cover_image' => 'gallery-01.jpg',
+                'cover_image' => 'destination-01.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 1,
@@ -28,7 +28,7 @@ class GallerySeeder extends Seeder
                 'title' => 'Mountain Escape',
                 'slug' => 'mountain-escape',
                 'description' => 'Breathtaking peaks and misty mornings perfect for hikers.',
-                'cover_image' => 'gallery-02.jpg',
+                'cover_image' => 'destination-02.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 2,
@@ -38,7 +38,7 @@ class GallerySeeder extends Seeder
                 'title' => 'City Lights',
                 'slug' => 'city-lights',
                 'description' => 'Night vibes, skyline views, and buzzing streets.',
-                'cover_image' => 'gallery-03.jpg',
+                'cover_image' => 'destination-03.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 3,
@@ -48,7 +48,7 @@ class GallerySeeder extends Seeder
                 'title' => 'Desert Adventure',
                 'slug' => 'desert-adventure',
                 'description' => 'Golden dunes, starry nights, and endless horizons.',
-                'cover_image' => 'gallery-04.jpg',
+                'cover_image' => 'destination-04.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 4,
@@ -58,7 +58,7 @@ class GallerySeeder extends Seeder
                 'title' => 'Forest Retreat',
                 'slug' => 'forest-retreat',
                 'description' => 'Lush greenery and tranquil trails for a mindful escape.',
-                'cover_image' => 'gallery-05.jpg',
+                'cover_image' => 'destination-05.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 5,
@@ -68,7 +68,7 @@ class GallerySeeder extends Seeder
                 'title' => 'Cultural Journey',
                 'slug' => 'cultural-journey',
                 'description' => 'Historic streets, vibrant markets, and local flavors.',
-                'cover_image' => 'gallery-06.jpg',
+                'cover_image' => 'destination-06.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 6,
@@ -78,7 +78,7 @@ class GallerySeeder extends Seeder
                 'title' => 'Snowy Peaks',
                 'slug' => 'snowy-peaks',
                 'description' => 'Snow-capped mountains and cozy winter retreats.',
-                'cover_image' => 'gallery-07.jpg',
+                'cover_image' => 'destination-07.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 7,
@@ -88,7 +88,7 @@ class GallerySeeder extends Seeder
                 'title' => 'Lakeside Calm',
                 'slug' => 'lakeside-calm',
                 'description' => 'Mirror lakes and peaceful sunrises for quiet escapes.',
-                'cover_image' => 'gallery-08.jpg',
+                'cover_image' => 'destination-08.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 8,
@@ -98,7 +98,7 @@ class GallerySeeder extends Seeder
                 'title' => 'Coastal Roads',
                 'slug' => 'coastal-roads',
                 'description' => 'Scenic drives along dramatic coastlines.',
-                'cover_image' => 'gallery-09.jpg',
+                'cover_image' => 'destination-01.png',
                 'status' => 'active',
                 'show_on_homepage' => true,
                 'sort_order' => 9,
@@ -106,11 +106,34 @@ class GallerySeeder extends Seeder
             ],
         ];
 
-        foreach ($items as $item) {
-            Gallery::updateOrCreate(
-                ['slug' => $item['slug']],
-                $item + ['title' => $item['title']]
-            );
+        // Ensure upload directory exists
+        $uploadDir = public_path('uploads/galleries');
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
         }
+
+        $sourceDir = public_path('assets/frontend/assets/images');
+
+        foreach ($items as $item) {
+            $coverImage = $item['cover_image'];
+            unset($item['cover_image']);
+
+            $gallery = Gallery::updateOrCreate(
+                ['slug' => $item['slug']],
+                $item
+            );
+
+            // Copy cover image if it doesn't exist
+            if (!$gallery->cover_image || !file_exists(public_path('uploads/galleries/' . $gallery->cover_image))) {
+                $sourcePath = $sourceDir . '/' . $coverImage;
+                if (file_exists($sourcePath)) {
+                    $destinationPath = $uploadDir . '/' . $coverImage;
+                    copy($sourcePath, $destinationPath);
+                    $gallery->update(['cover_image' => $coverImage]);
+                }
+            }
+        }
+
+        $this->command->info('Galleries seeded successfully!');
     }
 }

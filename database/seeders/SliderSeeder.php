@@ -17,55 +17,83 @@ class SliderSeeder extends Seeder
             [
                 'title' => 'Discover Amazing Travel Destinations',
                 'description' => 'Explore the world with our amazing travel packages. From tropical beaches to mountain adventures, we have something for everyone.',
-                'image' => 'slider1.jpg',
+                'image' => 'hero-banner.png',
                 'status' => 'active',
                 'sort_order' => 1,
-                'link' => 'https://example.com/destinations',
+                'link' => route('home'),
                 'button_text' => 'Explore Now',
             ],
             [
                 'title' => 'Adventure Awaits You',
                 'description' => 'Embark on thrilling adventures and create unforgettable memories. Our expert guides will ensure you have the experience of a lifetime.',
-                'image' => 'slider2.jpg',
+                'image' => 'destination-banner.png',
                 'status' => 'active',
                 'sort_order' => 2,
-                'link' => 'https://example.com/adventures',
+                'link' => route('home'),
                 'button_text' => 'Start Adventure',
             ],
             [
                 'title' => 'Luxury Travel Experiences',
                 'description' => 'Indulge in luxury travel experiences with our premium packages. Enjoy world-class accommodations and personalized service.',
-                'image' => 'slider3.jpg',
+                'image' => 'destination-01.png',
                 'status' => 'active',
                 'sort_order' => 3,
-                'link' => 'https://example.com/luxury',
+                'link' => route('home'),
                 'button_text' => 'Book Now',
             ],
             [
                 'title' => 'Cultural Tours & Heritage',
                 'description' => 'Immerse yourself in rich cultures and explore historical heritage sites around the world.',
-                'image' => 'slider4.jpg',
-                'status' => 'inactive',
+                'image' => 'destination-02.png',
+                'status' => 'active',
                 'sort_order' => 4,
-                'link' => 'https://example.com/cultural',
+                'link' => route('home'),
                 'button_text' => 'Learn More',
             ],
             [
                 'title' => 'Beach Paradise',
                 'description' => 'Relax and unwind at the most beautiful beaches in the world. Perfect for your next vacation.',
-                'image' => 'slider5.jpg',
+                'image' => 'destination-03.png',
                 'status' => 'active',
                 'sort_order' => 5,
-                'link' => 'https://example.com/beaches',
+                'link' => route('home'),
                 'button_text' => 'Book Vacation',
             ],
         ];
 
-        foreach ($sliders as $slider) {
-            Slider::create($slider);
+        // Ensure upload directory exists
+        $uploadDir = public_path('uploads/sliders');
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        $sourceDir = public_path('assets/frontend/assets/images');
+
+        foreach ($sliders as $sliderData) {
+            $imageName = $sliderData['image'];
+
+            // Copy image first
+            $sourcePath = $sourceDir . '/' . $imageName;
+            if (file_exists($sourcePath)) {
+                $destinationPath = $uploadDir . '/' . $imageName;
+                if (!file_exists($destinationPath)) {
+                    copy($sourcePath, $destinationPath);
+                }
+            }
+
+            $slider = Slider::firstOrCreate(
+                ['sort_order' => $sliderData['sort_order']],
+                $sliderData
+            );
+
+            // Update image if it was just created or doesn't exist
+            if (!$slider->image || !file_exists(public_path('uploads/sliders/' . $slider->image))) {
+                if (file_exists($sourcePath)) {
+                    $slider->update(['image' => $imageName]);
+                }
+            }
         }
 
         $this->command->info('Sliders seeded successfully!');
-        $this->command->warn('Note: Please add actual images to public/uploads/sliders/ directory with the names: slider1.jpg, slider2.jpg, etc.');
     }
 }

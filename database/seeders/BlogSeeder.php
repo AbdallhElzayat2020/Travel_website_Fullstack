@@ -129,8 +129,33 @@ class BlogSeeder extends Seeder
             ],
         ];
 
-        foreach ($blogs as $blog) {
-            Blog::create($blog);
+        // Ensure upload directory exists
+        $uploadDir = public_path('uploads/blogs');
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
         }
+
+        $sourceDir = public_path('assets/frontend/assets/images/blogs');
+        $blogImages = ['01.png', '02.png', '03.png', '04.png', '05.png', '06.png', '07.png', '08.png'];
+
+        foreach ($blogs as $index => $blogData) {
+            $blog = Blog::firstOrCreate(
+                ['slug' => $blogData['slug']],
+                $blogData
+            );
+
+            // Add cover image if it doesn't exist
+            if (!$blog->cover_image && isset($blogImages[$index])) {
+                $imageName = $blogImages[$index];
+                $sourcePath = $sourceDir . '/' . $imageName;
+                if (file_exists($sourcePath)) {
+                    $destinationPath = $uploadDir . '/' . $imageName;
+                    copy($sourcePath, $destinationPath);
+                    $blog->update(['cover_image' => $imageName]);
+                }
+            }
+        }
+
+        $this->command->info('Blogs seeded successfully!');
     }
 }

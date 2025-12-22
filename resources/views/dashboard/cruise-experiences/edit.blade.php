@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 
-@section('title', 'Edit Cruise Page')
+@section('title', 'Edit Dahbia Cruise Page')
 
 @push('css')
     <style>
@@ -78,6 +78,36 @@
 
         .select2-container--default .select2-selection--multiple .select2-selection__clear {
             color: #ff8b8b;
+        }
+
+        /* Fix Summernote dropdown z-index and overflow issues */
+        .note-editor {
+            position: relative;
+        }
+
+        .note-popover,
+        .note-dropdown-menu {
+            z-index: 9999 !important;
+            position: absolute !important;
+        }
+
+        .note-popover .popover-content,
+        .note-dropdown-menu {
+            z-index: 10000 !important;
+        }
+
+        /* Ensure parent containers don't clip the dropdown */
+        .card-body {
+            overflow: visible !important;
+        }
+
+        .row {
+            overflow: visible !important;
+        }
+
+        .col-md-12,
+        .col-lg-12 {
+            overflow: visible !important;
         }
     </style>
 @endpush
@@ -360,7 +390,49 @@
                     ],
                     placeholder: 'Write full program details here...',
                     tabsize: 2,
-                    dialogsInBody: true
+                    focus: false,
+                    dialogsInBody: true,
+                    popover: {
+                        image: [
+                            ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                            ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                            ['remove', ['removeMedia']]
+                        ],
+                        link: [
+                            ['link', ['linkDialogShow', 'unlink']]
+                        ],
+                        table: [
+                            ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                            ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                        ],
+                        air: [
+                            ['color', ['color']],
+                            ['font', ['bold', 'underline', 'clear']]
+                        ]
+                    }
+                });
+
+                // Fix Summernote dropdowns
+                $(document).on('click', '.note-btn-group .dropdown-toggle', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var $this = $(this);
+                    var $group = $this.closest('.note-btn-group');
+                    var $menu = $group.find('.note-dropdown-menu');
+                    // Close other dropdowns
+                    $('.note-btn-group').not($group).removeClass('open');
+                    $('.note-dropdown-menu').not($menu).removeClass('open').hide();
+                    // Toggle current dropdown
+                    $group.toggleClass('open');
+                    $menu.toggleClass('open').toggle();
+                });
+
+                // Close dropdowns when clicking outside
+                $(document).on('click', function(e) {
+                    if (!$(e.target).closest('.note-btn-group').length) {
+                        $('.note-btn-group').removeClass('open');
+                        $('.note-dropdown-menu').removeClass('open').hide();
+                    }
                 });
             }
 

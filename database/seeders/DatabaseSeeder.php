@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             BlogSeeder::class,
             GallerySeeder::class,
             PageSeeder::class,
+            CruiseExperienceSeeder::class,
         ]);
     }
 }

@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.master')
 
-@section('title', 'Cruises')
+@section('title', 'Dahbia Cruises')
 
 @php
     use Illuminate\Support\Str;

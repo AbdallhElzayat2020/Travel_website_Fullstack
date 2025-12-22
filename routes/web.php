@@ -26,6 +26,8 @@ Route::get('/blogs', [BlogController::class, 'index'])
     ->name('blogs.index');
 Route::get('/blogs/{slug}', [BlogController::class, 'show'])
     ->name('blogs.show');
+Route::get('/category/{slug}', [TourController::class, 'byCategory'])
+    ->name('tours.category');
 Route::get('/tours/{slug}', [TourController::class, 'show'])
     ->name('tours.show');
 Route::get('/nile-cruises', [CruiseExperienceController::class, 'index'])
