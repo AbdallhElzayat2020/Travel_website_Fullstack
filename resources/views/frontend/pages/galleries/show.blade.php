@@ -1,5 +1,16 @@
 @extends('frontend.layouts.master')
-@section('title', $gallery->title)
+@php
+    $metaTitle = $gallery->title . ' - Gallery';
+    $metaDescription = $gallery->description ? \Illuminate\Support\Str::limit(strip_tags($gallery->description), 160) : 'Explore our gallery of amazing travel destinations and experiences.';
+    $metaImage = $gallery->cover_image ? asset('uploads/galleries/' . $gallery->cover_image) : null;
+@endphp
+@section('meta_title', $metaTitle)
+@if($metaDescription)
+@section('meta_description', $metaDescription)
+@endif
+@if($metaImage)
+@section('meta_image', $metaImage)
+@endif
 
 @section('content')
     <section class="mb-[60px] md:mb-24">

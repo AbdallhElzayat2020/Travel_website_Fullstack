@@ -119,6 +119,15 @@ return [
             'report' => false,
         ],
 
+        'cruise_experiences' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/cruise-experiences'),
+            'url' => env('APP_URL') . '/uploads/cruise-experiences',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         'tour_variants' => [
             'driver' => 'local',
             'root' => public_path('uploads/tour-variants'),

@@ -1,4 +1,19 @@
 @extends('frontend.layouts.master')
+@php
+    $faqsPage = \App\Models\Page::getBySlug('faqs');
+    $metaTitle = $faqsPage && $faqsPage->meta_title ? $faqsPage->meta_title : 'FAQs - Frequently Asked Questions';
+    $metaDescription = $faqsPage && $faqsPage->meta_description ? $faqsPage->meta_description : 'Find answers to your most common travel questions. Get information about bookings, tours, destinations, and more.';
+@endphp
+@section('meta_title', $metaTitle)
+@if($metaDescription)
+@section('meta_description', $metaDescription)
+@endif
+@if($faqsPage && $faqsPage->meta_author)
+@section('meta_author', $faqsPage->meta_author)
+@endif
+@if($faqsPage && $faqsPage->meta_keywords)
+@section('meta_keywords', $faqsPage->meta_keywords)
+@endif
 
 @section('content')
     <section class="py-12 border border-t-light-grey border-r-0 border-b-0 border-l-0">

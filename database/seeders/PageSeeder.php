@@ -53,6 +53,14 @@ class PageSeeder extends Seeder
                 'meta_author' => 'Travel Website',
                 'meta_keywords' => 'contact, travel contact, inquiry, support',
             ],
+            [
+                'slug' => 'faqs',
+                'name' => 'FAQs',
+                'meta_title' => 'FAQs - Frequently Asked Questions',
+                'meta_description' => 'Find answers to your most common travel questions. Get information about bookings, tours, destinations, and more.',
+                'meta_author' => 'Travel Website',
+                'meta_keywords' => 'faq, frequently asked questions, travel questions, help',
+            ],
         ];
 
         foreach ($pages as $pageData) {

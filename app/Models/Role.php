@@ -38,10 +38,14 @@ class Role extends Model
      */
     public function hasPermission(string $permissionSlug): bool
     {
-        return $this->permissions()
-            ->where('slug', $permissionSlug)
-            ->where('status', 'active')
-            ->exists();
+        // Load active permissions once per request, then check in memory
+        if (! $this->relationLoaded('permissions')) {
+            $this->load(['permissions' => function ($query) {
+                $query->active();
+            }]);
+        }
+
+        return $this->permissions->contains('slug', $permissionSlug);
     }
 
     /**

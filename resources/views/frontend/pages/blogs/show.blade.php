@@ -1,16 +1,20 @@
 @extends('frontend.layouts.master')
 @php
     $metaTitle = $blog->meta_title ?? $blog->title;
+    $metaImage = $blog->cover_image ? asset('uploads/blogs/' . $blog->cover_image) : null;
 @endphp
 @section('meta_title', $metaTitle)
-@if($blog->meta_description)
-@section('meta_description', $blog->meta_description)
+@if ($blog->meta_description)
+    @section('meta_description', $blog->meta_description)
 @endif
-@if($blog->author)
-@section('meta_author', $blog->author)
+@if ($blog->author)
+    @section('meta_author', $blog->author)
 @endif
-@if($blog->meta_keywords)
-@section('meta_keywords', $blog->meta_keywords)
+@if ($blog->meta_keywords)
+    @section('meta_keywords', $blog->meta_keywords)
+@endif
+@if ($metaImage)
+    @section('meta_image', $metaImage)
 @endif
 
 @section('content')
@@ -32,16 +36,17 @@
 
                 <!-- Blog Header -->
                 <div class="mb-6">
-                    <h1 class="text-black font-bold text-[32px] md:text-[40px] leading-[1.2em] mb-4">{{ $metaTitle }}</h1>
+                    <h1 class="text-black font-bold text-[32px] md:text-[40px] leading-[1.2em] mb-4">{{ $metaTitle }}
+                    </h1>
 
                     <div class="flex flex-wrap items-center gap-4 text-sm text-dark-grey mb-4">
-                        @if($blog->published_at)
+                        @if ($blog->published_at)
                             <div class="flex items-center gap-2">
                                 <span class="iconify" data-icon="mdi:calendar" data-width="16" data-height="16"></span>
                                 <span>{{ $blog->published_at->format('M d, Y') }}</span>
                             </div>
                         @endif
-                        @if($blog->author)
+                        @if ($blog->author)
                             <div class="flex items-center gap-2">
                                 <span class="iconify" data-icon="mdi:account" data-width="16" data-height="16"></span>
                                 <span>{{ $blog->author }}</span>
@@ -51,7 +56,7 @@
                 </div>
 
                 <!-- Cover Image -->
-                @if($blog->cover_image)
+                @if ($blog->cover_image)
                     @php
                         $coverImage = asset('uploads/blogs/' . $blog->cover_image);
                     @endphp
@@ -61,7 +66,7 @@
                 @endif
 
                 <!-- Blog Content -->
-                @if($blog->description)
+                @if ($blog->description)
                     <div class="prose max-w-none text-dark-grey text-base leading-relaxed">
                         {!! $blog->description !!}
                     </div>
@@ -72,11 +77,11 @@
                 @endif
 
                 <!-- Related Blogs -->
-                @if(isset($relatedBlogs) && $relatedBlogs->count() > 0)
+                @if (isset($relatedBlogs) && $relatedBlogs->count() > 0)
                     <div class="mt-12 pt-8 border-t border-light-grey">
                         <h2 class="text-black font-bold text-[28px] mb-6">Related Posts</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                            @foreach($relatedBlogs as $relatedBlog)
+                            @foreach ($relatedBlogs as $relatedBlog)
                                 @php
                                     $relatedCover = $relatedBlog->cover_image
                                         ? asset('uploads/blogs/' . $relatedBlog->cover_image)
@@ -85,7 +90,8 @@
                                         ? \Carbon\Carbon::parse($relatedBlog->published_at)->format('M d, Y')
                                         : '';
                                 @endphp
-                                <article class="group bg-white overflow-hidden rounded-2xl shadow-sm border border-light-grey">
+                                <article
+                                    class="group bg-white overflow-hidden rounded-2xl shadow-sm border border-light-grey">
                                     <div class="overflow-hidden rounded-t-2xl">
                                         <a href="{{ route('blogs.show', $relatedBlog->slug) }}">
                                             <img src="{{ $relatedCover }}" alt="{{ $relatedBlog->title }}"
@@ -95,9 +101,10 @@
                                     <div class="p-4">
                                         <h3
                                             class="text-base font-bold text-black mb-2 line-clamp-2 group-hover:text-green-zomp transition">
-                                            <a href="{{ route('blogs.show', $relatedBlog->slug) }}">{{ $relatedBlog->title }}</a>
+                                            <a
+                                                href="{{ route('blogs.show', $relatedBlog->slug) }}">{{ $relatedBlog->title }}</a>
                                         </h3>
-                                        @if($relatedDate)
+                                        @if ($relatedDate)
                                             <span class="block text-dark-grey text-xs mb-2">{{ $relatedDate }}</span>
                                         @endif
                                     </div>

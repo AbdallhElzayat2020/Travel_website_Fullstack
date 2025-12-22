@@ -1,6 +1,6 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
-        <a href="{{ route(auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access') ? 'admin.dashboard' : 'welcome') }}"
+        <a href="{{ route(auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access') ? 'admin.dashboard' : 'home') }}"
             class="app-brand-link fs-4">
             Travel Website
         </a>
@@ -95,6 +95,7 @@
                     <div data-i18n="Users & Roles">Users & Roles</div>
                 </a>
                 <ul class="menu-sub">
+
                     @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('users.manage'))
                         <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.users.*'], 'active') }}">
                             <a href="{{ route('admin.users.index') }}" class="menu-link">
@@ -103,6 +104,7 @@
                             </a>
                         </li>
                     @endif
+
                     @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('roles.manage'))
                         <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.roles.*'], 'active') }}">
                             <a href="{{ route('admin.roles.index') }}" class="menu-link">
@@ -111,6 +113,7 @@
                             </a>
                         </li>
                     @endif
+
                 </ul>
             </li>
         @endif
@@ -186,6 +189,13 @@
                 <a href="{{ route('admin.galleries.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-photo"></i>
                     <div data-i18n="Galleries">Galleries</div>
+                </a>
+            </li>
+
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.cruise-experiences.*'], 'active') }}">
+                <a href="{{ route('admin.cruise-experiences.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-ship"></i>
+                    <div data-i18n="Dahbia Cruises">Dahbia Cruises</div>
                 </a>
             </li>
 

@@ -26,22 +26,42 @@
                         Nile Cruises
                     </a>
                 </li>
-                <li class="nav-father">
-                    <a href="#"
-                        class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
-                        Dahbia Wellness
-                    </a>
+                {{-- dropdown menu in Dahbia Nile Cruises
+                Jade Dahabia
+                Amber Dahabia
+                Dhabia Wellness
+                - Dahbia Private
+                --}}
+                <li class="relative group nav-father">
+                    <div
+                        class="inline-flex items-center gap-1 py-2 cursor-pointer transition-all duration-200 hover:text-green-zomp">
+                        <span>Dahbia Nile Cruises</span>
+                        <span class="iconify text-dark-grey" data-icon="meteor-icons:angle-down" data-width="18"
+                            data-height="18"></span>
+                    </div>
+                    <div
+                        class="nav-wrapper lg:absolute lg:p-5 lg:w-60 lg:left-0 lg:top-8 bg-white lg:shadow-custom lg:rounded-custom lg:opacity-0 lg:invisible lg:transition-all lg:group-hover:opacity-100 lg:group-hover:visible z-[999] border border-light-grey lg:border-none mt-2 lg:mt-0">
+                        <ul class="nav-menu space-y-2.5">
+                            <li class="nav-items cursor-pointer hover:text-green-zomp transition-all duration-200">
+                                <a href="#">Jade Dahabia</a>
+                            </li>
+                            <li class="nav-items cursor-pointer hover:text-green-zomp transition-all duration-200">
+                                <a href="#">Amber Dahabia</a>
+                            </li>
+                            <li class="nav-items cursor-pointer hover:text-green-zomp transition-all duration-200">
+                                <a href="#">Dhabia Wellness</a>
+                            </li>
+                            <li class="nav-items cursor-pointer hover:text-green-zomp transition-all duration-200">
+                                <a href="#">Dahbia Private</a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+
                 <li>
                     <a href="#"
                         class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
-                        Dahbia Private
-                    </a>
-                </li>
-                <li>
-                    <a href="#"
-                        class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
-                        Egypt Tours
+                        Tour Egypt Packages
                     </a>
                 </li>
                 <li>

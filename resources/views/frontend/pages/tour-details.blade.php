@@ -1,4 +1,19 @@
 @extends('frontend.layouts.master')
+@php
+    $metaTitle = $tour->meta_title ?? $tour->title;
+    $metaDescription = $tour->meta_description ?? ($tour->short_description ? \Illuminate\Support\Str::limit(strip_tags($tour->short_description), 160) : 'Discover amazing tours and travel experiences. Book your next adventure with us.');
+    $metaImage = $tour->cover_image ? asset('uploads/tours/' . $tour->cover_image) : null;
+@endphp
+@section('meta_title', $metaTitle)
+@if($metaDescription)
+@section('meta_description', $metaDescription)
+@endif
+@if($tour->meta_keywords)
+@section('meta_keywords', $tour->meta_keywords)
+@endif
+@if($metaImage)
+@section('meta_image', $metaImage)
+@endif
 
 @section('content')
     <section id="scroll-nav" class="[box-shadow:0px_9px_16px_0px_#0000001F] py-6 px-10 bg-white hidden">
@@ -13,10 +28,14 @@
                     To Expect</a>
             </li>
 
-            <li>
-                <a href="#faqs"
-                    class="text-dark-grey font-semibold [&.active]:text-green-zomp transition duration-200 before:content-[''] before:absolute before:left-0 before:-bottom-1 before:w-full before:h-[2px] before:scale-x-0 before:bg-green-zomp before:transition before:duration-200 [&.active]:before:scale-x-100 relative">Faqs</a>
-            </li>
+            @if($tour->seasonalPrices->count() > 0)
+                <li>
+                    <a href="#prices-accommodation"
+                        class="text-dark-grey font-semibold [&.active]:text-green-zomp transition duration-200 before:content-[''] before:absolute before:left-0 before:-bottom-1 before:w-full before:h-[2px] before:scale-x-0 before:bg-green-zomp before:transition before:duration-200 [&.active]:before:scale-x-100 relative">
+                        Prices
+                    </a>
+                </li>
+            @endif
             <li>
                 <a href="#reviews"
                     class="text-dark-grey font-semibold [&.active]:text-green-zomp transition duration-200 before:content-[''] before:absolute before:left-0 before:-bottom-1 before:w-full before:h-[2px] before:scale-x-0 before:bg-green-zomp before:transition before:duration-200 [&.active]:before:scale-x-100 relative">Reviews</a>

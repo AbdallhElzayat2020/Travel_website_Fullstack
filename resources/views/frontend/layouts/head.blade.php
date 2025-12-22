@@ -28,19 +28,44 @@
     <!-- Daterangepicker -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    @php
+        $currentUrl = url()->current();
+    @endphp
+
     <title>@hasSection('meta_title')@yield('meta_title')@else Travel Website @endif</title>
-    @hasSection('meta_title')
-        <meta name="title" content="@yield('meta_title')">
-    @endif
-    @hasSection('meta_description')
-        <meta name="description" content="@yield('meta_description')">
-    @endif
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="@hasSection('meta_title')@yield('meta_title')@else Travel Website @endif">
+    <meta name="description"
+        content="@hasSection('meta_description')@yield('meta_description')@else Discover amazing travel destinations and book your next adventure with us. @endif">
     @hasSection('meta_author')
         <meta name="author" content="@yield('meta_author')">
     @endif
     @hasSection('meta_keywords')
         <meta name="keywords" content="@yield('meta_keywords')">
     @endif
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <link rel="canonical" href="{{ $currentUrl }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ $currentUrl }}">
+    <meta property="og:title" content="@hasSection('meta_title')@yield('meta_title')@else Travel Website @endif">
+    <meta property="og:description"
+        content="@hasSection('meta_description')@yield('meta_description')@else Discover amazing travel destinations and book your next adventure with us. @endif">
+    <meta property="og:image"
+        content="@hasSection('meta_image')@yield('meta_image')@else {{ asset('assets/frontend/assets/images/hero-banner.png') }} @endif">
+    <meta property="og:site_name" content="{{ config('app.name', 'Travel Website') }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ $currentUrl }}">
+    <meta name="twitter:title" content="@hasSection('meta_title')@yield('meta_title')@else Travel Website @endif">
+    <meta name="twitter:description"
+        content="@hasSection('meta_description')@yield('meta_description')@else Discover amazing travel destinations and book your next adventure with us. @endif">
+    <meta name="twitter:image"
+        content="@hasSection('meta_image')@yield('meta_image')@else {{ asset('assets/frontend/assets/images/hero-banner.png') }} @endif">
     <style>
         #announcement-bar {
             position: relative;
