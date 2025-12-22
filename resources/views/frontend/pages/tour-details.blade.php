@@ -627,16 +627,15 @@
                                             </div>
                                         @enderror
 
-                                        <p class="mb-5 font-semibold text-black">Total = $<span
-                                                id="total-price">{{ number_format($hasSeasonalPrices ? $basePrice : 0, 2) }}</span>
+                                        <p class="mb-5 font-semibold text-black">Total: $<span
+                                                id="total-price">{{ number_format($basePrice, 2) }}</span>
                                         </p>
-                                        <input type="hidden" id="base-tour-price"
-                                            value="{{ $hasSeasonalPrices ? $basePrice : 0 }}">
+                                        <input type="hidden" id="base-tour-price" value="{{ $basePrice }}">
                                         <input type="hidden" id="accommodation-type-id" name="accommodation_type_id"
                                             value="{{ old('accommodation_type_id') }}">
                                         <input type="hidden" id="selected-variants" name="selected_variants" value="">
                                         <input type="hidden" id="total-price-input" name="total_price"
-                                            value="{{ old('total_price', $hasSeasonalPrices ? $basePrice : 0) }}">
+                                            value="{{ old('total_price', $basePrice) }}">
                                         <button type="submit"
                                             class="text-white font-semibold py-4 px-6 w-full bg-green-zomp rounded-[200px] transition duration-200 hover:bg-green-zomp-hover hover:-translate-y-[5px]">Booking
                                             Now</button>

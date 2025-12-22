@@ -119,7 +119,7 @@
 
         .nav-dropdown li a:hover {
             background-color: #f2f4f4;
-            color: #846A4F;
+            color: #8b7138;
         }
 
         /* Width for all navbar dropdown menus */

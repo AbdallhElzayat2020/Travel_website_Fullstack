@@ -9,8 +9,8 @@
 }
 
 .category-hot {
-    background-color: #e6f7f4;
-    color: #01806c;
+    background-color: #f5f0e8;
+    color: #8b7138;
 }
 
 .category-adventure {
@@ -37,7 +37,7 @@
     }
 
     .swiper-pagination-bullet-active {
-        background-color: #01aa90 !important;
+        background-color: #8b7138 !important;
     }
 }
 
@@ -51,7 +51,7 @@
         width: 32px !important;
         height: 10px !important;
         border-radius: 5px;
-        background-color: #01aa90;
+        background-color: #8b7138;
     }
 }
 
@@ -62,7 +62,7 @@
         }
 
         .swiper-slide-thumb-active {
-            border: 2px solid #01aa90;
+            border: 2px solid #8b7138;
             border-radius: 8px;
 
             img {
@@ -79,7 +79,7 @@
         }
 
         .swiper-slide-thumb-active {
-            border: 2px solid #01aa90;
+            border: 2px solid #8b7138;
             border-radius: 8px;
 
             img {
@@ -114,7 +114,7 @@
     height: 24px !important;
     border-radius: 100% !important;
     box-shadow: none !important;
-    border: 2px solid #01aa90;
+    border: 2px solid #8b7138;
 
     &::before {
         display: none !important;
@@ -255,9 +255,7 @@
         z-index: 999;
         opacity: 0;
         visibility: hidden;
-        transition:
-            opacity 0.3s ease,
-            visibility 0.3s ease;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .overlay-for-sidebar.active {

@@ -32,7 +32,7 @@
                             @endif
                             @if ($slider->link && $slider->button_text)
                                 <a href="{{ $slider->link }}"
-                                    class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#50d8c8] hover:-translate-y-1">
+                                    class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#7a6230] hover:-translate-y-1">
                                     {{ $slider->button_text }}
                                 </a>
                             @endif
@@ -428,7 +428,7 @@
                         <input type="email" name="email" placeholder="Your email address" required
                             class="flex-1 text-dark-grey font-normal py-3 px-6 rounded-full focus:outline-none" />
                         <button type="submit"
-                            class="bg-green-zomp py-3 px-6 text-white font-semibold rounded-full whitespace-nowrap transition duration-200 hover:-translate-y-[5px] hover:bg-[#50d8c8]">Sign
+                            class="bg-green-zomp py-3 px-6 text-white font-semibold rounded-full whitespace-nowrap transition duration-200 hover:-translate-y-[5px] hover:bg-[#7a6230]">Sign
                             Up
                         </button>
                     </form>

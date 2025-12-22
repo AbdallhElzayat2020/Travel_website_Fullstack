@@ -34,9 +34,9 @@
     <section class="mb-[60px] md:mb-24">
         <div class="container p-6 md:p-[60px] xl:p-[120px] relative overflow-hidden bg-[#f2f4f4] rounded-2xl">
             <div class="absolute inset-0 z-0" style="background-image: url('{{ asset('assets/frontend/assets/images/about-us-bg-form.png') }}');
-                                                        background-position: center center;
-                                                        background-repeat: repeat;
-                                                        opacity: 0.79;">
+                                                            background-position: center center;
+                                                            background-repeat: repeat;
+                                                            opacity: 0.79;">
             </div>
             <div class="grid md:grid-cols-2 gap-10 md:gap-[60px] items-start relative z-10">
                 <div class="wrapper">
@@ -209,17 +209,17 @@
                     </div>
                     <ul class="space-x-4 flex items-center mb-6">
                         <li
-                            class="group cursor-pointer w-[50px] h-[50px] rounded-md flex items-center justify-center p-2 bg-[#EBFEF5] transition duration-200 hover:bg-green-zomp">
+                            class="group cursor-pointer w-[50px] h-[50px] rounded-md flex items-center justify-center p-2 bg-[#f5f0e8] transition duration-200 hover:bg-green-zomp">
                             <span class="iconify text-green-zomp group-hover:text-white" data-icon="mdi:facebook"
                                 data-width="26" data-height="26"></span>
                         </li>
                         <li
-                            class="group cursor-pointer w-[50px] h-[50px] rounded-md flex items-center justify-center p-2 bg-[#EBFEF5] transition duration-200 hover:bg-green-zomp">
+                            class="group cursor-pointer w-[50px] h-[50px] rounded-md flex items-center justify-center p-2 bg-[#f5f0e8] transition duration-200 hover:bg-green-zomp">
                             <span class="iconify text-green-zomp group-hover:text-white" data-icon="mdi:instagram"
                                 data-width="26" data-height="26"></span>
                         </li>
                         <li
-                            class="group cursor-pointer w-[50px] h-[50px] rounded-md flex items-center justify-center p-2 bg-[#EBFEF5] transition duration-200 hover:bg-green-zomp">
+                            class="group cursor-pointer w-[50px] h-[50px] rounded-md flex items-center justify-center p-2 bg-[#f5f0e8] transition duration-200 hover:bg-green-zomp">
                             <span class="iconify text-green-zomp group-hover:text-white" data-icon="ri:twitter-x-fill"
                                 data-width="26" data-height="26"></span>
                         </li>
