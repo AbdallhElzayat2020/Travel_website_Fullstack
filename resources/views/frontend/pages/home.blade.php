@@ -55,9 +55,9 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
                 @endforelse
             </div>
             <!-- Navigation buttons -->
-            <div class="swiper-button-next hero-swiper-next !text-white !w-12 !h-12 !mt-0 rounded-full p-2 bg-white/20 backdrop-blur-sm transition duration-200 hover:!bg-white/30"
+            <div class="swiper-button-next hero-swiper-next !text-white !w-12 !h-12 !mt-0 rounded-full p-2 bg-[#8B6F47] transition duration-200 hover:!bg-[#7a6230]"
                 style="--swiper-navigation-size: 20px"></div>
-            <div class="swiper-button-prev hero-swiper-prev !text-white !w-12 !h-12 !mt-0 rounded-full p-2 bg-white/20 backdrop-blur-sm transition duration-200 hover:!bg-white/30"
+            <div class="swiper-button-prev hero-swiper-prev !text-white !w-12 !h-12 !mt-0 rounded-full p-2 bg-[#8B6F47] transition duration-200 hover:!bg-[#7a6230]"
                 style="--swiper-navigation-size: 20px"></div>
             <!-- Pagination -->
             <div class="swiper-pagination hero-swiper-pagination !bottom-6"></div>
