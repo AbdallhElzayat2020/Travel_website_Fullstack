@@ -5,7 +5,8 @@
         </div>
         <div class="header-logo flex items-center gap-2">
             <a href="{{ route('home') }}">
-                <img src="{{ asset('assets/frontend/assets/images/logo_master.webp') }}" alt="Logo" class="w-auto h-12">
+                <img src="{{ asset('assets/frontend/assets/images/logo_master.webp') }}" alt="Logo"
+                    class="w-auto h-[60px]">
             </a>
         </div>
         <nav class="header-menu mx-3 lg:mx-9 relative w-full">

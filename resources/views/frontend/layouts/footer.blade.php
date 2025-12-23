@@ -2,8 +2,8 @@
     <div class="container">
         <div class="flex flex-wrap md:flex-nowrap justify-between gap-5 md:gap-6 py-6 md:py-12">
             <div class="w-full md:w-[35%] mb-10 md:mb-0">
-                <img src="{{ asset('assets/frontend/assets/images/logo_mm.png') }}" alt="Logo"
-                    class="h-[50px] w-auto mb-7" />
+                <img src="{{ asset('assets/frontend/assets/images/logo_white.webp') }}" alt="Logo"
+                    class="h-[60px] w-auto mb-7" />
                 <p class="text-white-grey font-medium mb-10">Don't just get there, get there in style.</p>
                 <ul class="space-y-2 text-grey">
                     <li class="flex items-start gap-2">
