@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 @php
-    $homePage = \App\Models\Page::getBySlug('home');
-    $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home Page';
+$homePage = \App\Models\Page::getBySlug('home');
+$metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home Page';
 @endphp
 @section('meta_title', $metaTitle)
 @if($homePage && $homePage->meta_description)
@@ -15,6 +15,7 @@
 @endif
 
 @section('content')
+    {{-- sliders --}}
     <section class="mx-4 md:mx-6 mb-[60px] md:mb-24">
         <div class="swiper hero-swiper rounded-[32px] overflow-hidden">
             <div class="swiper-wrapper">
@@ -62,34 +63,35 @@
             <div class="swiper-pagination hero-swiper-pagination !bottom-6"></div>
         </div>
     </section>
+    {{-- sliders --}}
 
     {{-- icons section --}}
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                 <div class="text-center items">
-                    <img src="{{ asset('assets/frontend/assets/images/features-01.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/features-01.webp') }}" alt=""
                         class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Discover the possibilities</h4>
                     <p class="text-dark-grey">With nearly half a million attractions, <br /> hotels & more, you're sure
                         to find joy.</p>
                 </div>
                 <div class="text-center items">
-                    <img src="{{ asset('assets/frontend/assets/images/features-02.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/features-02.webp') }}" alt=""
                         class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Enjoy deals & delights</h4>
                     <p class="text-dark-grey">Quality activities. Great prices. Plus, <br /> earn credits to save more.
                     </p>
                 </div>
                 <div class="text-center items">
-                    <img src="{{ asset('assets/frontend/assets/images/features-03.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/features-03.webp') }}" alt=""
                         class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Exploring made easy</h4>
                     <p class="text-dark-grey">Book last minute, skip lines & get free <br /> cancellation for easier
                         exploring.</p>
                 </div>
                 <div class="text-center items">
-                    <img src="{{ asset('assets/frontend/assets/images/features-04.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/features-04.webp') }}" alt=""
                         class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Travel you can trust</h4>
                     <p class="text-dark-grey">Read reviews & get reliable customer <br /> support. We're with you at
@@ -237,9 +239,9 @@
                 <div class="grid md:grid-cols-2 gap-4 md:gap-6">
                     @foreach ($offerTours as $tour)
                         @php
-                            $offerCover = $tour->cover_image
-                                ? asset('uploads/tours/' . $tour->cover_image)
-                                : asset('assets/frontend/assets/images/inspire-01.png');
+        $offerCover = $tour->cover_image
+            ? asset('uploads/tours/' . $tour->cover_image)
+            : asset('assets/frontend/assets/images/inspire-01.png');
                         @endphp
                         <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
                             style="background-image: url('{{ $offerCover }}');">
@@ -292,41 +294,41 @@
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     @forelse($activeTours as $tour)
                         @php
-                            $coverImage = $tour->cover_image
-                                ? asset('uploads/tours/' . $tour->cover_image)
-                                : asset('assets/frontend/assets/images/blogs/01.png');
+        $coverImage = $tour->cover_image
+            ? asset('uploads/tours/' . $tour->cover_image)
+            : asset('assets/frontend/assets/images/blogs/01.png');
 
-                            $isOnSale = $tour->has_offer && $tour->isOfferActive();
-                            $currentPrice =
-                                $isOnSale && $tour->price_after_discount ? $tour->price_after_discount : $tour->price;
-                            $oldPrice = $isOnSale && $tour->price_before_discount ? $tour->price_before_discount : null;
+        $isOnSale = $tour->has_offer && $tour->isOfferActive();
+        $currentPrice =
+            $isOnSale && $tour->price_after_discount ? $tour->price_after_discount : $tour->price;
+        $oldPrice = $isOnSale && $tour->price_before_discount ? $tour->price_before_discount : null;
 
-                            // Location
-                            $locationParts = [];
-                            if ($tour->category) {
-                                $locationParts[] = $tour->category->name;
-                            }
-                            if ($tour->country) {
-                                $locationParts[] = $tour->country->name;
-                            }
-                            $location = implode(', ', $locationParts);
+        // Location
+        $locationParts = [];
+        if ($tour->category) {
+            $locationParts[] = $tour->category->name;
+        }
+        if ($tour->country) {
+            $locationParts[] = $tour->country->name;
+        }
+        $location = implode(', ', $locationParts);
 
-                            // Duration
-                            $durationText =
-                                $tour->duration .
-                                ' ' .
-                                ($tour->duration_type === 'days'
-                                    ? ($tour->duration == 1
-                                        ? 'day'
-                                        : 'days')
-                                    : ($tour->duration == 1
-                                        ? 'hour'
-                                        : 'hours'));
-                            if ($tour->duration_type === 'days' && $tour->duration > 1) {
-                                $nights = $tour->duration - 1;
-                                $durationText =
-                                    $tour->duration . ' days ' . $nights . ' ' . ($nights == 1 ? 'night' : 'nights');
-                            }
+        // Duration
+        $durationText =
+            $tour->duration .
+            ' ' .
+            ($tour->duration_type === 'days'
+                ? ($tour->duration == 1
+                    ? 'day'
+                    : 'days')
+                : ($tour->duration == 1
+                    ? 'hour'
+                    : 'hours'));
+        if ($tour->duration_type === 'days' && $tour->duration > 1) {
+            $nights = $tour->duration - 1;
+            $durationText =
+                $tour->duration . ' days ' . $nights . ' ' . ($nights == 1 ? 'night' : 'nights');
+        }
                         @endphp
                         <article class="relative overflow-hidden transition duration-200">
                             <div class="bg-white border rounded-2xl border-light-grey">
@@ -445,9 +447,9 @@
                 <div class="swiper-wrapper">
                     @foreach ($homeGalleries as $gallery)
                         @php
-                            $cover = $gallery->cover_image
-                                ? asset('uploads/galleries/' . $gallery->cover_image)
-                                : asset('assets/frontend/assets/images/gallery-placeholder.png');
+        $cover = $gallery->cover_image
+            ? asset('uploads/galleries/' . $gallery->cover_image)
+            : asset('assets/frontend/assets/images/gallery-placeholder.png');
                         @endphp
                         <div class="swiper-slide">
                             <a href="{{ route('galleries.show', $gallery->slug) }}">
@@ -479,12 +481,12 @@
                     <div class="swiper-wrapper">
                         @forelse($blogs as $blog)
                             @php
-                                $blogCover = $blog->cover_image
-                                    ? asset('uploads/blogs/' . $blog->cover_image)
-                                    : asset('assets/frontend/assets/images/blogs/01.png');
-                                $blogDate = $blog->published_at
-                                    ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y')
-                                    : '';
+    $blogCover = $blog->cover_image
+        ? asset('uploads/blogs/' . $blog->cover_image)
+        : asset('assets/frontend/assets/images/blogs/01.png');
+    $blogDate = $blog->published_at
+        ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y')
+        : '';
                             @endphp
                             <div class="swiper-slide">
                                 <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
