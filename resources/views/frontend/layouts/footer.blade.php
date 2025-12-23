@@ -16,7 +16,7 @@
                     </li>
                     <li class="flex items-center gap-2">
                         <span class="iconify" data-icon="carbon:email" data-width="20" data-height="20"></span>
-                        <p>hello@travelwp.com</p>
+                        <p>info@grandnilecruises.com</p>
                     </li>
                 </ul>
             </div>
