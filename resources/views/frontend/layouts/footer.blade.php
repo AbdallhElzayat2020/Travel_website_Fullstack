@@ -8,11 +8,11 @@
                 <ul class="space-y-2 text-grey">
                     <li class="flex items-start gap-2">
                         <span class="iconify" data-icon="ep:location" data-width="20" data-height="20"></span>
-                        <p>1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
+                        <p>Sarayah Zayed 2 Building, Apartment 1,<br>8th District<br>Sheikh Zayed City - Giza</p>
                     </li>
                     <li class="flex items-center gap-2">
                         <span class="iconify" data-icon="ph:phone-call" data-width="20" data-height="20"></span>
-                        <p>(308) 555-0121</p>
+                        <p>+20 101 515 7744 / +20 101 515 7746</p>
                     </li>
                     <li class="flex items-center gap-2">
                         <span class="iconify" data-icon="carbon:email" data-width="20" data-height="20"></span>
@@ -73,14 +73,9 @@
                         <span class="iconify text-white" data-icon="mdi:instagram" data-width="22"
                             data-height="22"></span>
                     </li>
-                    <li class="w-10 h-10 rounded-full flex items-center justify-center p-2.5 bg-[#FF0000]">
-                        <span class="iconify text-white" data-icon="ri:youtube-line" data-width="22"
-                            data-height="22"></span>
-                    </li>
 
                 </ul>
 
-                <h6 class="text-white font-bold mb-6">Follow Us</h6>
             </div>
         </div>
 
