@@ -86,7 +86,7 @@
 
         <div class="h-px w-full bg-stroke"></div>
         <div class="py-[22px] text-center text-grey">
-            <p>Copyright © {{ date('Y') }} Egypt Tours. All Rights Reserved.</p>
+            <p>Copyright © {{ date('Y') }} Grand Nile Cruises. All Rights Reserved.</p>
         </div>
     </div>
 </footer>
