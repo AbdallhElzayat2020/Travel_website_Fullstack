@@ -22,18 +22,48 @@
             </div>
 
             <div class="w-1/2 md:w-1/5 min-w-[150px] mb-10 md:mb-0">
-                <h6 class="text-white font-bold mb-6">Top Destination</h6>
+                <h6 class="text-white font-bold mb-6">Quick Links</h6>
                 <ul class="space-y-4 text-grey">
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Tokyo</a></li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Los Angeles</a>
-                    </li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Rome</a></li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Amsterdam</a></li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">San Francisco</a>
-                    </li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">London</a></li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">More
-                            Destinations</a></li>
+                    @php
+                        // Get categories in specific order
+                        $footerCategories = \App\Models\Category::whereIn('slug', ['nile-cruises', 'dahbia-tours', 'tour-egypt-packages'])
+                            ->where('status', 'active')
+                            ->orderByRaw("FIELD(slug, 'nile-cruises', 'dahbia-tours', 'tour-egypt-packages')")
+                            ->get();
+
+                        // Get cruise experiences
+                        $footerCruises = \App\Models\CruiseExperience::active()
+                            ->orderBy('sort_order')
+                            ->get();
+                    @endphp
+
+                    {{-- Display Category: Nile Cruises --}}
+                    @foreach($footerCategories as $category)
+                        @if($category->slug === 'nile-cruises')
+                            <li>
+                                <a href="{{ route('tours.category', $category->slug) }}"
+                                    class="hover:text-green-zomp transition duration-200">{{ $category->name }}</a>
+                            </li>
+                        @endif
+                    @endforeach
+
+                    {{-- Display Cruise Experiences (Dahbia Cruises) --}}
+                    @foreach($footerCruises as $cruise)
+                        <li>
+                            <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
+                                class="hover:text-green-zomp transition duration-200">{{ $cruise->title }}</a>
+                        </li>
+                    @endforeach
+
+                    {{-- Display Other Categories --}}
+                    @foreach($footerCategories as $category)
+                        @if($category->slug !== 'nile-cruises')
+                            <li>
+                                <a href="{{ route('tours.category', $category->slug) }}"
+                                    class="hover:text-green-zomp transition duration-200">{{ $category->name }}</a>
+                            </li>
+                        @endif
+                    @endforeach
                 </ul>
             </div>
 
