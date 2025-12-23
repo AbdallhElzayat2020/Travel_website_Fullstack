@@ -25,12 +25,12 @@
                 <h6 class="text-white font-bold mb-6">Quick Links</h6>
                 <ul class="space-y-4 text-grey">
                     {{-- Display Cruise Experiences from shared data --}}
-                    @foreach($sharedCruiseExperiences as $cruise)
-                        <li>
-                            <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
-                                class="hover:text-green-zomp transition duration-200">{{ $cruise->title }}</a>
-                        </li>
-                    @endforeach
+                    {{-- @foreach($sharedCruiseExperiences as $cruise)
+                    <li>
+                        <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
+                            class="hover:text-green-zomp transition duration-200">{{ $cruise->title }}</a>
+                    </li>
+                    @endforeach --}}
 
                     {{-- Display Categories from shared data --}}
                     @foreach($sharedCategories as $category)
