@@ -22,7 +22,7 @@ Route::get('/galleries', [GalleryController::class, 'index'])
     ->name('galleries.index');
 Route::get('/galleries/{slug}', [GalleryController::class, 'show'])
     ->name('galleries.show');
-Route::get('/', [BlogController::class, 'index'])
+Route::get('/blog', [BlogController::class, 'index'])
     ->name('blogs.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])
     ->name('blogs.show');
