@@ -10,43 +10,42 @@ class CruiseExperienceController extends Controller
     /**
      * Show main Nile cruise page (first active cruise experience).
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
         $experience = CruiseExperience::active()
-            ->with([
-                'images',
-                'tours' => function ($query) {
-                    $query->active()
-                        ->with(['category', 'country'])
-                        ->orderBy('sort_order')
-                        ->latest();
-                },
-            ])
+            ->with(['images'])
             ->orderBy('sort_order')
             ->firstOrFail();
 
-        // Reuse the same view structure as individual cruise pages
-        return view('frontend.pages.nile-cruises.show', compact('experience'));
+        // Get only the selected related tours
+        $relatedTours = $experience->tours()
+            ->active()
+            ->with(['category', 'country', 'state'])
+            ->orderBy('sort_order')
+            ->latest()
+            ->paginate(15);
+
+        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours'));
     }
 
     /**
      * Show a single cruise experience page.
      */
-    public function show(string $slug)
+    public function show(\Illuminate\Http\Request $request, string $slug)
     {
         $experience = CruiseExperience::active()
-            ->with([
-                'images',
-                'tours' => function ($query) {
-                    $query->active()
-                        ->with(['category', 'country'])
-                        ->orderBy('sort_order')
-                        ->latest();
-                },
-            ])
+            ->with(['images'])
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return view('frontend.pages.nile-cruises.show', compact('experience'));
+        // Get only the selected related tours
+        $relatedTours = $experience->tours()
+            ->active()
+            ->with(['category', 'country', 'state'])
+            ->orderBy('sort_order')
+            ->latest()
+            ->paginate(15);
+
+        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours'));
     }
 }

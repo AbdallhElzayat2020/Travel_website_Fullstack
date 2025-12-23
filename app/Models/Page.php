@@ -9,10 +9,18 @@ class Page extends Model
     protected $fillable = [
         'slug',
         'name',
+        'content',
         'meta_title',
         'meta_description',
         'meta_author',
         'meta_keywords',
+        'status',
+        'sort_order',
+    ];
+
+    protected $casts = [
+        'status' => 'string',
+        'sort_order' => 'integer',
     ];
 
     /**

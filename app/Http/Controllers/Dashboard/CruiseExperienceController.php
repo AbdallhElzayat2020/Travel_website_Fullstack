@@ -30,11 +30,11 @@ class CruiseExperienceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         $tours = Tour::active()
             ->orderBy('title')
-            ->get();
+            ->paginate(15);
 
         return view('dashboard.cruise-experiences.create', compact('tours'));
     }
@@ -117,7 +117,7 @@ class CruiseExperienceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         $experience = CruiseExperience::with('images', 'tours')->findOrFail($id);
         $tours = Tour::active()->orderBy('title')->get();

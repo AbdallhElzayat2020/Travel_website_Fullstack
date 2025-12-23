@@ -537,7 +537,13 @@
                                         <table class="info-table">
                                             <tr>
                                                 <th>Category</th>
-                                                <td>{{ $tour->category->name }}</td>
+                                                <td>
+                                                    @if($tour->category)
+                                                        {{ $tour->category->name }}
+                                                    @else
+                                                        <span class="text-muted">No Category</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             @if($tour->subCategory)
                                                 <tr>
@@ -547,12 +553,24 @@
                                             @endif
                                             <tr>
                                                 <th>Country</th>
-                                                <td>{{ $tour->country->name }}</td>
+                                                <td>
+                                                    @if($tour->country)
+                                                        {{ $tour->country->name }}
+                                                    @else
+                                                        <span class="text-muted">No Country</span>
+                                                    @endif
+                                                </td>
                                             </tr>
                                             @if($tour->state)
                                                 <tr>
                                                     <th>State</th>
-                                                    <td>{{ $tour->state->name }}</td>
+                                                    <td>
+                                                        @if($tour->state)
+                                                            {{ $tour->state->name }}
+                                                        @else
+                                                            <span class="text-muted">No State</span>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             @endif
                                             <tr>

@@ -13,6 +13,12 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        // List of allowed category slugs (only these will be kept)
+        $allowedSlugs = ['nile-cruises', 'dahbia-tours', 'tour-egypt-packages'];
+
+        // Delete all categories that are not in the allowed list
+        Category::whereNotIn('slug', $allowedSlugs)->delete();
+
         $categories = [
             [
                 'name' => 'Nile Cruises',
@@ -56,98 +62,37 @@ class CategorySeeder extends Seeder
                 'show_breadcrumb' => true,
                 'show_description' => true,
             ],
-            [
-                'name' => 'Adventure Tours',
-                'slug' => 'adventure-tours',
-                'description' => 'Exciting adventure tours and activities',
-                'image' => 'destination-04.png',
-                'status' => 'active',
-                'sort_order' => 4,
-                'grid_columns' => '4',
-                'header_background_color' => '#ffffff',
-                'header_text_color' => '#000000',
-                'card_style' => 'default',
-                'show_breadcrumb' => true,
-                'show_description' => true,
-            ],
-            [
-                'name' => 'Beach Holidays',
-                'slug' => 'beach-holidays',
-                'description' => 'Relaxing beach destinations',
-                'image' => 'destination-05.png',
-                'status' => 'active',
-                'sort_order' => 5,
-                'grid_columns' => '3',
-                'header_background_color' => '#e3f2fd',
-                'header_text_color' => '#000000',
-                'card_style' => 'modern',
-                'show_breadcrumb' => true,
-                'show_description' => true,
-            ],
-            [
-                'name' => 'Cultural Tours',
-                'slug' => 'cultural-tours',
-                'description' => 'Explore rich cultural heritage',
-                'image' => 'destination-06.png',
-                'status' => 'active',
-                'sort_order' => 6,
-                'grid_columns' => '4',
-                'header_background_color' => '#ffffff',
-                'header_text_color' => '#000000',
-                'card_style' => 'default',
-                'show_breadcrumb' => true,
-                'show_description' => true,
-            ],
-            [
-                'name' => 'Mountain Expeditions',
-                'slug' => 'mountain-expeditions',
-                'description' => 'Mountain climbing and hiking tours',
-                'image' => 'destination-07.png',
-                'status' => 'active',
-                'sort_order' => 7,
-                'grid_columns' => '3',
-                'header_background_color' => '#ffffff',
-                'header_text_color' => '#000000',
-                'card_style' => 'classic',
-                'show_breadcrumb' => true,
-                'show_description' => true,
-            ],
-            [
-                'name' => 'City Breaks',
-                'slug' => 'city-breaks',
-                'description' => 'Urban exploration and city tours',
-                'image' => 'destination-08.png',
-                'status' => 'active',
-                'sort_order' => 8,
-                'grid_columns' => '4',
-                'header_background_color' => '#ffffff',
-                'header_text_color' => '#000000',
-                'card_style' => 'default',
-                'show_breadcrumb' => true,
-                'show_description' => true,
-            ],
         ];
 
         foreach ($categories as $categoryData) {
             $image = $categoryData['image'] ?? null;
             unset($categoryData['image']);
 
+            // Check if image exists before creating category
+            if ($image) {
+                $sourcePath = public_path('assets/frontend/assets/images/' . $image);
+                if (!file_exists($sourcePath)) {
+                    // Skip this category if image doesn't exist
+                    continue;
+                }
+            } else {
+                // Skip categories without images
+                continue;
+            }
+
             $category = Category::firstOrCreate(
                 ['slug' => $categoryData['slug']],
                 $categoryData
             );
 
-            // Copy image if provided
+            // Copy image if provided and category doesn't have image
             if ($image && !$category->image) {
-                $sourcePath = public_path('assets/frontend/assets/images/' . $image);
-                if (file_exists($sourcePath)) {
-                    $destinationPath = public_path('uploads/categories/' . $image);
-                    if (!file_exists(public_path('uploads/categories'))) {
-                        mkdir(public_path('uploads/categories'), 0755, true);
-                    }
-                    copy($sourcePath, $destinationPath);
-                    $category->update(['image' => $image]);
+                $destinationPath = public_path('uploads/categories/' . $image);
+                if (!file_exists(public_path('uploads/categories'))) {
+                    mkdir(public_path('uploads/categories'), 0755, true);
                 }
+                copy($sourcePath, $destinationPath);
+                $category->update(['image' => $image]);
             }
         }
 

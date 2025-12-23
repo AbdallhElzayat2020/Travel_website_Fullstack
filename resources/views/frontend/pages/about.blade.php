@@ -142,90 +142,7 @@
         </div>
     </section>
 
-    <section class="py-[60px] xl:py-[120px] bg-green-light">
-        <div class="container">
-            <div class="md:max-w-[670px] mx-auto text-center mb-10 md:mb-[60px]">
-                <h2 class="text-black text-3xl sm:text-[45px] xl:text-[56px] font-bold leading-[1.1em] mb-7 capitalize">
-                    Experienced professionals with best service</h2>
-                <p class="text-dark-grey">Our team consists of experienced professionals and is highly committed to
-                    providing the best service to our customers.</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-                <div class="relative group overflow-hidden rounded-2xl">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/10.png') }}" alt=""
-                        class="w-full h-auto object-cover rounded-2xl" />
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style="background: linear-gradient(180deg, rgba(12, 20, 29, 0.028125) 54.09%, rgba(12, 20, 29, 0.117) 66.22%, rgba(12, 20, 29, 0.9) 100%);">
-                    </div>
-                    <div
-                        class="absolute bottom-6 left-6 text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
-                        <h4 class="text-[32px] font-bold">John Marvel</h4>
-                        <p class="text-xl font-semibold">Travel Expert Team</p>
-                    </div>
-                </div>
-                <div class="relative group overflow-hidden rounded-2xl">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/11.png') }}" alt=""
-                        class="w-full h-auto object-cover rounded-2xl" />
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style="background: linear-gradient(180deg, rgba(12, 20, 29, 0.028125) 54.09%, rgba(12, 20, 29, 0.117) 66.22%, rgba(12, 20, 29, 0.9) 100%);">
-                    </div>
-                    <div
-                        class="absolute bottom-6 left-6 text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
-                        <h4 class="text-[32px] font-bold">John Marvel</h4>
-                        <p class="text-xl font-semibold">Travel Expert Team</p>
-                    </div>
-                </div>
-                <div class="relative group overflow-hidden rounded-2xl">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/12.png') }}" alt=""
-                        class="w-full h-auto object-cover rounded-2xl" />
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style="background: linear-gradient(180deg, rgba(12, 20, 29, 0.028125) 54.09%, rgba(12, 20, 29, 0.117) 66.22%, rgba(12, 20, 29, 0.9) 100%);">
-                    </div>
-                    <div
-                        class="absolute bottom-6 left-6 text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
-                        <h4 class="text-[32px] font-bold">John Marvel</h4>
-                        <p class="text-xl font-semibold">Travel Expert Team</p>
-                    </div>
-                </div>
-                <div class="relative group overflow-hidden rounded-2xl">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/13.png') }}" alt=""
-                        class="w-full h-auto object-cover rounded-2xl" />
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style="background: linear-gradient(180deg, rgba(12, 20, 29, 0.028125) 54.09%, rgba(12, 20, 29, 0.117) 66.22%, rgba(12, 20, 29, 0.9) 100%);">
-                    </div>
-                    <div
-                        class="absolute bottom-6 left-6 text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
-                        <h4 class="text-[32px] font-bold">John Marvel</h4>
-                        <p class="text-xl font-semibold">Travel Expert Team</p>
-                    </div>
-                </div>
-                <div class="relative group overflow-hidden rounded-2xl">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/14.png') }}" alt=""
-                        class="w-full h-auto object-cover rounded-2xl" />
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style="background: linear-gradient(180deg, rgba(12, 20, 29, 0.028125) 54.09%, rgba(12, 20, 29, 0.117) 66.22%, rgba(12, 20, 29, 0.9) 100%);">
-                    </div>
-                    <div
-                        class="absolute bottom-6 left-6 text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
-                        <h4 class="text-[32px] font-bold">John Marvel</h4>
-                        <p class="text-xl font-semibold">Travel Expert Team</p>
-                    </div>
-                </div>
-                <div class="relative group overflow-hidden rounded-2xl">
-                    <img src="{{ asset('assets/frontend/assets/images/list-gallery/15.png') }}" alt=""
-                        class="w-full h-auto object-cover rounded-2xl" />
-                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        style="background: linear-gradient(180deg, rgba(12, 20, 29, 0.028125) 54.09%, rgba(12, 20, 29, 0.117) 66.22%, rgba(12, 20, 29, 0.9) 100%);">
-                    </div>
-                    <div
-                        class="absolute bottom-6 left-6 text-white opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
-                        <h4 class="text-[32px] font-bold">John Marvel</h4>
-                        <p class="text-xl font-semibold">Travel Expert Team</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <section class="py-[60px] xl:py-[120px] bg-white">
         <div class="container">
@@ -261,9 +178,9 @@
 
     <section class="relative py-[60px] xl:py-[120px] bg-[#f2f4f4] overflow-hidden">
         <div class="absolute inset-0 z-0" style="background-image: url('{{ asset('assets/frontend/assets/images/about-us-bg-form.png') }}');
-                                                                background-position: center center;
-                                                                background-repeat: repeat;
-                                                                opacity: 0.79;">
+                                                                    background-position: center center;
+                                                                    background-repeat: repeat;
+                                                                    opacity: 0.79;">
         </div>
         <div class="container relative z-10">
             <div class="grid xl:grid-cols-2 gap-10 xl:gap-24 items-center justify-center xl:justify-between">

@@ -15,11 +15,21 @@
 @endif
 
 @section('content')
+    <section class="py-10 lg:py-12 border border-t-light-grey border-r-0 border-b-0 border-l-0">
+        <div class="container">
+            <nav class="font-medium text-grey" aria-label="Breadcrumb">
+                <ul class="flex flex-wrap items-center gap-1 mb-2">
+                    <li><a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Home</a></li>
+                    <span class="mx-1">/</span>
+                    <li><span class="text-dark-grey">Galleries</span></li>
+                </ul>
+            </nav>
+            <h1 class="text-black text-[40px] font-bold leading-[1.1em] mb-2">{{ $metaTitle }}</h1>
+        </div>
+    </section>
+
     <section class="mb-[60px] md:mb-24">
         <div class="container">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
-                <h1 class="text-black font-bold text-[32px] leading-[1.1em] capitalize">{{ $metaTitle }}</h1>
-            </div>
 
             @if($galleries->count())
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">

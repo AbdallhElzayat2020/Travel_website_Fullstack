@@ -34,7 +34,7 @@ class AdminSeeder extends Seeder
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Administrator',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('1234'),
                 'role_id' => $adminRole->id,
                 'email_verified_at' => now(),
             ]
@@ -47,6 +47,6 @@ class AdminSeeder extends Seeder
 
         $this->command->info('Admin user created successfully!');
         $this->command->info('Email: admin@gmail.com');
-        $this->command->info('Password: password');
+        $this->command->info('Password: 1234');
     }
 }

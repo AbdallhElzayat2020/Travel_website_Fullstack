@@ -72,10 +72,9 @@ class HomeController extends Controller
             'name' => 'nullable|string|max:255',
         ]);
 
-        $existing = Subscriber::withTrashed()->where('email', $data['email'])->first();
+        $existing = Subscriber::where('email', $data['email'])->first();
 
         if ($existing) {
-            $existing->restore();
             $existing->update([
                 'name' => $data['name'] ?? $existing->name,
                 'is_active' => true,

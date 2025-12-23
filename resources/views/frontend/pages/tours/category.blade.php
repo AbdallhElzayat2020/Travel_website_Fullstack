@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @php
-    $metaTitle = $category->meta_title ?? ($category->name . ' Tours - ' . config('app.name', 'Travel Website'));
+    $metaTitle = $category->meta_title ?? ($category->name);
     $metaDescription = $category->description
         ? \Illuminate\Support\Str::limit(strip_tags($category->description), 160)
         : ('Discover our ' . $category->name . ' tours and packages.');
@@ -38,22 +38,18 @@
         </style>
     @endif
 
-    <section class="py-10 lg:py-12 border border-t-light-grey border-r-0 border-b-0 border-l-0" @if($headerStyle)
-    style="{{ $headerStyle }}" @endif>
+    <section class="py-10 lg:py-12 border border-t-light-grey border-r-0 border-b-0 border-l-0">
         <div class="container">
             @if($category->show_breadcrumb ?? true)
                 <nav class="font-medium text-grey" aria-label="Breadcrumb">
                     <ul class="flex flex-wrap items-center gap-1 mb-2">
-                        <li>
-                            <a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Home</a>
-                        </li>
+                        <li><a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Home</a></li>
                         <span class="mx-1">/</span>
                         <li><span class="text-dark-grey">{{ $category->name }}</span></li>
                     </ul>
                 </nav>
             @endif
-            <h1 class="text-black text-[32px] md:text-[40px] font-bold leading-[1.1em] mb-2" @if($headerText)
-            style="color: {{ $headerText }};" @endif>{{ $category->name }}</h1>
+            <h1 class="text-black text-[40px] font-bold leading-[1.1em] mb-2">{{ $category->name }}</h1>
             @if(($category->show_description ?? true) && $category->description)
                 <div class="text-dark-grey max-w-2xl prose prose-sm">
                     {!! $category->description !!}
@@ -163,8 +159,6 @@
                                         <a href="{{ route('tours.show', $tour->slug) }}"
                                             class="inline-flex items-center gap-1 text-sm font-semibold text-green-zomp transition duration-200 hover:text-green-zomp-hover">
                                             View Details
-                                            <span class="iconify" data-icon="mdi:arrow-right" data-width="16"
-                                                data-height="16"></span>
                                         </a>
                                     </div>
                                 </div>

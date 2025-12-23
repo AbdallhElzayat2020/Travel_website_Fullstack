@@ -37,7 +37,7 @@
                     </li>
                 </ul>
             </nav>
-            <h1 class="text-black text-[30px] md:text-[40px] font-bold leading-[1.1em] mb-4">
+            <h1 class="text-black text-[40px] font-bold leading-[1.1em] mb-2">
                 {{ $experience->title }}
             </h1>
             @if($experience->short_description)
@@ -50,7 +50,7 @@
 
     <section class="mb-[60px] md:mb-24">
         <div class="container">
-            {{-- Gallery full-width --}}
+            {{-- Gallery full-width - عرض كل الصور --}}
             @if($experience->images->count())
                 @php
                     $galleryImages = $experience->images;
@@ -67,8 +67,8 @@
                             </div>
                         </a>
                     </div>
-                    <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
-                        @foreach($galleryImages->slice(0, 2) as $index => $image)
+                    <div class="grid grid-cols-2 md:grid-cols-1 gap-4 max-h-[420px] overflow-y-auto custom-scrollbar">
+                        @foreach($galleryImages as $index => $image)
                             <a data-fancybox="cruise-gallery" href="{{ asset('uploads/cruise-experiences/' . $image->image) }}">
                                 <div class="rounded-2xl overflow-hidden h-[120px] md:h-[140px]">
                                     <img src="{{ asset('uploads/cruise-experiences/' . $image->image) }}"
@@ -76,29 +76,6 @@
                                 </div>
                             </a>
                         @endforeach
-
-                        @if($galleryImages->count() > 2)
-                            @php
-                                $thirdImage = $galleryImages->slice(2, 1)->first();
-                            @endphp
-                            @if($thirdImage)
-                                <div class="relative">
-                                    <a data-fancybox="cruise-gallery"
-                                        href="{{ asset('uploads/cruise-experiences/' . $thirdImage->image) }}">
-                                        <div class="rounded-2xl overflow-hidden h-[120px] md:h-[140px]">
-                                            <img src="{{ asset('uploads/cruise-experiences/' . $thirdImage->image) }}" alt="Image 3"
-                                                class="w-full h-full object-cover" />
-                                        </div>
-                                    </a>
-                                    <button
-                                        class="absolute bottom-3 right-3 bg-white text-black px-4 py-2.5 rounded-full font-semibold flex items-center gap-2 transition duration-200 hover:bg-green-zomp hover:text-white"
-                                        data-fancybox="cruise-gallery" data-src="{{ $mainImage }}" data-thumb="{{ $mainImage }}">
-                                        <span class="iconify" data-icon="dashicons:grid-view" data-width="18" data-height="18"></span>
-                                        Gallery
-                                    </button>
-                                </div>
-                            @endif
-                        @endif
                     </div>
                 </div>
             @endif
@@ -113,75 +90,165 @@
         </div>
     </section>
 
-    {{-- Related Tours (same section position/style as tour details "Related Tours") --}}
-    @if($experience->tours->count())
+    {{-- Related Tours with Pagination --}}
+    @if(isset($relatedTours) && $relatedTours->count())
         <section class="mb-[60px] md:mb-24">
             <div class="container">
                 <h2 class="text-black text-3xl font-bold leading-[1.1] mb-8">Related Tours</h2>
-                <div class="swiper tours-similar-swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($experience->tours as $tour)
-                            @php
-                                $tourCover = $tour->cover_image
-                                    ? asset('uploads/tours/' . $tour->cover_image)
-                                    : asset('assets/frontend/assets/images/destination-01.png');
-                                $tourPrice = $tour->current_price ?? $tour->price;
-                                $tourState = $tour->state->name ?? null;
-                                $tourCountry = $tour->country->name ?? null;
-                            @endphp
-                            <div class="swiper-slide">
-                                <article class="relative overflow-hidden transition duration-200">
-                                    <div class="bg-white border rounded-2xl border-light-grey">
-                                        <div class="relative overflow-hidden rounded-t-2xl">
-                                            <a href="{{ route('tours.show', $tour->slug) }}">
-                                                <img src="{{ $tourCover }}" alt="{{ $tour->title }}"
-                                                    class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-                                            </a>
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    @foreach($relatedTours as $tour)
+                        @php
+                            $tourCover = $tour->cover_image
+                                ? asset('uploads/tours/' . $tour->cover_image)
+                                : asset('assets/frontend/assets/images/destination-01.png');
+                            $tourPrice = $tour->current_price ?? $tour->price;
+                            $tourState = $tour->state->name ?? null;
+                            $tourCountry = $tour->country->name ?? null;
+                        @endphp
+                        <article class="relative overflow-hidden transition duration-200">
+                            <div class="bg-white border rounded-2xl border-light-grey">
+                                <div class="relative overflow-hidden rounded-t-2xl">
+                                    <a href="{{ route('tours.show', $tour->slug) }}">
+                                        <img src="{{ $tourCover }}" alt="{{ $tour->title }}"
+                                            class="object-cover w-full h-auto transition duration-300 hover:scale-105">
+                                    </a>
+                                </div>
+                                <div class="p-4">
+                                    @if($tourState || $tourCountry)
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
+                                            <span class="text-sm text-dark-grey">
+                                                {{ trim(($tourState ? $tourState . ', ' : '') . ($tourCountry ?? '')) }}
+                                            </span>
                                         </div>
-                                        <div class="p-4">
-                                            @if($tourState || $tourCountry)
-                                                <div class="flex items-center gap-2 mb-2">
-                                                    <span class="iconify" data-icon="ep:location" data-width="14"
-                                                        data-height="14"></span>
-                                                    <span class="text-sm text-dark-grey">
-                                                        {{ trim(($tourState ? $tourState . ', ' : '') . ($tourCountry ?? '')) }}
-                                                    </span>
-                                                </div>
-                                            @endif
+                                    @endif
 
-                                            <h4
-                                                class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
-                                                <a href="{{ route('tours.show', $tour->slug) }}">{{ $tour->title }}</a>
-                                            </h4>
+                                    <h4
+                                        class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
+                                        <a href="{{ route('tours.show', $tour->slug) }}">{{ $tour->title }}</a>
+                                    </h4>
 
-                                            <div class="flex items-center mb-2 text-orange-yellow">
-                                                <span class="iconify" data-icon="mdi:star"></span>
-                                                <span class="iconify" data-icon="mdi:star"></span>
-                                                <span class="iconify" data-icon="mdi:star"></span>
-                                                <span class="iconify" data-icon="mdi:star"></span>
-                                                <span class="iconify" data-icon="mdi:star"></span>
-                                            </div>
-
-                                            <div class="h-px my-4 border-t border-light-grey"></div>
-
-                                            @if($tourPrice !== null)
-                                                <div class="flex items-center justify-between gap-2">
-                                                    <span class="flex items-center gap-1">
-                                                        <span>From</span>
-                                                        <span class="text-base font-bold text-green-zomp">
-                                                            {{ number_format($tourPrice, 2) }} EGP
-                                                        </span>
-                                                    </span>
-                                                </div>
-                                            @endif
-                                        </div>
+                                    <div class="flex items-center mb-2 text-orange-yellow">
+                                        <span class="iconify" data-icon="mdi:star"></span>
+                                        <span class="iconify" data-icon="mdi:star"></span>
+                                        <span class="iconify" data-icon="mdi:star"></span>
+                                        <span class="iconify" data-icon="mdi:star"></span>
+                                        <span class="iconify" data-icon="mdi:star"></span>
                                     </div>
-                                </article>
+
+                                    <div class="h-px my-4 border-t border-light-grey"></div>
+
+                                    @if($tourPrice !== null)
+                                        <div class="flex items-center justify-between gap-2">
+                                            <span class="flex items-center gap-1">
+                                                <span>From</span>
+                                                <span class="text-base font-bold text-green-zomp">
+                                                    {{ number_format($tourPrice, 2) }} EGP
+                                                </span>
+                                            </span>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
-                        @endforeach
-                    </div>
+                        </article>
+                    @endforeach
                 </div>
+
+                @if($relatedTours->hasPages())
+                    <nav class="flex items-center justify-center gap-2 mt-10 sm:mt-14" aria-label="Pagination">
+                        {{-- Previous Page Link --}}
+                        @if ($relatedTours->onFirstPage())
+                            <span
+                                class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
+                                <span class="iconify text-dark-grey" data-icon="proicons:chevron-left" data-width="20"
+                                    data-height="20"></span>
+                            </span>
+                        @else
+                            <a href="{{ $relatedTours->previousPageUrl() }}"
+                                class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">
+                                <span class="iconify text-dark-grey group-hover:!text-white" data-icon="proicons:chevron-left"
+                                    data-width="20" data-height="20"></span>
+                            </a>
+                        @endif
+
+                        {{-- Pagination Elements --}}
+                        @php
+                            $currentPage = $relatedTours->currentPage();
+                            $lastPage = $relatedTours->lastPage();
+                            $startPage = max(1, $currentPage - 2);
+                            $endPage = min($lastPage, $currentPage + 2);
+                        @endphp
+
+                        {{-- First Page --}}
+                        @if ($startPage > 1)
+                            <a href="{{ $relatedTours->url(1) }}"
+                                class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">1</a>
+                            @if ($startPage > 2)
+                                <span
+                                    class="text-dark-grey font-bold text-sm py-2 w-10 h-10 rounded-full flex items-center justify-center">...</span>
+                            @endif
+                        @endif
+
+                        {{-- Page Range --}}
+                        @for ($page = $startPage; $page <= $endPage; $page++)
+                            @if ($page == $currentPage)
+                                <span
+                                    class="font-bold text-sm bg-green-zomp text-white w-10 h-10 py-2 rounded-full flex items-center justify-center">{{ $page }}</span>
+                            @else
+                                <a href="{{ $relatedTours->url($page) }}"
+                                    class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">{{ $page }}</a>
+                            @endif
+                        @endfor
+
+                        {{-- Last Page --}}
+                        @if ($endPage < $lastPage)
+                            @if ($endPage < $lastPage - 1)
+                                <span
+                                    class="text-dark-grey font-bold text-sm py-2 w-10 h-10 rounded-full flex items-center justify-center">...</span>
+                            @endif
+                            <a href="{{ $relatedTours->url($lastPage) }}"
+                                class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">{{ $lastPage }}</a>
+                        @endif
+
+                        {{-- Next Page Link --}}
+                        @if ($relatedTours->hasMorePages())
+                            <a href="{{ $relatedTours->nextPageUrl() }}"
+                                class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">
+                                <span class="iconify text-dark-grey group-hover:!text-white" data-icon="proicons:chevron-right"
+                                    data-width="20" data-height="20"></span>
+                            </a>
+                        @else
+                            <span
+                                class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
+                                <span class="iconify text-dark-grey" data-icon="proicons:chevron-right" data-width="20"
+                                    data-height="20"></span>
+                            </span>
+                        @endif
+                    </nav>
+                @endif
             </div>
         </section>
     @endif
 @endsection
+
+@push('css')
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #8b7138;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #7a6230;
+        }
+    </style>
+@endpush

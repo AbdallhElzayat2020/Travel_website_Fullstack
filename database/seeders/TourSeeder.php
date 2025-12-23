@@ -32,51 +32,21 @@ class TourSeeder extends Seeder
         $uae = Country::where('code', 'ARE')->first();
         $dubai = State::where('slug', 'dubai')->first();
 
-        // Get or create categories
-        $culturalCategory = Category::where('slug', 'cultural-tours')->first();
-        if (!$culturalCategory) {
-            $culturalCategory = Category::create([
-                'name' => 'Cultural Tours',
-                'slug' => 'cultural-tours',
-                'status' => 'active',
-                'sort_order' => 1,
-            ]);
-        }
+        // Use existing categories only (Nile Cruises, Dahbia Tours, Tour Egypt Packages)
+        $nileCruisesCategory = Category::where('slug', 'nile-cruises')->first();
+        $dahbiaToursCategory = Category::where('slug', 'dahbia-tours')->first();
+        $tourEgyptPackagesCategory = Category::where('slug', 'tour-egypt-packages')->first();
 
-        $adventureCategory = Category::where('slug', 'adventure-tours')->first();
-        if (!$adventureCategory) {
-            $adventureCategory = Category::create([
-                'name' => 'Adventure Tours',
-                'slug' => 'adventure-tours',
-                'status' => 'active',
-                'sort_order' => 2,
-            ]);
-        }
-
-        $beachCategory = Category::where('slug', 'beach-tours')->first();
-        if (!$beachCategory) {
-            $beachCategory = Category::create([
-                'name' => 'Beach Tours',
-                'slug' => 'beach-tours',
-                'status' => 'active',
-                'sort_order' => 3,
-            ]);
-        }
-
-        $religiousCategory = Category::where('slug', 'religious-tours')->first();
-        if (!$religiousCategory) {
-            $religiousCategory = Category::create([
-                'name' => 'Religious Tours',
-                'slug' => 'religious-tours',
-                'status' => 'active',
-                'sort_order' => 4,
-            ]);
+        // If any of the required categories don't exist, skip seeding tours
+        if (!$nileCruisesCategory || !$dahbiaToursCategory || !$tourEgyptPackagesCategory) {
+            $this->command->warn('Required categories not found. Please run CategorySeeder first.');
+            return;
         }
 
         // Tours data
         $tours = [
             [
-                'category_id' => $culturalCategory->id,
+                'category_id' => $nileCruisesCategory->id,
                 'country_id' => $egypt->id,
                 'state_id' => $cairo->id,
                 'title' => 'Cairo and Giza Pyramids Tour',
@@ -100,7 +70,7 @@ class TourSeeder extends Seeder
                 'sort_order' => 1,
             ],
             [
-                'category_id' => $culturalCategory->id,
+                'category_id' => $nileCruisesCategory->id,
                 'country_id' => $egypt->id,
                 'state_id' => $luxor->id,
                 'title' => 'Luxor and Aswan Nile Cruise',
@@ -120,7 +90,7 @@ class TourSeeder extends Seeder
                 'sort_order' => 2,
             ],
             [
-                'category_id' => $beachCategory->id,
+                'category_id' => $dahbiaToursCategory->id,
                 'country_id' => $egypt->id,
                 'state_id' => $hurghada->id,
                 'title' => 'Hurghada Red Sea Paradise',
@@ -144,7 +114,7 @@ class TourSeeder extends Seeder
                 'sort_order' => 3,
             ],
             [
-                'category_id' => $adventureCategory->id,
+                'category_id' => $dahbiaToursCategory->id,
                 'country_id' => $egypt->id,
                 'state_id' => $sharmElSheikh->id,
                 'title' => 'Sharm El Sheikh Adventure & Diving',
@@ -164,7 +134,7 @@ class TourSeeder extends Seeder
                 'sort_order' => 4,
             ],
             [
-                'category_id' => $religiousCategory->id,
+                'category_id' => $tourEgyptPackagesCategory->id,
                 'country_id' => $saudi->id,
                 'state_id' => $mecca->id,
                 'title' => 'Umrah Package - Mecca and Medina',
@@ -184,7 +154,7 @@ class TourSeeder extends Seeder
                 'sort_order' => 5,
             ],
             [
-                'category_id' => $adventureCategory->id,
+                'category_id' => $tourEgyptPackagesCategory->id,
                 'country_id' => $uae->id,
                 'state_id' => $dubai->id,
                 'title' => 'Dubai City Tour & Desert Safari',

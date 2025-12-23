@@ -1,31 +1,32 @@
 @extends('frontend.layouts.master')
 @php
-    $faqsPage = \App\Models\Page::getBySlug('faqs');
-    $metaTitle = $faqsPage && $faqsPage->meta_title ? $faqsPage->meta_title : 'FAQs - Frequently Asked Questions';
-    $metaDescription = $faqsPage && $faqsPage->meta_description ? $faqsPage->meta_description : 'Find answers to your most common travel questions. Get information about bookings, tours, destinations, and more.';
+    $metaTitle = $page && $page->meta_title ? $page->meta_title : 'FAQs - Frequently Asked Questions';
+    $metaDescription = $page && $page->meta_description ? $page->meta_description : 'Find answers to your most common travel questions. Get information about bookings, tours, destinations, and more.';
+    $metaAuthor = $page ? ($page->meta_author ?? null) : null;
+    $metaKeywords = $page ? ($page->meta_keywords ?? null) : null;
 @endphp
 @section('meta_title', $metaTitle)
 @if($metaDescription)
 @section('meta_description', $metaDescription)
 @endif
-@if($faqsPage && $faqsPage->meta_author)
-@section('meta_author', $faqsPage->meta_author)
+@if($metaAuthor)
+@section('meta_author', $metaAuthor)
 @endif
-@if($faqsPage && $faqsPage->meta_keywords)
-@section('meta_keywords', $faqsPage->meta_keywords)
+@if($metaKeywords)
+@section('meta_keywords', $metaKeywords)
 @endif
 
 @section('content')
-    <section class="py-12 border border-t-light-grey border-r-0 border-b-0 border-l-0">
+    <section class="py-10 lg:py-12 border border-t-light-grey border-r-0 border-b-0 border-l-0">
         <div class="container">
             <nav class="font-medium text-grey" aria-label="Breadcrumb">
                 <ul class="flex flex-wrap items-center gap-1 mb-2">
                     <li><a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Home</a></li>
                     <span class="mx-1">/</span>
-                    <li><span class="text-dark-grey">Faqs</span></li>
+                    <li><span class="text-dark-grey">FAQs</span></li>
                 </ul>
             </nav>
-            <h1 class="text-black text-[40px] font-bold leading-[1.1em] mb-2">Faqs</h1>
+            <h1 class="text-black text-[40px] font-bold leading-[1.1em] mb-2">FAQs</h1>
             <p class="text-dark-grey">Find answers to your most common travel questions right here</p>
         </div>
     </section>

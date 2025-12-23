@@ -1,8 +1,8 @@
 @php
-    $metaTitle = isset($page) && $page && $page->meta_title ? $page->meta_title : 'Contact Us';
-    $metaDescription = isset($page) && $page ? $page->meta_description ?? null : null;
-    $metaAuthor = isset($page) && $page ? $page->meta_author ?? null : null;
-    $metaKeywords = isset($page) && $page ? $page->meta_keywords ?? null : null;
+    $metaTitle = $page && $page->meta_title ? $page->meta_title : 'Contact Us';
+    $metaDescription = $page ? ($page->meta_description ?? null) : null;
+    $metaAuthor = $page ? ($page->meta_author ?? null) : null;
+    $metaKeywords = $page ? ($page->meta_keywords ?? null) : null;
 @endphp
 @section('meta_title', $metaTitle)
 @if ($metaDescription)
@@ -34,9 +34,9 @@
     <section class="mb-[60px] md:mb-24">
         <div class="container p-6 md:p-[60px] xl:p-[120px] relative overflow-hidden bg-[#f2f4f4] rounded-2xl">
             <div class="absolute inset-0 z-0" style="background-image: url('{{ asset('assets/frontend/assets/images/about-us-bg-form.png') }}');
-                                                            background-position: center center;
-                                                            background-repeat: repeat;
-                                                            opacity: 0.79;">
+                                                                    background-position: center center;
+                                                                    background-repeat: repeat;
+                                                                    opacity: 0.79;">
             </div>
             <div class="grid md:grid-cols-2 gap-10 md:gap-[60px] items-start relative z-10">
                 <div class="wrapper">

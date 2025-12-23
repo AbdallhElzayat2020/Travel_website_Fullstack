@@ -5,56 +5,52 @@
 @endphp
 @section('meta_title', $metaTitle)
 @if ($blog->meta_description)
-    @section('meta_description', $blog->meta_description)
+@section('meta_description', $blog->meta_description)
 @endif
 @if ($blog->author)
-    @section('meta_author', $blog->author)
+@section('meta_author', $blog->author)
 @endif
 @if ($blog->meta_keywords)
-    @section('meta_keywords', $blog->meta_keywords)
+@section('meta_keywords', $blog->meta_keywords)
 @endif
 @if ($metaImage)
-    @section('meta_image', $metaImage)
+@section('meta_image', $metaImage)
 @endif
 
 @section('content')
+    <section class="py-10 lg:py-12 border border-t-light-grey border-r-0 border-b-0 border-l-0">
+        <div class="container">
+            <nav class="font-medium text-grey" aria-label="Breadcrumb">
+                <ul class="flex flex-wrap items-center gap-1 mb-2">
+                    <li><a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Home</a></li>
+                    <span class="mx-1">/</span>
+                    <li><a href="{{ route('blogs.index') }}" class="transition duration-200 hover:text-green-zomp">Blogs</a>
+                    </li>
+                    <span class="mx-1">/</span>
+                    <li><span class="text-dark-grey">{{ $blog->title }}</span></li>
+                </ul>
+            </nav>
+            <h1 class="text-black text-[40px] font-bold leading-[1.1em] mb-2">{{ $metaTitle }}</h1>
+            <div class="flex flex-wrap items-center gap-4 text-sm text-dark-grey">
+                @if ($blog->published_at)
+                    <div class="flex items-center gap-2">
+                        <span class="iconify" data-icon="mdi:calendar" data-width="16" data-height="16"></span>
+                        <span>{{ $blog->published_at->format('M d, Y') }}</span>
+                    </div>
+                @endif
+                @if ($blog->author)
+                    <div class="flex items-center gap-2">
+                        <span class="iconify" data-icon="mdi:account" data-width="16" data-height="16"></span>
+                        <span>{{ $blog->author }}</span>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </section>
+
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="max-w-4xl mx-auto">
-                <!-- Breadcrumb -->
-                <nav class="mb-6 text-sm">
-                    <ol class="flex items-center gap-2 text-dark-grey">
-                        <li><a href="{{ route('home') }}" class="hover:text-green-zomp transition">Home</a></li>
-                        <li><span class="iconify" data-icon="mdi:chevron-right" data-width="16" data-height="16"></span>
-                        </li>
-                        <li><a href="{{ route('blogs.index') }}" class="hover:text-green-zomp transition">Blogs</a></li>
-                        <li><span class="iconify" data-icon="mdi:chevron-right" data-width="16" data-height="16"></span>
-                        </li>
-                        <li class="text-black">{{ $blog->title }}</li>
-                    </ol>
-                </nav>
-
-                <!-- Blog Header -->
-                <div class="mb-6">
-                    <h1 class="text-black font-bold text-[32px] md:text-[40px] leading-[1.2em] mb-4">{{ $metaTitle }}
-                    </h1>
-
-                    <div class="flex flex-wrap items-center gap-4 text-sm text-dark-grey mb-4">
-                        @if ($blog->published_at)
-                            <div class="flex items-center gap-2">
-                                <span class="iconify" data-icon="mdi:calendar" data-width="16" data-height="16"></span>
-                                <span>{{ $blog->published_at->format('M d, Y') }}</span>
-                            </div>
-                        @endif
-                        @if ($blog->author)
-                            <div class="flex items-center gap-2">
-                                <span class="iconify" data-icon="mdi:account" data-width="16" data-height="16"></span>
-                                <span>{{ $blog->author }}</span>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-
                 <!-- Cover Image -->
                 @if ($blog->cover_image)
                     @php
@@ -90,8 +86,7 @@
                                         ? \Carbon\Carbon::parse($relatedBlog->published_at)->format('M d, Y')
                                         : '';
                                 @endphp
-                                <article
-                                    class="group bg-white overflow-hidden rounded-2xl shadow-sm border border-light-grey">
+                                <article class="group bg-white overflow-hidden rounded-2xl shadow-sm border border-light-grey">
                                     <div class="overflow-hidden rounded-t-2xl">
                                         <a href="{{ route('blogs.show', $relatedBlog->slug) }}">
                                             <img src="{{ $relatedCover }}" alt="{{ $relatedBlog->title }}"
@@ -101,8 +96,7 @@
                                     <div class="p-4">
                                         <h3
                                             class="text-base font-bold text-black mb-2 line-clamp-2 group-hover:text-green-zomp transition">
-                                            <a
-                                                href="{{ route('blogs.show', $relatedBlog->slug) }}">{{ $relatedBlog->title }}</a>
+                                            <a href="{{ route('blogs.show', $relatedBlog->slug) }}">{{ $relatedBlog->title }}</a>
                                         </h3>
                                         @if ($relatedDate)
                                             <span class="block text-dark-grey text-xs mb-2">{{ $relatedDate }}</span>

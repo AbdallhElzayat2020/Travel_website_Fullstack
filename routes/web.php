@@ -30,9 +30,9 @@ Route::get('/category/{slug}', [TourController::class, 'byCategory'])
     ->name('tours.category');
 Route::get('/tours/{slug}', [TourController::class, 'show'])
     ->name('tours.show');
-Route::get('/nile-cruises', [CruiseExperienceController::class, 'index'])
+Route::get('/dahbia-cruises', [CruiseExperienceController::class, 'index'])
     ->name('nile-cruises.index');
-Route::get('/nile-cruises/{slug}', [CruiseExperienceController::class, 'show'])
+Route::get('/dahbia-cruises/{slug}', [CruiseExperienceController::class, 'show'])
     ->name('nile-cruises.show');
 Route::get('/about-us', [PageController::class, 'about'])
     ->name('about-us');
@@ -44,6 +44,12 @@ Route::post('/contact-us', [ContactController::class, 'store'])
     ->name('contact-us.store');
 Route::post('/bookings', [BookingController::class, 'store'])
     ->name('bookings.store');
+
+// Terms and Conditions & Privacy Policy
+Route::get('/terms-and-conditions', [PageController::class, 'termsAndConditions'])
+    ->name('terms-and-conditions');
+Route::get('/privacy-policy', [PageController::class, 'privacyPolicy'])
+    ->name('privacy-policy');
 
 
 

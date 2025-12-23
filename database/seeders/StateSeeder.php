@@ -30,13 +30,16 @@ class StateSeeder extends Seeder
             ];
 
             foreach ($egyptStates as $state) {
-                State::create([
-                    'country_id' => $egypt->id,
-                    'name' => $state['name'],
-                    'slug' => $state['slug'],
-                    'status' => $state['status'],
-                    'sort_order' => $state['sort_order'],
-                ]);
+                State::updateOrCreate(
+                    ['slug' => $state['slug']],
+                    [
+                        'country_id' => $egypt->id,
+                        'name' => $state['name'],
+                        'slug' => $state['slug'],
+                        'status' => $state['status'],
+                        'sort_order' => $state['sort_order'],
+                    ]
+                );
             }
         }
 
@@ -52,13 +55,16 @@ class StateSeeder extends Seeder
             ];
 
             foreach ($saudiStates as $state) {
-                State::create([
-                    'country_id' => $saudi->id,
-                    'name' => $state['name'],
-                    'slug' => $state['slug'],
-                    'status' => $state['status'],
-                    'sort_order' => $state['sort_order'],
-                ]);
+                State::updateOrCreate(
+                    ['slug' => $state['slug']],
+                    [
+                        'country_id' => $saudi->id,
+                        'name' => $state['name'],
+                        'slug' => $state['slug'],
+                        'status' => $state['status'],
+                        'sort_order' => $state['sort_order'],
+                    ]
+                );
             }
         }
 
@@ -73,13 +79,16 @@ class StateSeeder extends Seeder
             ];
 
             foreach ($uaeStates as $state) {
-                State::create([
-                    'country_id' => $uae->id,
-                    'name' => $state['name'],
-                    'slug' => $state['slug'],
-                    'status' => $state['status'],
-                    'sort_order' => $state['sort_order'],
-                ]);
+                State::updateOrCreate(
+                    ['slug' => $state['slug']],
+                    [
+                        'country_id' => $uae->id,
+                        'name' => $state['name'],
+                        'slug' => $state['slug'],
+                        'status' => $state['status'],
+                        'sort_order' => $state['sort_order'],
+                    ]
+                );
             }
         }
     }

@@ -53,18 +53,29 @@
                                 </td>
                                 <td>{{ Str::limit($tour->title, 30) }}</td>
                                 <td>
-                                    <span class="badge bg-label-info">{{ $tour->category->name }}</span>
+                                    @if($tour->category)
+                                        <span class="badge bg-label-info">{{ $tour->category->name }}</span>
+                                    @else
+                                        <span class="badge bg-label-secondary">No Category</span>
+                                    @endif
                                     @if($tour->subCategory)
                                         <br><small class="text-muted">{{ $tour->subCategory->name }}</small>
                                     @endif
                                 </td>
-                                <td>{{ $tour->country->name }}</td>
+                                <td>
+                                    @if($tour->country)
+                                        {{ $tour->country->name }}
+                                    @else
+                                        <span class="text-muted">No Country</span>
+                                    @endif
+                                </td>
                                 <td>
                                     {{ $tour->duration }} {{ $tour->duration_type }}
                                 </td>
                                 <td>
                                     @if($tour->has_offer && $tour->isOfferActive())
-                                        <span class="text-decoration-line-through text-muted">{{ number_format($tour->price_before_discount, 2) }}</span>
+                                        <span
+                                            class="text-decoration-line-through text-muted">{{ number_format($tour->price_before_discount, 2) }}</span>
                                         <br>
                                         <strong class="text-danger">{{ number_format($tour->price_after_discount, 2) }}</strong>
                                     @else
@@ -87,8 +98,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex gap-2">
-                                        <a href="{{ route('admin.tours.show', $tour->id) }}"
-                                            class="btn btn-sm btn-label-info">
+                                        <a href="{{ route('admin.tours.show', $tour->id) }}" class="btn btn-sm btn-label-info">
                                             <i class="ti ti-eye"></i>
                                         </a>
                                         <a href="{{ route('admin.tours.edit', $tour->id) }}"
@@ -121,4 +131,3 @@
         </div>
     </div>
 @endsection
-

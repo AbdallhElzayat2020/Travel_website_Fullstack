@@ -1,17 +1,21 @@
 @extends('frontend.layouts.master')
 @php
     $metaTitle = $tour->meta_title ?? $tour->title;
-    $metaDescription = $tour->meta_description ?? ($tour->short_description ? \Illuminate\Support\Str::limit(strip_tags($tour->short_description), 160) : 'Discover amazing tours and travel experiences. Book your next adventure with us.');
+    $metaDescription =
+        $tour->meta_description ??
+        ($tour->short_description
+            ? \Illuminate\Support\Str::limit(strip_tags($tour->short_description), 160)
+            : 'Discover amazing tours and travel experiences. Book your next adventure with us.');
     $metaImage = $tour->cover_image ? asset('uploads/tours/' . $tour->cover_image) : null;
 @endphp
 @section('meta_title', $metaTitle)
-@if($metaDescription)
+@if ($metaDescription)
 @section('meta_description', $metaDescription)
 @endif
-@if($tour->meta_keywords)
+@if ($tour->meta_keywords)
 @section('meta_keywords', $tour->meta_keywords)
 @endif
-@if($metaImage)
+@if ($metaImage)
 @section('meta_image', $metaImage)
 @endif
 
@@ -28,7 +32,7 @@
                     To Expect</a>
             </li>
 
-            @if($tour->seasonalPrices->count() > 0)
+            @if ($tour->seasonalPrices->count() > 0)
                 <li>
                     <a href="#prices-accommodation"
                         class="text-dark-grey font-semibold [&.active]:text-green-zomp transition duration-200 before:content-[''] before:absolute before:left-0 before:-bottom-1 before:w-full before:h-[2px] before:scale-x-0 before:bg-green-zomp before:transition before:duration-200 [&.active]:before:scale-x-100 relative">
@@ -43,16 +47,14 @@
         </ul>
     </section>
 
-    <section class="pt-10 lg:pt-12 pb-2 border border-b-0 border-l-0 border-r-0 border-t-light-grey">
+    <section class="py-10 lg:py-12 border border-t-light-grey border-r-0 border-b-0 border-l-0">
         <div class="container">
             <nav class="font-medium text-grey" aria-label="Breadcrumb">
                 <ul class="flex flex-wrap items-center gap-1 mb-2">
-                    <li>
-                        <a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Home</a>
-                    </li>
+                    <li><a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Home</a></li>
                     <span class="mx-1">/</span>
                     <li><span class="text-dark-grey">Tours</span></li>
-                    @if($tour->category)
+                    @if ($tour->category)
                         <span class="mx-1">/</span>
                         <li><span class="text-dark-grey">{{ $tour->category->name }}</span></li>
                     @endif
@@ -69,11 +71,11 @@
                         <h1 class="text-black text-2xl lg:text-[32px] font-bold leading-[1.1em] mb-4">{{ $tour->title }}
                         </h1>
                         <div class="flex flex-wrap items-center gap-2 mb-2">
-                            @if($tour->show_on_homepage)
+                            @if ($tour->show_on_homepage)
                                 <span
                                     class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured">Featured</span>
                             @endif
-                            @if($tour->has_offer && $tour->isOfferActive())
+                            @if ($tour->has_offer && $tour->isOfferActive())
                                 <span
                                     class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-best-seller">On
                                     Sale</span>
@@ -89,8 +91,9 @@
 
                             </div>
                             <ul class="flex items-center gap-7 list-disc marker:text-[#C0C5C9] pl-5">
-                                @if($tour->state)
-                                    <li class="text-dark-grey">{{ $tour->state->name }}, {{ $tour->country->name ?? '' }}</li>
+                                @if ($tour->state)
+                                    <li class="text-dark-grey">{{ $tour->state->name }}, {{ $tour->country->name ?? '' }}
+                                    </li>
                                 @elseif($tour->country)
                                     <li class="text-dark-grey">{{ $tour->country->name }}</li>
                                 @endif
@@ -161,7 +164,9 @@
                 <div class="grid grid-cols-12 gap-6 mb-8">
                     <div class="col-span-12 lg:col-span-8">
                         @php
-                            $coverImage = $tour->cover_image ? asset('uploads/tours/' . $tour->cover_image) : asset('assets/frontend/assets/images/blogs/01.png');
+                            $coverImage = $tour->cover_image
+                                ? asset('uploads/tours/' . $tour->cover_image)
+                                : asset('assets/frontend/assets/images/blogs/01.png');
                             $firstImage = $tour->tourImages->first();
                             $mainImage = $firstImage ? asset('uploads/tours/' . $firstImage->image) : $coverImage;
                         @endphp
@@ -171,8 +176,8 @@
                         </a>
                     </div>
                     <div class="col-span-12 grid grid-cols-2 lg:col-span-4 lg:flex lg:flex-col gap-4">
-                        @if($tour->tourImages->count() > 0)
-                            @foreach($tour->tourImages->take(2) as $index => $image)
+                        @if ($tour->tourImages->count() > 0)
+                            @foreach ($tour->tourImages->take(2) as $index => $image)
                                 <a data-fancybox="gallery" href="{{ asset('uploads/tours/' . $image->image) }}">
                                     <img src="{{ asset('uploads/tours/' . $image->image) }}" alt="Image {{ $index + 1 }}"
                                         class="w-full h-full object-cover rounded-xl" />
@@ -183,7 +188,7 @@
                                 <img src="{{ $coverImage }}" alt="Image 2" class="w-full h-full object-cover rounded-xl" />
                             </a>
                         @endif
-                        @if($tour->tourImages->count() > 2)
+                        @if ($tour->tourImages->count() > 2)
                             <div class="relative">
                                 <a data-fancybox="gallery"
                                     href="{{ asset('uploads/tours/' . $tour->tourImages->skip(2)->first()->image) }}">
@@ -214,7 +219,7 @@
                                         {{ $tour->duration_type == 'days' ? ($tour->duration > 1 ? 'Days' : 'Day') : ($tour->duration > 1 ? 'Hours' : 'Hour') }}</span>
                                 </span>
                             </div>
-                            @if($tour->category)
+                            @if ($tour->category)
                                 <div class="flex flex-1 items-center gap-2">
                                     <span class="iconify text-green-zomp" data-icon="solar:planet-2-linear" data-width="24"
                                         data-height="24"></span>
@@ -224,7 +229,7 @@
                                     </span>
                                 </div>
                             @endif
-                            @if($tour->subCategory)
+                            @if ($tour->subCategory)
                                 <div class="flex items-center gap-2">
                                     <span class="iconify text-green-zomp" data-icon="solar:tag-horizontal-linear"
                                         data-width="24" data-height="24"></span>
@@ -237,7 +242,7 @@
                         </div>
                         <div class="tours-content">
                             <div id="overview" class="border border-white-grey rounded-2xl p-6 mt-6 bg-white mb-6">
-                                @if($tour->description)
+                                @if ($tour->description)
                                     <div class="text-dark-grey mb-6">
                                         {!! $tour->description !!}
                                     </div>
@@ -247,9 +252,9 @@
 
                             <div id="what-to-expect" class="border border-white-grey rounded-2xl p-6 mt-6 bg-white mb-6">
                                 <h3 class="text-black text-2xl font-semibold leading-[1.1] mb-6">What To Expect</h3>
-                                @if($tour->tourDays->count() > 0)
+                                @if ($tour->tourDays->count() > 0)
                                     <div class="flex flex-col relative">
-                                        @foreach($tour->tourDays as $index => $day)
+                                        @foreach ($tour->tourDays as $index => $day)
                                             <div
                                                 class="relative flex items-start md:before:content-[''] md:before:absolute md:before:top-11 md:before:left-[22px] md:before:w-px md:before:bg-green-zomp md:last:before:hidden md:before:h-full">
                                                 <div class="relative z-10">
@@ -260,7 +265,7 @@
                                                 </div>
                                                 <div class="md:ml-6 flex-1 {{ !$loop->last ? 'mb-8' : '' }}">
                                                     <h6 class="text-black font-bold mb-2">{{ $day->day_title }}</h6>
-                                                    @if($day->details)
+                                                    @if ($day->details)
                                                         <div class="text-dark-grey">
                                                             {!! $day->details !!}
                                                         </div>
@@ -274,21 +279,22 @@
                                 @endif
                             </div>
 
-                            @if($tour->seasonalPrices->count() > 0)
+                            @if ($tour->seasonalPrices->count() > 0)
                                 <div id="prices-accommodation"
                                     class="border border-white-grey rounded-2xl p-6 mt-6 bg-white mb-6">
-                                    <h3 class="text-black text-2xl font-semibold leading-[1.1] mb-6">Prices & Accommodation</h3>
+                                    <h3 class="text-black text-2xl font-semibold leading-[1.1] mb-6">Prices & Accommodation
+                                    </h3>
                                     <div class="space-y-6">
-                                        @foreach($tour->seasonalPrices as $seasonalPrice)
+                                        @foreach ($tour->seasonalPrices as $seasonalPrice)
                                             <div class="mb-6">
                                                 <h4 class="text-black text-xl font-bold mb-3">
                                                     {{ $seasonalPrice->season_name }}
-                                                    @if($seasonalPrice->description)
+                                                    @if ($seasonalPrice->description)
                                                         <span class="text-base font-normal text-dark-grey"> -
                                                             {{ $seasonalPrice->description }}</span>
                                                     @endif
                                                 </h4>
-                                                @if($seasonalPrice->priceItems->count() > 0)
+                                                @if ($seasonalPrice->priceItems->count() > 0)
                                                     <div class="overflow-x-auto">
                                                         <table class="w-full border-collapse border border-light-grey">
                                                             <thead>
@@ -299,7 +305,7 @@
                                                                     <th
                                                                         class="border border-light-grey px-4 py-3 text-left text-black font-semibold">
                                                                         Price</th>
-                                                                    @if($seasonalPrice->priceItems->first()->description)
+                                                                    @if ($seasonalPrice->priceItems->first()->description)
                                                                         <th
                                                                             class="border border-light-grey px-4 py-3 text-left text-black font-semibold">
                                                                             Description</th>
@@ -307,7 +313,7 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach($seasonalPrice->priceItems as $item)
+                                                                @foreach ($seasonalPrice->priceItems as $item)
                                                                     <tr class="accommodation-row transition duration-200 cursor-pointer hover:bg-green-zomp group"
                                                                         data-item-id="{{ $item->id }}" data-price="{{ $item->price_value }}"
                                                                         data-item-name="{{ $item->price_name }}"
@@ -318,8 +324,9 @@
                                                                         </td>
                                                                         <td
                                                                             class="border border-light-grey px-4 py-3 text-green-zomp font-bold accommodation-price group-hover:text-white">
-                                                                            ${{ number_format($item->price_value, 2) }}</td>
-                                                                        @if($item->description)
+                                                                            ${{ number_format($item->price_value, 2) }}
+                                                                        </td>
+                                                                        @if ($item->description)
                                                                             <td
                                                                                 class="border border-light-grey px-4 py-3 text-dark-grey accommodation-desc group-hover:text-white">
                                                                                 {{ $item->description }}
@@ -340,12 +347,12 @@
                             <div id="reviews" class="border border-white-grey rounded-2xl p-6 md:p-10 mt-6 bg-white">
                                 <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
                                     <h3 class="text-black text-2xl md:text-3xl font-bold leading-[1.1]">Reviews</h3>
-                                    @if($testimonials->count() > 0)
+                                    @if ($testimonials->count() > 0)
                                         <div class="flex items-center gap-3">
                                             <span
                                                 class="text-[36px] md:text-[42px] font-bold text-black">{{ number_format($averageRating, 1) }}</span>
                                             <div class="flex items-center gap-0.5">
-                                                @for($i = 1; $i <= 5; $i++)
+                                                @for ($i = 1; $i <= 5; $i++)
                                                     <i
                                                         class="fas fa-star text-sm md:text-base {{ $i <= round($averageRating) ? 'text-orange-yellow' : 'text-light-grey' }}"></i>
                                                 @endfor
@@ -354,11 +361,11 @@
                                     @endif
                                 </div>
 
-                                @if($testimonials->count() > 0)
+                                @if ($testimonials->count() > 0)
                                     <div class="relative mb-10">
                                         <div class="swiper reviews-swiper">
                                             <div class="swiper-wrapper">
-                                                @foreach($testimonials as $testimonial)
+                                                @foreach ($testimonials as $testimonial)
                                                     <div class="swiper-slide">
                                                         <div class="bg-white-grey rounded-2xl p-6 md:p-10 relative overflow-hidden">
                                                             <div
@@ -375,11 +382,11 @@
                                                                         {{ $testimonial->name }}
                                                                     </p>
                                                                     <p class="text-dark-grey text-sm">
-                                                                        {{ $testimonial->company ?? $testimonial->job_title ?? 'Traveler' }}
+                                                                        {{ $testimonial->company ?? ($testimonial->job_title ?? 'Traveler') }}
                                                                     </p>
                                                                 </div>
                                                                 <div class="flex items-center gap-0.5">
-                                                                    @for($i = 1; $i <= 5; $i++)
+                                                                    @for ($i = 1; $i <= 5; $i++)
                                                                         <i
                                                                             class="fas fa-star text-xs md:text-sm {{ $i <= ($testimonial->rating ?? 5) ? 'text-orange-yellow' : 'text-light-grey' }}"></i>
                                                                     @endfor
@@ -419,7 +426,7 @@
                                                     <span
                                                         class="review-trust-score font-bold text-black text-lg md:text-xl">4.6/5</span>
                                                     <span class="review-trust-stars flex items-center gap-0.5">
-                                                        @for($i = 1; $i <= 5; $i++)
+                                                        @for ($i = 1; $i <= 5; $i++)
                                                             <svg class="w-3 h-3 {{ $i <= 4 ? 'text-orange-yellow fill-current' : ($i == 5 ? 'text-orange-yellow fill-current opacity-40' : 'text-light-grey') }}"
                                                                 viewBox="0 0 24 24" fill="currentColor">
                                                                 <path
@@ -445,7 +452,7 @@
                                                     <span
                                                         class="review-trust-score font-bold text-black text-lg md:text-xl">4.8/5</span>
                                                     <span class="review-trust-stars flex items-center gap-0.5">
-                                                        @for($i = 1; $i <= 5; $i++)
+                                                        @for ($i = 1; $i <= 5; $i++)
                                                             <svg class="w-3 h-3 {{ $i <= 4 ? 'text-orange-yellow fill-current' : ($i == 5 ? 'text-orange-yellow fill-current opacity-40' : 'text-light-grey') }}"
                                                                 viewBox="0 0 24 24" fill="currentColor">
                                                                 <path
@@ -471,7 +478,7 @@
                                                     <span
                                                         class="review-trust-score font-bold text-black text-lg md:text-xl">4.8/5</span>
                                                     <span class="review-trust-stars flex items-center gap-0.5">
-                                                        @for($i = 1; $i <= 5; $i++)
+                                                        @for ($i = 1; $i <= 5; $i++)
                                                             <svg class="w-3 h-3 {{ $i <= 4 ? 'text-orange-yellow fill-current' : ($i == 5 ? 'text-orange-yellow fill-current opacity-40' : 'text-light-grey') }}"
                                                                 viewBox="0 0 24 24" fill="currentColor">
                                                                 <path
@@ -496,7 +503,7 @@
                         <div class="border-2 border-green-zomp rounded-2xl p-6 bg-white-grey">
                             <h4 class="text-black text-[32px] font-semibold leading-[1.1] mb-6">
                                 <span class="text-dark-grey text-base font-medium mr-2">From</span>
-                                @if($tour->has_offer && $tour->isOfferActive())
+                                @if ($tour->has_offer && $tour->isOfferActive())
                                     <span
                                         class="line-through text-grey text-lg mr-2">${{ number_format($tour->price_before_discount ?? $tour->price, 2) }}</span>
                                     ${{ number_format($tour->price_after_discount ?? $tour->price, 2) }}
@@ -507,25 +514,26 @@
                             <div class="col-span-8">
                                 @php
                                     $hasSeasonalPrices = $tour->seasonalPrices->count() > 0;
-                                    $basePrice = $tour->has_offer && $tour->isOfferActive()
-                                        ? ($tour->price_after_discount ?? $tour->price)
+                                    $basePrice =
+                                        $tour->has_offer && $tour->isOfferActive()
+                                        ? $tour->price_after_discount ?? $tour->price
                                         : $tour->price;
                                 @endphp
                                 <div class="booking-form-wrapper">
                                     <p class="text-black font-semibold mb-3">Book This Tour</p>
 
-                                    @if(session('success'))
+                                    @if (session('success'))
                                         <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                                             <i class="fas fa-check-circle me-2"></i>
                                             {{ session('success') }}
                                         </div>
                                     @endif
 
-                                    @if($errors->any())
+                                    @if ($errors->any())
                                         <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
                                             <strong class="block mb-2">Please fix the following errors:</strong>
                                             <ul class="list-disc list-inside">
-                                                @foreach($errors->all() as $error)
+                                                @foreach ($errors->all() as $error)
                                                     <li>{{ $error }}</li>
                                                 @endforeach
                                             </ul>
@@ -568,18 +576,19 @@
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
-                                        @if($hasSeasonalPrices)
+                                        @if ($hasSeasonalPrices)
                                             <div class="mb-5">
                                                 <label class="block mb-2 text-dark-grey font-semibold">Accommodation
                                                     Type</label>
                                                 <select id="accommodation_type" name="accommodation_type"
                                                     class="w-full border {{ $errors->has('accommodation_type_id') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none cursor-pointer">
                                                     <option value="">Select Accommodation Type</option>
-                                                    @foreach($tour->seasonalPrices as $seasonalPrice)
-                                                        @foreach($seasonalPrice->priceItems as $item)
+                                                    @foreach ($tour->seasonalPrices as $seasonalPrice)
+                                                        @foreach ($seasonalPrice->priceItems as $item)
                                                             <option value="{{ $item->id }}" data-price="{{ $item->price_value }}"
                                                                 data-season="{{ $seasonalPrice->season_name }}" {{ old('accommodation_type_id') == $item->id ? 'selected' : '' }}>
-                                                                {{ $item->price_name }} - {{ $seasonalPrice->season_name }}
+                                                                {{ $item->price_name }} -
+                                                                {{ $seasonalPrice->season_name }}
                                                                 (${{ number_format($item->price_value, 2) }})
                                                             </option>
                                                         @endforeach
@@ -591,7 +600,7 @@
                                             </div>
                                         @endif
 
-                                        @if($tour->variants->count() > 0)
+                                        @if ($tour->variants->count() > 0)
                                             <p class="mb-2.5 font-semibold">Extra Options</p>
                                             @php
                                                 $oldVariants = old('selected_variants', []);
@@ -604,7 +613,7 @@
                                                     $oldVariants = [];
                                                 }
                                             @endphp
-                                            @foreach($tour->variants as $variant)
+                                            @foreach ($tour->variants as $variant)
                                                 <div class="mb-2.5">
                                                     <label class="flex items-center gap-2 text-dark-grey cursor-pointer">
                                                         <input type="checkbox" class="variant-checkbox w-4 h-4"
@@ -612,7 +621,8 @@
                                                             data-price="{{ $variant->additional_price }}" value="{{ $variant->id }}"
                                                             {{ in_array($variant->id, $oldVariants) ? 'checked' : '' }}>
                                                         <span>{{ $variant->title }}
-                                                            (${{ number_format($variant->additional_price, 2) }})</span>
+                                                            (${{ number_format($variant->additional_price, 2) }})
+                                                        </span>
                                                     </label>
                                                 </div>
                                             @endforeach
@@ -652,21 +662,23 @@
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <h2 class="text-black text-3xl font-bold leading-[1.1] mb-8">Related Tours</h2>
-            @if($relatedTours->count() > 0)
+            @if ($relatedTours->count() > 0)
                 <div class="swiper tours-similar-swiper">
                     <div class="swiper-wrapper">
-                        @foreach($relatedTours as $relatedTour)
+                        @foreach ($relatedTours as $relatedTour)
                             <div class="swiper-slide">
                                 <article class="relative overflow-hidden transition duration-200">
                                     <div class="bg-white border rounded-2xl border-light-grey">
                                         <div class="relative overflow-hidden rounded-t-2xl">
                                             <a href="{{ route('tours.show', $relatedTour->slug) }}">
                                                 @php
-                                                    $relatedCoverImage = $relatedTour->cover_image ? asset('uploads/tours/' . $relatedTour->cover_image) : asset('assets/frontend/assets/images/blogs/01.png');
+                                                    $relatedCoverImage = $relatedTour->cover_image
+                                                        ? asset('uploads/tours/' . $relatedTour->cover_image)
+                                                        : asset('assets/frontend/assets/images/blogs/01.png');
                                                 @endphp
                                                 <img src="{{ $relatedCoverImage }}" alt="{{ $relatedTour->title }}"
                                                     class="object-cover w-full h-auto transition duration-300 hover:scale-105">
-                                                @if($relatedTour->has_offer && $relatedTour->isOfferActive())
+                                                @if ($relatedTour->has_offer && $relatedTour->isOfferActive())
                                                     <span
                                                         class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
                                                         Sale</span>
@@ -678,8 +690,9 @@
                                                 <span class="iconify" data-icon="ep:location" data-width="14"
                                                     data-height="14"></span>
                                                 <span class="text-sm text-dark-grey">
-                                                    @if($relatedTour->state)
-                                                        {{ $relatedTour->state->name }}, {{ $relatedTour->country->name ?? '' }}
+                                                    @if ($relatedTour->state)
+                                                        {{ $relatedTour->state->name }},
+                                                        {{ $relatedTour->country->name ?? '' }}
                                                     @elseif($relatedTour->country)
                                                         {{ $relatedTour->country->name }}
                                                     @endif
@@ -701,7 +714,7 @@
                                             </div>
 
                                             <div class="flex flex-wrap items-center gap-2">
-                                                @if($relatedTour->show_on_homepage)
+                                                @if ($relatedTour->show_on_homepage)
                                                     <span
                                                         class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">Featured</span>
                                                 @endif
@@ -709,7 +722,7 @@
 
                                             <div class="h-px my-4 border-t border-light-grey"></div>
 
-                                            @if($relatedTour->has_offer && $relatedTour->isOfferActive())
+                                            @if ($relatedTour->has_offer && $relatedTour->isOfferActive())
                                                 <div class="mb-1 text-sm font-bold line-through text-grey">
                                                     ${{ number_format($relatedTour->price_before_discount ?? $relatedTour->price, 2) }}
                                                 </div>
@@ -719,7 +732,7 @@
                                                 <span class="flex items-center gap-1">
                                                     <span>From</span>
                                                     <span class="text-base font-bold text-green-zomp">
-                                                        @if($relatedTour->has_offer && $relatedTour->isOfferActive())
+                                                        @if ($relatedTour->has_offer && $relatedTour->isOfferActive())
                                                             ${{ number_format($relatedTour->price_after_discount ?? $relatedTour->price, 2) }}
                                                         @else
                                                             ${{ number_format($relatedTour->price, 2) }}

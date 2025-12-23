@@ -54,6 +54,21 @@
             </li>
         @endif
 
+
+        <li
+            class="menu-item {{ \App\Helpers\setSidebarActive(
+                [
+                    'admin.
+                                cruise-experiences.*',
+                ],
+                'active',
+            ) }}">
+            <a href="{{ route('admin.cruise-experiences.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-ship"></i>
+                <div data-i18n="Dahbia Cruises">Dahbia Cruises</div>
+            </a>
+        </li>
+
         @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
             <li
                 class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*', 'admin.countries.*', 'admin.states.*', 'admin.tour-variants.*'], 'active open') }}">
@@ -62,12 +77,7 @@
                     <div data-i18n="Tours">Tours</div>
                 </a>
                 <ul class="menu-sub">
-                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.cruise-experiences.*'], 'active') }}">
-                        <a href="{{ route('admin.cruise-experiences.index') }}" class="menu-link">
-                            <i class="menu-icon tf-icons ti ti-ship"></i>
-                            <div data-i18n="Dahbia Cruises">Dahbia Cruises</div>
-                        </a>
-                    </li>
+                    <!-- Dahbia Cruises tab moved outside of Tours tab as standalone -->
 
                     <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*'], 'active') }}">
                         <a href="{{ route('admin.tours.index') }}" class="menu-link">

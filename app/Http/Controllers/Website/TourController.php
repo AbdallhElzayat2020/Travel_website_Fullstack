@@ -54,13 +54,10 @@ class TourController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // Get related tours (same category or recent)
+        // Get related tours (same category only)
         $relatedTours = Tour::active()
             ->where('id', '!=', $tour->id)
-            ->where(function ($query) use ($tour) {
-                $query->where('category_id', $tour->category_id)
-                    ->orWhere('country_id', $tour->country_id);
-            })
+            ->where('category_id', $tour->category_id)
             ->orderBy('sort_order')
             ->latest()
             ->take(8)

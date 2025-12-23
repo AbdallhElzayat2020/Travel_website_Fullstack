@@ -87,7 +87,10 @@ class CountrySeeder extends Seeder
         ];
 
         foreach ($countries as $country) {
-            Country::create($country);
+            Country::updateOrCreate(
+                ['slug' => $country['slug']],
+                $country
+            );
         }
     }
 }

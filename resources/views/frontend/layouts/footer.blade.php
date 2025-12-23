@@ -2,7 +2,7 @@
     <div class="container">
         <div class="flex flex-wrap md:flex-nowrap justify-between gap-5 md:gap-6 py-6 md:py-12">
             <div class="w-full md:w-[35%] mb-10 md:mb-0">
-                <img src="{{ asset('assets/frontend/assets/images/logo-footer.png') }}" alt="Logo"
+                <img src="{{ asset('assets/frontend/assets/images/logo_mm.png') }}" alt="Logo"
                     class="h-[50px] w-auto mb-7" />
                 <p class="text-white-grey font-medium mb-10">Don't just get there, get there in style.</p>
                 <ul class="space-y-2 text-grey">
@@ -40,16 +40,24 @@
             <div class="w-1/2 md:w-1/5 min-w-[150px] mb-10 md:mb-0">
                 <h6 class="text-white font-bold mb-6">Information</h6>
                 <ul class="space-y-4 text-grey">
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Help & FAQs</a>
-                    </li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Press centre</a>
-                    </li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">About us</a></li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Contact us</a>
-                    </li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Privacy policy</a>
-                    </li>
-                    <li><a href="#" class="hover:text-green-zomp transition duration-200">Site map</a></li>
+                    <li><a href="{{ route('blogs.index') }}"
+                            class="hover:text-green-zomp transition duration-200">Blog</a></li>
+                    <li><a href="{{ route('about-us') }}" class="hover:text-green-zomp transition duration-200">About
+                            Us</a></li>
+                    <li><a href="{{ route('contact-us') }}"
+                            class="hover:text-green-zomp transition duration-200">Contact Us</a></li>
+                    @php
+                        $termsPage = \App\Models\Page::where('slug', 'terms-and-conditions')->where('status', 'active')->first();
+                        $privacyPage = \App\Models\Page::where('slug', 'privacy-policy')->where('status', 'active')->first();
+                    @endphp
+                    @if($privacyPage)
+                        <li><a href="{{ route('privacy-policy') }}"
+                                class="hover:text-green-zomp transition duration-200">Privacy Policy</a></li>
+                    @endif
+                    @if($termsPage)
+                        <li><a href="{{ route('terms-and-conditions') }}"
+                                class="hover:text-green-zomp transition duration-200">Terms & Conditions</a></li>
+                    @endif
                 </ul>
             </div>
 
