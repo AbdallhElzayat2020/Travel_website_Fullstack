@@ -24,45 +24,20 @@
             <div class="w-1/2 md:w-1/5 min-w-[150px] mb-10 md:mb-0">
                 <h6 class="text-white font-bold mb-6">Quick Links</h6>
                 <ul class="space-y-4 text-grey">
-                    @php
-                        // Get categories in specific order
-                        $footerCategories = \App\Models\Category::whereIn('slug', ['nile-cruises', 'dahbia-tours', 'tour-egypt-packages'])
-                            ->where('status', 'active')
-                            ->orderByRaw("FIELD(slug, 'nile-cruises', 'dahbia-tours', 'tour-egypt-packages')")
-                            ->get();
-
-                        // Get cruise experiences
-                        $footerCruises = \App\Models\CruiseExperience::active()
-                            ->orderBy('sort_order')
-                            ->get();
-                    @endphp
-
-                    {{-- Display Category: Nile Cruises --}}
-                    @foreach($footerCategories as $category)
-                        @if($category->slug === 'nile-cruises')
-                            <li>
-                                <a href="{{ route('tours.category', $category->slug) }}"
-                                    class="hover:text-green-zomp transition duration-200">{{ $category->name }}</a>
-                            </li>
-                        @endif
+                    {{-- Display Categories from shared data --}}
+                    @foreach($sharedCategories as $category)
+                        <li>
+                            <a href="{{ route('tours.category', $category->slug) }}"
+                                class="hover:text-green-zomp transition duration-200">{{ $category->name }}</a>
+                        </li>
                     @endforeach
 
-                    {{-- Display Cruise Experiences (Dahbia Cruises) --}}
-                    @foreach($footerCruises as $cruise)
+                    {{-- Display Cruise Experiences from shared data --}}
+                    @foreach($sharedCruiseExperiences as $cruise)
                         <li>
                             <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
                                 class="hover:text-green-zomp transition duration-200">{{ $cruise->title }}</a>
                         </li>
-                    @endforeach
-
-                    {{-- Display Other Categories --}}
-                    @foreach($footerCategories as $category)
-                        @if($category->slug !== 'nile-cruises')
-                            <li>
-                                <a href="{{ route('tours.category', $category->slug) }}"
-                                    class="hover:text-green-zomp transition duration-200">{{ $category->name }}</a>
-                            </li>
-                        @endif
                     @endforeach
                 </ul>
             </div>
@@ -76,15 +51,11 @@
                             Us</a></li>
                     <li><a href="{{ route('contact-us') }}"
                             class="hover:text-green-zomp transition duration-200">Contact Us</a></li>
-                    @php
-                        $termsPage = \App\Models\Page::where('slug', 'terms-and-conditions')->where('status', 'active')->first();
-                        $privacyPage = \App\Models\Page::where('slug', 'privacy-policy')->where('status', 'active')->first();
-                    @endphp
-                    @if($privacyPage)
+                    @if($sharedPrivacyPage)
                         <li><a href="{{ route('privacy-policy') }}"
                                 class="hover:text-green-zomp transition duration-200">Privacy Policy</a></li>
                     @endif
-                    @if($termsPage)
+                    @if($sharedTermsPage)
                         <li><a href="{{ route('terms-and-conditions') }}"
                                 class="hover:text-green-zomp transition duration-200">Terms & Conditions</a></li>
                     @endif

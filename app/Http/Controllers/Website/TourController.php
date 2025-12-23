@@ -34,6 +34,7 @@ class TourController extends Controller
                 'category',
                 'subCategory',
                 'state',
+                'country',
                 'tourDays' => function ($query) {
                     $query->orderBy('day_number')->orderBy('sort_order');
                 },
@@ -54,10 +55,12 @@ class TourController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        // Get related tours (same category only)
+        // Get related tours (same category only) with eager loading
+        // Laravel will optimize and reuse already loaded relations when IDs match
         $relatedTours = Tour::active()
             ->where('id', '!=', $tour->id)
             ->where('category_id', $tour->category_id)
+            ->with(['category:id,name,slug', 'country:id,name,code', 'state:id,name,slug'])
             ->orderBy('sort_order')
             ->latest()
             ->take(8)

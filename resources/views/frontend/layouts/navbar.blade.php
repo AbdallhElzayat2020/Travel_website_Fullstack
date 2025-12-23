@@ -13,15 +13,12 @@
                 <span class="iconify" data-icon="ic:sharp-clear" data-width="22" data-height="22"></span>
             </div>
             @php
-                // Get "Nile Cruises" category
-                $nileCruisesCategory = \App\Models\Category::active()
-                    ->where(function ($query) {
-                        $query->where('slug', 'nile-cruises')
-                            ->orWhere('name', 'Nile Cruises');
-                    })
-                    ->first();
+                // Use shared categories from LayoutComposer
+                $nileCruisesCategory = $sharedCategories->firstWhere('slug', 'nile-cruises');
+                $dahbiaToursCategory = $sharedCategories->firstWhere('slug', 'dahbia-tours');
+                $tourEgyptPackagesCategory = $sharedCategories->firstWhere('slug', 'tour-egypt-packages');
 
-                // Get tours for this category
+                // Get tours for Nile Cruises category (this is category-specific data)
                 $nileCruisesTours = $nileCruisesCategory
                     ? \App\Models\Tour::active()
                         ->where('category_id', $nileCruisesCategory->id)
@@ -31,26 +28,8 @@
                         ->get()
                     : collect();
 
-                // Get cruise experiences for Dahbia Cruises dropdown
-                $dahbiaCruiseExperiences = \App\Models\CruiseExperience::active()
-                    ->orderBy('sort_order')
-                    ->get();
-
-                // Get "Dahbia Tours" category
-                $dahbiaToursCategory = \App\Models\Category::active()
-                    ->where(function ($query) {
-                        $query->where('slug', 'dahbia-tours')
-                            ->orWhere('name', 'Dahbia Tours');
-                    })
-                    ->first();
-
-                // Get "Tour Egypt Packages" category
-                $tourEgyptPackagesCategory = \App\Models\Category::active()
-                    ->where(function ($query) {
-                        $query->where('slug', 'tour-egypt-packages')
-                            ->orWhere('name', 'Tour Egypt Packages');
-                    })
-                    ->first();
+                // Use shared cruise experiences
+                $dahbiaCruiseExperiences = $sharedCruiseExperiences;
             @endphp
             <ul
                 class="flex flex-wrap lg:flex-nowrap items-center justify-end gap-4 lg:gap-8 xl:gap-10 text-sm sm:text-base font-semibold text-black">
