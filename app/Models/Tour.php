@@ -23,6 +23,7 @@ class Tour extends Model
         'duration',
         'duration_type',
         'cover_image',
+        'cover_image_alt',
         'status',
         'show_on_homepage',
         'price',

@@ -2,21 +2,25 @@
     <div class="container">
         <div class="flex flex-wrap md:flex-nowrap justify-between gap-5 md:gap-6 py-6 md:py-12">
             <div class="w-full md:w-[35%] mb-10 md:mb-0">
-                <img src="{{ asset('assets/frontend/assets/images/logo_white.webp') }}" alt="Logo"
-                    class="h-[60px] w-auto mb-7" />
+                @if($footerLogo)
+                    <img src="{{ asset('uploads/settings/' . $footerLogo) }}" alt="Logo" class="h-[60px] w-auto mb-7" />
+                @else
+                    <img src="{{ asset('assets/frontend/assets/images/logo_white.webp') }}" alt="Logo"
+                        class="h-[60px] w-auto mb-7" />
+                @endif
                 <p class="text-white-grey font-medium mb-10">Don't just get there, get there in style.</p>
                 <ul class="space-y-2 text-grey">
                     <li class="flex items-start gap-2">
                         <span class="iconify" data-icon="ep:location" data-width="20" data-height="20"></span>
-                        <p>Sarayah Zayed 2 Building, Apartment 1,<br>8th District<br>Sheikh Zayed City - Giza</p>
+                        <p>{!! $siteAddress !!}</p>
                     </li>
                     <li class="flex items-center gap-2">
                         <span class="iconify" data-icon="ph:phone-call" data-width="20" data-height="20"></span>
-                        <p>+20 101 515 7744 / +20 101 515 7746</p>
+                        <p>{{ $sitePhone }}</p>
                     </li>
                     <li class="flex items-center gap-2">
                         <span class="iconify" data-icon="carbon:email" data-width="20" data-height="20"></span>
-                        <p>info@grandnilecruises.com</p>
+                        <p>{{ $siteEmail }}</p>
                     </li>
                 </ul>
             </div>

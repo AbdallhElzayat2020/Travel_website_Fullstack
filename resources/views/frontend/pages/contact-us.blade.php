@@ -34,9 +34,9 @@
     <section class="mb-[60px] md:mb-24">
         <div class="container p-6 md:p-[60px] xl:p-[120px] relative overflow-hidden bg-[#f2f4f4] rounded-2xl">
             <div class="absolute inset-0 z-0" style="background-image: url('{{ asset('assets/frontend/assets/images/about-us-bg-form.png') }}');
-                                                                    background-position: center center;
-                                                                    background-repeat: repeat;
-                                                                    opacity: 0.79;">
+                                                                            background-position: center center;
+                                                                            background-repeat: repeat;
+                                                                            opacity: 0.79;">
             </div>
             <div class="grid md:grid-cols-2 gap-10 md:gap-[60px] items-start relative z-10">
                 <div class="wrapper">
@@ -56,7 +56,7 @@
                             </div>
                             <div>
                                 <h3 class="text-black font-semibold mb-1">Email Us</h3>
-                                <p class="text-dark-grey text-sm">Demo@domain.com</p>
+                                <p class="text-dark-grey text-sm">{{ $siteEmail }}</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -67,7 +67,7 @@
                             </div>
                             <div>
                                 <h3 class="text-black font-semibold mb-1">Call Us</h3>
-                                <p class="text-dark-grey text-sm">(123) 456-7890</p>
+                                <p class="text-dark-grey text-sm">{{ $sitePhone }}</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -194,12 +194,12 @@
                         <p class="text-dark-grey flex items-center gap-2">
                             <span class="iconify text-green-zomp" data-icon="mdi:phone" data-width="20"
                                 data-height="20"></span>
-                            (123) 456-7890
+                            {{ $sitePhone }}
                         </p>
                         <p class="text-dark-grey flex items-center gap-2">
                             <span class="iconify text-green-zomp" data-icon="mdi:email" data-width="20"
                                 data-height="20"></span>
-                            Demo@domain.com
+                            {{ $siteEmail }}
                         </p>
                         <p class="text-dark-grey flex items-center gap-2">
                             <span class="iconify text-green-zomp" data-icon="mdi:map-marker" data-width="20"

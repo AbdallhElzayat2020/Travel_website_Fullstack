@@ -37,6 +37,7 @@ class CategoryController extends Controller
             'slug' => 'nullable|string|max:255|unique:categories,slug',
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4000',
+            'image_alt' => 'nullable|string|max:255',
             'status' => 'required|in:active,inactive',
             'sort_order' => 'nullable|integer|min:0',
         ]);
@@ -90,6 +91,7 @@ class CategoryController extends Controller
             'slug' => 'nullable|string|max:255|unique:categories,slug,' . $id,
             'description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4000',
+            'image_alt' => 'nullable|string|max:255',
             'status' => 'required|in:active,inactive',
             'sort_order' => 'nullable|integer|min:0',
         ]);

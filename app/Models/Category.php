@@ -13,6 +13,7 @@ class Category extends Model
         'slug',
         'description',
         'image',
+        'image_alt',
         'status',
         'sort_order',
         'grid_columns',

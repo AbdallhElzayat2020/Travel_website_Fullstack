@@ -395,6 +395,16 @@
                                         <div id="coverImagePreview" class="mt-3"></div>
                                     </div>
 
+                                    <div class="mb-4">
+                                        <label for="cover_image_alt" class="form-label">Cover Image Alt Text</label>
+                                        <input type="text" class="form-control @error('cover_image_alt') is-invalid @enderror" id="cover_image_alt"
+                                            name="cover_image_alt" value="{{ old('cover_image_alt') }}" placeholder="Enter alt text for the cover image">
+                                        <small class="text-muted">Describe the image for accessibility and SEO</small>
+                                        @error('cover_image_alt')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                     <hr class="divider">
 
                                     <div class="mb-3">
@@ -971,12 +981,16 @@
                     <div class="card mb-3 image-item image-preview-card" data-image-index="${imageCounter}">
                         <div class="card-body">
                             <div class="row align-items-end">
-                                <div class="col-md-8 mb-3">
+                                <div class="col-md-5 mb-3">
                                     <label class="form-label">Image</label>
                                     <input type="file" class="form-control image-input" name="tour_images[${imageCounter}][image]" accept="image/*" required>
                                     <div class="image-preview mt-2"></div>
                                 </div>
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Image Alt Text</label>
+                                    <input type="text" class="form-control" name="tour_images[${imageCounter}][alt]" placeholder="Enter alt text for the image">
+                                </div>
+                                <div class="col-md-2 mb-3">
                                     <label class="form-label">Sort Order</label>
                                     <input type="number" class="form-control" name="tour_images[${imageCounter}][sort_order]" value="${imageCounter}" min="0">
                                 </div>

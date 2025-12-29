@@ -128,6 +128,15 @@ return [
             'report' => false,
         ],
 
+        'settings' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/settings'),
+            'url' => env('APP_URL') . '/uploads/settings',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
         'tour_variants' => [
             'driver' => 'local',
             'root' => public_path('uploads/tour-variants'),

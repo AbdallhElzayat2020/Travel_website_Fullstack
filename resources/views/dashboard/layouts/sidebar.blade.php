@@ -182,6 +182,14 @@
                     <div data-i18n="TopNav">TopNav Announcement</div>
                 </a>
             </li>
+
+            {{-- Settings --}}
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.settings.*'], 'active') }}">
+                <a href="{{ route('admin.settings.edit') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-settings"></i>
+                    <div data-i18n="Settings">Settings</div>
+                </a>
+            </li>
         @endif
 
         {{-- Communications Section --}}

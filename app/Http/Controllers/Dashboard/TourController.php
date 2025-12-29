@@ -82,8 +82,10 @@ class TourController extends Controller
             'tour_days.*.day_number' => 'required|integer|min:1',
             'tour_days.*.day_title' => 'required|string|max:255',
             'tour_days.*.details' => 'nullable|string',
+            'cover_image_alt' => 'nullable|string|max:255',
             'tour_images' => 'nullable|array',
             'tour_images.*.image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tour_images.*.alt' => 'nullable|string|max:255',
             'tour_images.*.sort_order' => 'nullable|integer|min:0',
             'tour_variants' => 'nullable|array',
             'tour_variants.*.title' => 'required|string|max:255',
@@ -157,6 +159,7 @@ class TourController extends Controller
                             TourImage::create([
                                 'tour_id' => $tour->id,
                                 'image' => $imagePath,
+                                'alt' => $imageData['alt'] ?? null,
                                 'sort_order' => $imageData['sort_order'] ?? $index,
                             ]);
                         }
@@ -319,6 +322,7 @@ class TourController extends Controller
             'deleted_days.*' => 'exists:tour_days,id',
             'tour_images' => 'nullable|array',
             'tour_images.*.image' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'tour_images.*.alt' => 'nullable|string|max:255',
             'tour_images.*.sort_order' => 'nullable|integer|min:0',
             'deleted_images' => 'nullable|array',
             'deleted_images.*' => 'exists:tour_images,id',
@@ -427,8 +431,9 @@ class TourController extends Controller
                         // Existing image
                         $image = TourImage::find($imageId);
                         if ($image && $image->tour_id == $tour->id) {
-                            // Update sort order
+                            // Update sort order and alt
                             $image->update([
+                                'alt' => $imageData['alt'] ?? $image->alt,
                                 'sort_order' => $imageData['sort_order'] ?? $image->sort_order,
                             ]);
 
@@ -465,6 +470,7 @@ class TourController extends Controller
                                 TourImage::create([
                                     'tour_id' => $tour->id,
                                     'image' => $imagePath,
+                                    'alt' => $imageData['alt'] ?? null,
                                     'sort_order' => $imageData['sort_order'] ?? 0,
                                 ]);
                             }

@@ -51,6 +51,16 @@
                         @enderror
                     </div>
 
+                    <div class="col-md-6 mb-3">
+                        <label for="image_alt" class="form-label">Image Alt Text</label>
+                        <input type="text" class="form-control @error('image_alt') is-invalid @enderror" id="image_alt"
+                            name="image_alt" value="{{ old('image_alt') }}" placeholder="Enter alt text for the image">
+                        <small class="text-muted">Describe the image for accessibility and SEO</small>
+                        @error('image_alt')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="col-md-3 mb-3">
                         <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                         <select class="form-select @error('status') is-invalid @enderror" id="status" name="status"

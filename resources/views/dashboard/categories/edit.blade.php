@@ -49,7 +49,8 @@
                         <label for="image" class="form-label">Image</label>
                         @if($category->image)
                             <div class="mb-2">
-                                <img src="{{ asset('uploads/categories/' . $category->image) }}" alt="{{ $category->name }}"
+                                <img src="{{ asset('uploads/categories/' . $category->image) }}"
+                                    alt="{{ $category->image_alt ?? $category->name }}"
                                     style="max-width: 200px; max-height: 200px; border-radius: 4px;">
                             </div>
                         @endif
@@ -57,6 +58,17 @@
                             accept="image/*">
                         <small class="text-muted">Leave empty to keep current image</small>
                         @error('image')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="image_alt" class="form-label">Image Alt Text</label>
+                        <input type="text" class="form-control @error('image_alt') is-invalid @enderror" id="image_alt"
+                            name="image_alt" value="{{ old('image_alt', $category->image_alt) }}"
+                            placeholder="Enter alt text for the image">
+                        <small class="text-muted">Describe the image for accessibility and SEO</small>
+                        @error('image_alt')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

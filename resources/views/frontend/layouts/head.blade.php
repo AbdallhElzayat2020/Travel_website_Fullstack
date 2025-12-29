@@ -74,16 +74,17 @@
 
         .announcement-scroll {
             display: inline-block;
-            animation: scroll-horizontal 50s linear infinite;
+            animation: scroll-horizontal 80s linear infinite;
+            will-change: transform;
         }
 
         @keyframes scroll-horizontal {
             0% {
-                transform: translateX(100%);
+                transform: translateX(0);
             }
 
             100% {
-                transform: translateX(-100%);
+                transform: translateX(-50%);
             }
         }
 
@@ -168,33 +169,6 @@
             animation: pulse 2s infinite;
         }
 
-        .floating-phone-btn {
-            position: fixed;
-            bottom: 24px;
-            left: 24px;
-            width: 56px;
-            height: 56px;
-            background-color: #01AA90;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            z-index: 9999;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .floating-phone-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-            background-color: #019982;
-        }
-
-        .floating-phone-btn .phone-icon {
-            color: white;
-            font-size: 28px;
-        }
 
         .floating-scroll-top-btn {
             position: fixed;
@@ -247,14 +221,12 @@
         @media (max-width: 768px) {
 
             .floating-whatsapp-btn,
-            .floating-phone-btn,
             .floating-scroll-top-btn {
                 width: 48px;
                 height: 48px;
             }
 
-            .floating-whatsapp-btn,
-            .floating-phone-btn {
+            .floating-whatsapp-btn {
                 bottom: 16px;
             }
 
@@ -267,12 +239,7 @@
                 right: 16px;
             }
 
-            .floating-phone-btn {
-                left: 16px;
-            }
-
             .floating-whatsapp-btn .whatsapp-icon,
-            .floating-phone-btn .phone-icon,
             .floating-scroll-top-btn .scroll-top-icon {
                 font-size: 24px;
             }

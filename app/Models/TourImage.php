@@ -10,6 +10,7 @@ class TourImage extends Model
     protected $fillable = [
         'tour_id',
         'image',
+        'alt',
         'sort_order',
     ];
 

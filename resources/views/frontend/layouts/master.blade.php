@@ -29,14 +29,19 @@
     </button>
 
     {{-- WhatsApp Button --}}
-    <a href="https://wa.me/201015157744" target="_blank" rel="noopener noreferrer" class="floating-whatsapp-btn">
+    @php
+        // Extract first phone number from the string (before / if exists)
+        $phoneForWhatsApp = explode('/', $sitePhone)[0];
+        $whatsappNumber = preg_replace('/[^0-9]/', '', trim($phoneForWhatsApp));
+        // Remove leading zeros but keep country code
+        if (strlen($whatsappNumber) > 10) {
+            $whatsappNumber = ltrim($whatsappNumber, '0');
+        }
+    @endphp
+    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" rel="noopener noreferrer"
+        class="floating-whatsapp-btn">
         <span class="iconify whatsapp-icon" data-icon="logos:whatsapp-icon" data-width="28" data-height="28"></span>
         <span class="notification-dot"></span>
-    </a>
-
-    {{-- Phone Call Button --}}
-    <a href="tel:+201015157744" class="floating-phone-btn">
-        <span class="iconify phone-icon" data-icon="ph:phone-call-fill" data-width="28" data-height="28"></span>
     </a>
 
     @include('frontend.layouts.scripts')

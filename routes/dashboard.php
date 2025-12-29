@@ -24,6 +24,7 @@ use App\Http\Controllers\Dashboard\{
     PageController,
     AnnouncementController,
     BookingController,
+    SettingController,
 };
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -101,6 +102,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
     Route::put('bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
     Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
+
+    // Settings Routes
+    Route::get('settings/edit', [SettingController::class, 'edit'])->name('settings.edit');
+    Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
 });
 
 
