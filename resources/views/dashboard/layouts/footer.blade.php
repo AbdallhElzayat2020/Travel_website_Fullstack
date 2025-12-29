@@ -5,13 +5,11 @@
                 <script>
                     {{ date('Y') }}
                 </script>
-                made ❤️ by <a href="https://mostaql.com/u/Abdallh_Elzayat/portfolio" target="_blank"
-                    class="fw-semibold">Abdallh
-                    Elzayat</a>
+                Made with Love ❤️ in Egypt
             </div>
             <div>
                 <a href="https://wa.me/201212484233" class="footer-link me-4" target="_blank">
-                    Support & Contact Developer
+                    © 2026 MRCO-Egypt - Travel Website System Ver 1.0 - All Rights Reserved.
                 </a>
 
             </div>

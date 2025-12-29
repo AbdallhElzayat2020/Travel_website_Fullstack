@@ -74,7 +74,7 @@
 
         .announcement-scroll {
             display: inline-block;
-            animation: scroll-horizontal 30s linear infinite;
+            animation: scroll-horizontal 50s linear infinite;
         }
 
         @keyframes scroll-horizontal {

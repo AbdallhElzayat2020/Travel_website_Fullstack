@@ -6,8 +6,8 @@
 <body class="antialiased font-urbanist">
 
     @if($sharedAnnouncements->count() > 0)
-        <div id="announcement-bar"
-            class="bg-[#F51D35] text-white py-2 relative overflow-hidden border-b-2 border-dark-grey">
+        <div style="background-color: #f9e600; color: #8b7138;" id="announcement-bar"
+            class="bg-[#f9e600] text-white py-2 relative overflow-hidden border-b-2 border-dark-grey">
             <div class="announcement-scroll whitespace-nowrap">
                 @foreach($sharedAnnouncements as $announcement)
                     <span class="inline-block mx-8 font-bold text-base md:text-lg">{{ $announcement->content }}</span>
