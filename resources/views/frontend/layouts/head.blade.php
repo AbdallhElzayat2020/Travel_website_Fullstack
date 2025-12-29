@@ -218,6 +218,17 @@
             }
         }
 
+        /* Hero Slider Text Color Override */
+        .hero-swiper .swiper-slide h1,
+        .hero-swiper .swiper-slide h1 * {
+            color: #8b7138 !important;
+        }
+
+        .hero-swiper .swiper-slide p,
+        .hero-swiper .swiper-slide p * {
+            color: #8b7138 !important;
+        }
+
         @media (max-width: 768px) {
 
             .floating-whatsapp-btn,

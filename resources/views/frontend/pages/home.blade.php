@@ -20,14 +20,16 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
         <div class="swiper hero-swiper rounded-[32px] overflow-hidden">
             <div class="swiper-wrapper">
                 @forelse($sliders as $slider)
-                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center text-white"
+                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center"
                         style="background-image: url('{{ asset('uploads/sliders/' . $slider->image) }}')">
                         <div class="px-4 md:px-0 max-w-4xl mx-auto text-center">
-                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center">
+                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center"
+                                style="color: #8b7138 !important;">
                                 {!! nl2br(e($slider->title)) !!}
                             </h1>
                             @if ($slider->description)
-                                <p class="mb-4 md:mb-10 text-lg font-semibold text-center">
+                                <p class="mb-4 md:mb-10 text-lg font-semibold text-center"
+                                    style="color: #8b7138 !important;">
                                     {{ $slider->description }}
                                 </p>
                             @endif
@@ -41,14 +43,16 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
                     </div>
                 @empty
                     <!-- Default Slide if no sliders -->
-                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center text-white"
+                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center"
                         style="background-image: url('{{ asset('assets/frontend/assets/images/hero-banner.png') }}')">
                         <div class="px-4 md:px-0 max-w-4xl mx-auto text-center">
-                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center">
+                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center"
+                                style="color: #8b7138 !important;">
                                 Discover amazing destinations. <br />
                                 Create unforgettable memories.
                             </h1>
-                            <p class="mb-4 md:mb-10 text-lg font-semibold text-center">Your next adventure is just one click
+                            <p class="mb-4 md:mb-10 text-lg font-semibold text-center"
+                                style="color: #8b7138 !important;">Your next adventure is just one click
                                 away</p>
                         </div>
                     </div>
