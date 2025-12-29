@@ -232,27 +232,6 @@
     p {
         color: #b0b3b8;
     }
-    .note-editor {
-        background: #252836 !important;
-        border: 1px solid #3a3d4a !important;
-    }
-    .note-editor .note-editing-area {
-        background: #252836 !important;
-        color: #e4e6eb !important;
-    }
-    .note-toolbar {
-        background: #2a2d3a !important;
-        border-bottom: 1px solid #3a3d4a !important;
-    }
-    .note-btn-group .note-btn {
-        background: transparent !important;
-        border-color: #3a3d4a !important;
-        color: #b0b3b8 !important;
-    }
-    .note-btn-group .note-btn:hover {
-        background: #3a3d4a !important;
-        color: #e4e6eb !important;
-    }
 </style>
 @endpush
 

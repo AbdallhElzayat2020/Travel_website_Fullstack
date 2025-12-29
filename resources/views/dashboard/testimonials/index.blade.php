@@ -28,7 +28,7 @@
                             <th>Name</th>
                             <th>Description</th>
                             <th>Job Title</th>
-                            <th>Company</th>
+                            <th>Country</th>
                             <th>Rating</th>
                             <th>Status</th>
                             <th>Order</th>

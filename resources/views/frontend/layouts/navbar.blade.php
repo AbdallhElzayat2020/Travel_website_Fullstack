@@ -52,9 +52,9 @@
                 </li>
                 {{-- Dahbia Cruises dropdown with cruise experiences --}}
                 <li class="relative group nav-father">
-                    <div
-                        class="inline-flex items-center gap-1 py-2 cursor-pointer transition-all duration-200 hover:text-green-zomp">
-                        <span>{{ $dahbiaCruisesName }}</span>
+                    <div class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
+                        <a href="{{ route('nile-cruises.index') }}"
+                            class="hover:text-green-zomp">{{ $dahbiaCruisesName }}</a>
                         <i class="fa-solid fa-chevron-down text-xs text-dark-grey"></i>
                     </div>
                     @if($dahbiaCruiseExperiences->count())

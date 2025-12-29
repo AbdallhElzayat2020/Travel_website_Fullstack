@@ -87,9 +87,9 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label for="company" class="form-label">Company</label>
+                        <label for="company" class="form-label">Country</label>
                         <input type="text" class="form-control @error('company') is-invalid @enderror" id="company"
-                            name="company" value="{{ old('company', $testimonial->company) }}" placeholder="Company Name">
+                            name="company" value="{{ old('company', $testimonial->company) }}" placeholder="Country Name">
                         @error('company')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

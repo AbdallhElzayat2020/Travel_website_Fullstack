@@ -232,48 +232,39 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
     {{-- Top destination section --}}
 
     {{-- Offers section --}}
-    @if (isset($offerTours) && $offerTours->count())
+    @if (isset($cruiseExperiences) && $cruiseExperiences->count())
         <section class="mb-[60px] md:mb-24">
             <div class="container">
                 <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Offers to inspire you</h2>
                 <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-                    @foreach ($offerTours as $tour)
+                    @foreach ($cruiseExperiences as $cruise)
                         @php
-        $offerCover = $tour->cover_image
-            ? asset('uploads/tours/' . $tour->cover_image)
-            : asset('assets/frontend/assets/images/inspire-01.png');
+                            $firstImage = $cruise->images->first();
+                            $offerCover = $firstImage
+                                ? asset('uploads/cruise-experiences/' . $firstImage->image)
+                                : asset('assets/frontend/assets/images/inspire-01.png');
                         @endphp
                         <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
                             style="background-image: url('{{ $offerCover }}');">
                             <div class="absolute inset-0 rounded-2xl md:rounded-3xl"
-                                style="background: linear-gradient(134deg, #11A191 18%, #01AA9000 100%);"></div>
+                                style="background: linear-gradient(134deg, #8b7138 18%, rgba(139, 113, 56, 0) 100%);"></div>
                             <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
                                 <div>
                                     <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
-                                        <a href="{{ route('tours.show', $tour->slug) }}"
-                                            class="hover:text-green-zomp transition duration-200">
-                                            {!! $tour->title !!}
+                                        <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
+                                            class="hover:text-[#f9e600] transition duration-200">
+                                            {!! $cruise->title !!}
                                         </a>
                                     </h2>
-                                    @if ($tour->short_description)
+                                    @if ($cruise->short_description)
                                         <p class="text-white text-base mb-[40px] line-clamp-3">
-                                            {!! $tour->short_description !!}
+                                            {!! \Illuminate\Support\Str::limit(strip_tags($cruise->short_description), 150) !!}
                                         </p>
                                     @endif
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    @if ($tour->price_before_discount)
-                                        <span class="text-white line-through text-base">
-                                            ${{ number_format($tour->price_before_discount, 2) }}
-                                        </span>
-                                    @endif
-                                    @if ($tour->price_after_discount)
-                                        <span class="text-lg font-bold text-white">
-                                            ${{ number_format($tour->price_after_discount, 2) }}
-                                        </span>
-                                    @endif
-                                    <a href="{{ route('tours.show', $tour->slug) }}"
-                                        class="ml-auto border border-white text-sm text-white font-semibold py-2 px-4 rounded-[200px] transition duration-200 hover:bg-green-zomp hover:border-green-zomp">
+                                    <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
+                                        class="ml-auto border border-white text-sm text-white font-semibold py-2 px-4 rounded-[200px] transition duration-200 hover:bg-[#8b7138] hover:border-[#8b7138]">
                                         View Details
                                     </a>
                                 </div>

@@ -7,6 +7,7 @@ use App\Models\Tour;
 use App\Models\Slider;
 use App\Models\Subscriber;
 use App\Models\Gallery;
+use App\Models\CruiseExperience;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,17 +22,8 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $offerTours = Tour::active()
-            ->where('has_offer', true)
-            ->where('status', 'active')
-            ->where(function ($q) {
-                $q->whereNull('offer_start_date')
-                    ->orWhere('offer_start_date', '<=', now());
-            })
-            ->where(function ($q) {
-                $q->whereNull('offer_end_date')
-                    ->orWhere('offer_end_date', '>=', now());
-            })
+        $cruiseExperiences = CruiseExperience::active()
+            ->with('images')
             ->orderBy('sort_order')
             ->latest()
             ->take(2)
@@ -59,7 +51,7 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
-        return view('frontend.pages.home', compact('sliders', 'offerTours', 'blogs', 'homeGalleries', 'activeTours'));
+        return view('frontend.pages.home', compact('sliders', 'cruiseExperiences', 'blogs', 'homeGalleries', 'activeTours'));
     }
 
     /**

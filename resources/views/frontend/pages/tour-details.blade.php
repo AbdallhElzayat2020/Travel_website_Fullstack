@@ -385,12 +385,6 @@
                                                                         {{ $testimonial->company ?? ($testimonial->job_title ?? 'Traveler') }}
                                                                     </p>
                                                                 </div>
-                                                                <div class="flex items-center gap-0.5">
-                                                                    @for ($i = 1; $i <= 5; $i++)
-                                                                        <i
-                                                                            class="fas fa-star text-xs md:text-sm {{ $i <= ($testimonial->rating ?? 5) ? 'text-orange-yellow' : 'text-light-grey' }}"></i>
-                                                                    @endfor
-                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

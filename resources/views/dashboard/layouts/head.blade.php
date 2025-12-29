@@ -140,6 +140,144 @@
             -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
             box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
         }
+
+        /* Summernote Light Mode Styles */
+        html:not(.dark-style) .note-editor {
+            background: #ffffff !important;
+            border: 1px solid #dbdade !important;
+        }
+
+        html:not(.dark-style) .note-editor .note-editing-area {
+            background: #ffffff !important;
+            color: #6f6b7d !important;
+        }
+
+        html:not(.dark-style) .note-editor .note-editing-area .note-editable {
+            color: #6f6b7d !important;
+        }
+
+        html:not(.dark-style) .note-toolbar {
+            background: #f8f7fa !important;
+            border-bottom: 1px solid #dbdade !important;
+        }
+
+        html:not(.dark-style) .note-btn-group .note-btn {
+            background: transparent !important;
+            border-color: #dbdade !important;
+            color: #6f6b7d !important;
+        }
+
+        html:not(.dark-style) .note-btn-group .note-btn:hover {
+            background: #f8f7fa !important;
+            color: #5d596c !important;
+        }
+
+        html:not(.dark-style) .note-btn-group .note-btn.active {
+            background: #7367f0 !important;
+            color: #ffffff !important;
+            border-color: #7367f0 !important;
+        }
+
+        html:not(.dark-style) .note-dropdown-menu {
+            background-color: #ffffff !important;
+            border: 1px solid #dbdade !important;
+            color: #6f6b7d !important;
+        }
+
+        html:not(.dark-style) .note-dropdown-menu>li>a {
+            color: #6f6b7d !important;
+        }
+
+        html:not(.dark-style) .note-dropdown-menu>li>a:hover,
+        html:not(.dark-style) .note-dropdown-menu>li>a:focus {
+            color: #5d596c !important;
+            background-color: #f8f7fa !important;
+        }
+
+        /* Summernote Dark Mode Styles */
+        html.dark-style .note-editor {
+            background: #2f3349 !important;
+            border: 1px solid #434968 !important;
+        }
+
+        html.dark-style .note-editor .note-editing-area {
+            background: #2f3349 !important;
+            color: #b6bee3 !important;
+        }
+
+        html.dark-style .note-editor .note-editing-area .note-editable {
+            color: #b6bee3 !important;
+        }
+
+        html.dark-style .note-toolbar {
+            background: #25293c !important;
+            border-bottom: 1px solid #434968 !important;
+        }
+
+        html.dark-style .note-btn-group .note-btn {
+            background: transparent !important;
+            border-color: #434968 !important;
+            color: #b6bee3 !important;
+        }
+
+        html.dark-style .note-btn-group .note-btn:hover {
+            background: #3a3f57 !important;
+            color: #cfd3ec !important;
+        }
+
+        html.dark-style .note-btn-group .note-btn.active {
+            background: #7367f0 !important;
+            color: #ffffff !important;
+            border-color: #7367f0 !important;
+        }
+
+        html.dark-style .note-dropdown-menu {
+            background-color: #2f3349 !important;
+            border: 1px solid #434968 !important;
+            color: #b6bee3 !important;
+        }
+
+        html.dark-style .note-dropdown-menu>li>a {
+            color: #b6bee3 !important;
+        }
+
+        html.dark-style .note-dropdown-menu>li>a:hover,
+        html.dark-style .note-dropdown-menu>li>a:focus {
+            color: #cfd3ec !important;
+            background-color: #3a3f57 !important;
+        }
+
+        /* Summernote Code View Styles */
+        html:not(.dark-style) .note-editor .note-codable {
+            background: #f8f7fa !important;
+            color: #6f6b7d !important;
+        }
+
+        html.dark-style .note-editor .note-codable {
+            background: #25293c !important;
+            color: #b6bee3 !important;
+        }
+
+        /* Summernote Popover Styles */
+        html:not(.dark-style) .note-popover {
+            background: #ffffff !important;
+            border: 1px solid #dbdade !important;
+        }
+
+        html.dark-style .note-popover {
+            background: #2f3349 !important;
+            border: 1px solid #434968 !important;
+        }
+
+        html:not(.dark-style) .note-popover .popover-content {
+            background: #ffffff !important;
+            color: #6f6b7d !important;
+        }
+
+        html.dark-style .note-popover .popover-content {
+            background: #2f3349 !important;
+            color: #b6bee3 !important;
+        }
     </style>
     @stack('css')
     <!-- Page CSS -->
