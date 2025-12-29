@@ -20,9 +20,11 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
         <div class="swiper hero-swiper rounded-[32px] overflow-hidden">
             <div class="swiper-wrapper">
                 @forelse($sliders as $slider)
-                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center"
+                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative"
                         style="background-image: url('{{ asset('uploads/sliders/' . $slider->image) }}')">
-                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center">
+                        <!-- Blur Overlay -->
+                        <div class="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-10">
                             <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center"
                                 style="color: #8b7138 !important;">
                                 {!! nl2br(e($slider->title)) !!}
@@ -43,9 +45,11 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
                     </div>
                 @empty
                     <!-- Default Slide if no sliders -->
-                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center"
+                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative"
                         style="background-image: url('{{ asset('assets/frontend/assets/images/hero-banner.png') }}')">
-                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center">
+                        <!-- Blur Overlay -->
+                        <div class="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-10">
                             <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center"
                                 style="color: #8b7138 !important;">
                                 Discover amazing destinations. <br />
