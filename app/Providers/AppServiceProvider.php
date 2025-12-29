@@ -32,7 +32,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('unreadContactsCount', $unreadContactsCount);
         });
 
-        // Share common data with main frontend layout once (navbar & footer inherit it)
+        // Share common data with all frontend views
         View::composer('frontend.layouts.master', LayoutComposer::class);
+        View::composer('frontend.pages.*', LayoutComposer::class);
     }
 }

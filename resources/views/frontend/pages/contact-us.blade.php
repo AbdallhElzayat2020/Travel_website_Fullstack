@@ -56,7 +56,7 @@
                             </div>
                             <div>
                                 <h3 class="text-black font-semibold mb-1">Email Us</h3>
-                                <p class="text-dark-grey text-sm">{{ $siteEmail }}</p>
+                                <p class="text-dark-grey text-sm">{{ $siteEmail ?? 'info@grandnilecruises.com' }}</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -67,7 +67,7 @@
                             </div>
                             <div>
                                 <h3 class="text-black font-semibold mb-1">Call Us</h3>
-                                <p class="text-dark-grey text-sm">{{ $sitePhone }}</p>
+                                <p class="text-dark-grey text-sm">{{ $sitePhone ?? '+20 101 515 7744 / +20 101 515 7746' }}</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -194,12 +194,12 @@
                         <p class="text-dark-grey flex items-center gap-2">
                             <span class="iconify text-green-zomp" data-icon="mdi:phone" data-width="20"
                                 data-height="20"></span>
-                            {{ $sitePhone }}
+                            {{ $sitePhone ?? '+20 101 515 7744 / +20 101 515 7746' }}
                         </p>
                         <p class="text-dark-grey flex items-center gap-2">
                             <span class="iconify text-green-zomp" data-icon="mdi:email" data-width="20"
                                 data-height="20"></span>
-                            {{ $siteEmail }}
+                            {{ $siteEmail ?? 'info@grandnilecruises.com' }}
                         </p>
                         <p class="text-dark-grey flex items-center gap-2">
                             <span class="iconify text-green-zomp" data-icon="mdi:map-marker" data-width="20"

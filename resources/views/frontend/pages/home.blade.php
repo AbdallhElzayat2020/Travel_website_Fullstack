@@ -110,7 +110,7 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
     </section>
     {{-- icons section --}}
 
-    {{-- Top destination section --}}
+   {{-- Top destination section --}}
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="flex items-center justify-between mb-10">
@@ -238,6 +238,9 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
         </div>
     </section>
     {{-- Top destination section --}}
+
+
+ 
 
     {{-- Offers section --}}
     @if (isset($cruiseExperiences) && $cruiseExperiences->count())
