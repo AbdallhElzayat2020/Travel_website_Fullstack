@@ -2,6 +2,21 @@
 
 @section('title', 'Subscribers')
 
+@push('css')
+<style>
+    .column-toggle {
+        margin-bottom: 15px;
+    }
+    .column-toggle label {
+        margin-right: 15px;
+        font-weight: normal;
+    }
+    .dt-buttons {
+        margin-bottom: 15px;
+    }
+</style>
+@endpush
+
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -15,8 +30,40 @@
                 </div>
             @endif
 
+            {{-- Column Toggle --}}
+            <div class="column-toggle d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+                <div>
+                    <strong>Select Columns to Export:</strong><br>
+                    <label>
+                        <input type="checkbox" class="column-checkbox" value="id"> ID
+                    </label>
+                    <label>
+                        <input type="checkbox" class="column-checkbox" value="email" checked> Email
+                    </label>
+                    <label>
+                        <input type="checkbox" class="column-checkbox" value="name" checked> Name
+                    </label>
+                    <label>
+                        <input type="checkbox" class="column-checkbox" value="is_active"> Status
+                    </label>
+                    <label>
+                        <input type="checkbox" class="column-checkbox" value="subscribed_at"> Subscribed At
+                    </label>
+                    <label>
+                        <input type="checkbox" class="column-checkbox" value="unsubscribed_at"> Unsubscribed At
+                    </label>
+                    <button type="button" class="btn btn-sm btn-primary ms-3" id="selectAllColumns">Select All</button>
+                    <button type="button" class="btn btn-sm btn-secondary" id="deselectAllColumns">Deselect All</button>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-success" id="exportBtn">
+                        <i class="ti ti-file-export me-1"></i> Export to Excel
+                    </button>
+                </div>
+            </div>
+
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table id="subscribersTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -86,10 +133,58 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="mt-3">
-                {{ $subscribers->links() }}
-            </div>
         </div>
     </div>
 @endsection
+
+@push('js')
+<script>
+    $(document).ready(function() {
+        var table = $('#subscribersTable').DataTable({
+            pageLength: 25,
+            order: [[0, 'desc']],
+            language: {
+                search: "Search:",
+                lengthMenu: "Show _MENU_ entries",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                infoEmpty: "Showing 0 to 0 of 0 entries",
+                infoFiltered: "(filtered from _MAX_ total entries)",
+                paginate: {
+                    first: "First",
+                    last: "Last",
+                    next: "Next",
+                    previous: "Previous"
+                }
+            }
+        });
+
+        // Export Button
+        $('#exportBtn').on('click', function() {
+            var selectedColumns = [];
+            $('.column-checkbox:checked').each(function() {
+                selectedColumns.push($(this).val());
+            });
+
+            // Default to email and name if nothing is selected
+            if (selectedColumns.length === 0) {
+                selectedColumns = ['email', 'name'];
+            }
+
+            var url = '{{ route("admin.subscribers.export") }}';
+            url += '?columns=' + selectedColumns.join(',');
+
+            window.location.href = url;
+        });
+
+        // Select All Columns
+        $('#selectAllColumns').on('click', function() {
+            $('.column-checkbox').prop('checked', true);
+        });
+
+        // Deselect All Columns
+        $('#deselectAllColumns').on('click', function() {
+            $('.column-checkbox').prop('checked', false);
+        });
+    });
+</script>
+@endpush

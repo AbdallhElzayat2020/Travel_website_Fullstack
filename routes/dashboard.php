@@ -56,6 +56,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     // Subscribers Routes
     Route::resource('subscribers', SubscriberController::class)->only(['index', 'destroy']);
     Route::patch('subscribers/{subscriber}/toggle-status', [SubscriberController::class, 'toggleStatus'])->name('subscribers.toggle-status');
+    Route::get('subscribers/export', [SubscriberController::class, 'export'])->name('subscribers.export');
 
     // Galleries Routes
     Route::resource('galleries', GalleryController::class);
