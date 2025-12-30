@@ -8,10 +8,10 @@
         if (announcementBar) {
             const scrollContent = announcementBar.querySelector('.announcement-scroll');
             if (scrollContent) {
-                // Duplicate content multiple times for seamless loop
+                // Duplicate content once for seamless loop (original + one copy)
                 const originalContent = scrollContent.innerHTML;
-                // Duplicate 3 times to ensure smooth continuous scrolling
-                scrollContent.innerHTML = originalContent + originalContent + originalContent + originalContent;
+                // Duplicate only once to ensure content finishes before repeating
+                scrollContent.innerHTML = originalContent + originalContent;
             }
         }
     });

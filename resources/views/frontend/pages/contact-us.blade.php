@@ -1,18 +1,18 @@
 @php
     $metaTitle = $page && $page->meta_title ? $page->meta_title : 'Contact Us';
-    $metaDescription = $page ? ($page->meta_description ?? null) : null;
-    $metaAuthor = $page ? ($page->meta_author ?? null) : null;
-    $metaKeywords = $page ? ($page->meta_keywords ?? null) : null;
+    $metaDescription = $page ? $page->meta_description ?? null : null;
+    $metaAuthor = $page ? $page->meta_author ?? null : null;
+    $metaKeywords = $page ? $page->meta_keywords ?? null : null;
 @endphp
 @section('meta_title', $metaTitle)
 @if ($metaDescription)
-@section('meta_description', $metaDescription)
+    @section('meta_description', $metaDescription)
 @endif
 @if ($metaAuthor)
-@section('meta_author', $metaAuthor)
+    @section('meta_author', $metaAuthor)
 @endif
 @if ($metaKeywords)
-@section('meta_keywords', $metaKeywords)
+    @section('meta_keywords', $metaKeywords)
 @endif
 @extends('frontend.layouts.master')
 
@@ -33,7 +33,8 @@
 
     <section class="mb-[60px] md:mb-24">
         <div class="container p-6 md:p-[60px] xl:p-[120px] relative overflow-hidden bg-[#f2f4f4] rounded-2xl">
-            <div class="absolute inset-0 z-0" style="background-image: url('{{ asset('assets/frontend/assets/images/about-us-bg-form.png') }}');
+            <div class="absolute inset-0 z-0"
+                style="background-image: url('{{ asset('assets/frontend/assets/images/about-us-bg-form.png') }}');
                                                                             background-position: center center;
                                                                             background-repeat: repeat;
                                                                             opacity: 0.79;">
@@ -67,7 +68,8 @@
                             </div>
                             <div>
                                 <h3 class="text-black font-semibold mb-1">Call Us</h3>
-                                <p class="text-dark-grey text-sm">{{ $sitePhone ?? '+20 101 515 7744 / +20 101 515 7746' }}</p>
+                                <p class="text-dark-grey text-sm">{{ $sitePhone ?? '+20 101 515 7744 / +20 101 515 7746' }}
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -88,7 +90,8 @@
                         @csrf
 
                         @if (session('success'))
-                            <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-zomp rounded-lg flex items-start gap-3">
+                            <div
+                                class="mb-6 p-4 bg-green-50 border-l-4 border-green-zomp rounded-lg flex items-start gap-3">
                                 <span class="iconify text-green-zomp flex-shrink-0 mt-0.5" data-icon="mdi:check-circle"
                                     data-width="20" data-height="20"></span>
                                 <div>
@@ -119,8 +122,8 @@
                                 <label for="name" class="block mb-2 text-dark-grey text-sm font-medium">
                                     Name <span class="text-red-500">*</span>
                                 </label>
-                                <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Your name"
-                                    required
+                                <input type="text" id="name" name="name" value="{{ old('name') }}"
+                                    placeholder="Your name" required
                                     class="w-full border border-light-grey rounded-lg py-3 px-4 outline-none transition duration-200 focus:border-green-zomp focus:ring-2 focus:ring-green-zomp focus:ring-opacity-20 @error('name') border-red-500 focus:border-red-500 focus:ring-red-500 @enderror">
                                 @error('name')
                                     <p class="mt-1 text-sm text-red-500">{{ $message }}</p>

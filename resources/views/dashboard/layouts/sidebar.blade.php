@@ -1,8 +1,9 @@
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="{{ route(auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access') ? 'admin.dashboard' : 'home') }}"
-            class="app-brand-link fs-4">
-            Travel Website
+            class="app-brand-link d-flex flex-column">
+            <span class="fs-4 fw-bold">MRCO-Egypt</span>
+            <span class="small">Travel Website System</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
