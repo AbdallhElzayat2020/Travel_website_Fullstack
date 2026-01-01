@@ -166,7 +166,7 @@
             <div class="container">
                 <div class="flex items-center justify-between mb-10">
                     <h2 class="text-black font-bold text-[32px] leading-[1.1em]">
-                        Top Destination For Your Next Vacation
+                        The Luxury Nile Cruises & Egypt Tours
                     </h2>
                     <div class="hidden sm:flex items-center gap-4">
                         <div class="swiper-button-prev top-destination-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"

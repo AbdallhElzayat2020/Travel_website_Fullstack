@@ -9,7 +9,7 @@
             </div>
             <div>
                 <a href="https://mrco-egypt.com" class="footer-link me-4" target="_blank">
-                    © 2026 MRCO-Egypt - Travel Website System Ver 1.0 - All Rights Reserved.
+                    © {{date('Y')}} MRCO-Egypt - Travel Website System Ver 1.0 - All Rights Reserved.
                 </a>
             </div>
         </div>

@@ -90,7 +90,7 @@
                             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.cruise-experiences.*'], 'active') }}">
                                 <a href="{{ route('admin.cruise-experiences.index') }}" class="menu-link">
                                     <i class="menu-icon tf-icons ti ti-ship"></i>
-                                    <div data-i18n="Dahbia Cruises">Dahbia Cruises</div>
+                                    <div data-i18n="Dahabiya Cruises">Dahabiya Cruises</div>
                                 </a>
                             </li>
 
