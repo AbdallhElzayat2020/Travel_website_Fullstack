@@ -23,24 +23,24 @@
                     <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative"
                         style="background-image: url('{{ asset('uploads/sliders/' . $slider->image) }}')">
                         <!-- Darker Overlay for better text visibility -->
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
-                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-10">
-                            <div class="bg-black/50 rounded-2xl p-6 md:p-10 inline-block border border-white/10 shadow-2xl">
-                                <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white">
-                                    {!! nl2br(e($slider->title)) !!}
-                                </h1>
-                                @if ($slider->description)
-                                    <p class="mb-6 md:mb-8 text-lg md:text-xl font-semibold text-center text-white">
-                                        {{ $slider->description }}
-                                    </p>
-                                @endif
-                                @if ($slider->link && $slider->button_text)
-                                    <a href="{{ $slider->link }}"
-                                        class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#7a6230] hover:-translate-y-1 shadow-lg">
-                                        {{ $slider->button_text }}
-                                    </a>
-                                @endif
-                            </div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60 z-[1]"></div>
+                        <!-- Blur background for text -->
+                        <div class="absolute inset-0 bg-black/40 backdrop-blur-md z-[2]"></div>
+                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-[3]">
+                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white">
+                                {!! nl2br(e($slider->title)) !!}
+                            </h1>
+                            @if ($slider->description)
+                                <p class="mb-6 md:mb-8 text-lg md:text-xl font-semibold text-center text-white">
+                                    {{ $slider->description }}
+                                </p>
+                            @endif
+                            @if ($slider->link && $slider->button_text)
+                                <a href="{{ $slider->link }}"
+                                    class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#7a6230] hover:-translate-y-1 shadow-lg">
+                                    {{ $slider->button_text }}
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @empty
@@ -48,17 +48,17 @@
                     <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative"
                         style="background-image: url('{{ asset('assets/frontend/assets/images/hero-banner.png') }}')">
                         <!-- Darker Overlay for better text visibility -->
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
-                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-10">
-                            <div class="bg-black/50 rounded-2xl p-6 md:p-10 inline-block border border-white/10 shadow-2xl">
-                                <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white">
-                                    Discover amazing destinations. <br />
-                                    Create unforgettable memories.
-                                </h1>
-                                <p class="mb-6 md:mb-8 text-lg md:text-xl font-semibold text-center text-white">
-                                    Your next adventure is just one click
-                                    away</p>
-                            </div>
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60 z-[1]"></div>
+                        <!-- Blur background for text -->
+                        <div class="absolute inset-0 bg-black/40 backdrop-blur-md z-[2]"></div>
+                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-[3]">
+                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white">
+                                Discover amazing destinations. <br />
+                                Create unforgettable memories.
+                            </h1>
+                            <p class="mb-6 md:mb-8 text-lg md:text-xl font-semibold text-center text-white">
+                                Your next adventure is just one click
+                                away</p>
                         </div>
                     </div>
                 @endforelse
