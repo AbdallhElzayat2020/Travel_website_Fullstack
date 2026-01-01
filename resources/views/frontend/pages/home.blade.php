@@ -20,24 +20,24 @@
         <div class="swiper hero-swiper rounded-[32px] overflow-hidden">
             <div class="swiper-wrapper">
                 @forelse($sliders as $slider)
-                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative"
-                        style="background-image: url('{{ asset('uploads/sliders/' . $slider->image) }}')">
-                        <!-- Darker Overlay for better text visibility -->
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60 z-[1]"></div>
-                        <!-- Blur background for text -->
-                        <div class="absolute inset-0 bg-black/40 backdrop-blur-md z-[2]"></div>
-                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-[3]">
-                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white">
+                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative bg-with-overlay overlay-medium"
+                         style="background-image: url('{{ asset('uploads/sliders/' . $slider->image) }}')">
+                        <!-- Background image with overlay layer applied via CSS -->
+
+                        <!-- Text content on top of overlay -->
+                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center">
+                            <h1 style="color: #fff !important;"
+                                class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-[#ffffff] ">
                                 {!! nl2br(e($slider->title)) !!}
                             </h1>
                             @if ($slider->description)
-                                <p class="mb-6 md:mb-8 text-lg md:text-xl font-semibold text-center text-white">
+                                <p style="color: #fff !important;" class="mb-4 md:mb-10 text-lg font-semibold text-center text-[#ffffff] ">
                                     {{ $slider->description }}
                                 </p>
                             @endif
                             @if ($slider->link && $slider->button_text)
                                 <a href="{{ $slider->link }}"
-                                    class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#7a6230] hover:-translate-y-1 shadow-lg">
+                                   class="inline-block hero_button bg-green-zomp  font-semibold py-3 px-8 rounded-[200px] text-[#ffffff] transition duration-200">
                                     {{ $slider->button_text }}
                                 </a>
                             @endif
@@ -45,18 +45,18 @@
                     </div>
                 @empty
                     <!-- Default Slide if no sliders -->
-                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative"
-                        style="background-image: url('{{ asset('assets/frontend/assets/images/hero-banner.png') }}')">
-                        <!-- Darker Overlay for better text visibility -->
-                        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60 z-[1]"></div>
-                        <!-- Blur background for text -->
-                        <div class="absolute inset-0 bg-black/40 backdrop-blur-md z-[2]"></div>
-                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-[3]">
-                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white">
-                                Discover amazing destinations. <br />
+                    <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative bg-with-overlay overlay-medium"
+                         style="background-image: url('{{ asset('assets/frontend/assets/images/hero-banner.png') }}')">
+                        <!-- Background image with overlay layer applied via CSS -->
+
+                        <!-- Text content on top of overlay -->
+                        <div class="px-4 md:px-0 max-w-4xl mx-auto text-center">
+                            <h1
+                                class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white">
+                                Discover amazing destinations. <br/>
                                 Create unforgettable memories.
                             </h1>
-                            <p class="mb-6 md:mb-8 text-lg md:text-xl font-semibold text-center text-white">
+                            <p class="mb-4 md:mb-10 text-lg font-semibold text-center text-white">
                                 Your next adventure is just one click
                                 away</p>
                         </div>
@@ -65,9 +65,9 @@
             </div>
             <!-- Navigation buttons -->
             <div class="swiper-button-next hero-swiper-next !text-white !w-12 !h-12 !mt-0 rounded-full p-2 bg-[#8B6F47] transition duration-200 hover:!bg-[#7a6230]"
-                style="--swiper-navigation-size: 20px"></div>
+                 style="--swiper-navigation-size: 20px"></div>
             <div class="swiper-button-prev hero-swiper-prev !text-white !w-12 !h-12 !mt-0 rounded-full p-2 bg-[#8B6F47] transition duration-200 hover:!bg-[#7a6230]"
-                style="--swiper-navigation-size: 20px"></div>
+                 style="--swiper-navigation-size: 20px"></div>
             <!-- Pagination -->
             <div class="swiper-pagination hero-swiper-pagination !bottom-6"></div>
         </div>
@@ -80,30 +80,30 @@
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                 <div class="text-center items">
                     <img src="{{ asset('assets/frontend/assets/images/features-01.webp') }}" alt=""
-                        class="w-[72px] h-auto mx-auto mb-6">
+                         class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Discover the possibilities</h4>
-                    <p class="text-dark-grey">With nearly half a million attractions, <br /> hotels & more, you're sure
+                    <p class="text-dark-grey">With nearly half a million attractions, <br/> hotels & more, you're sure
                         to find joy.</p>
                 </div>
                 <div class="text-center items">
                     <img src="{{ asset('assets/frontend/assets/images/features-02.webp') }}" alt=""
-                        class="w-[72px] h-auto mx-auto mb-6">
+                         class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Enjoy deals & delights</h4>
-                    <p class="text-dark-grey">Quality activities. Great prices. Plus, <br /> earn credits to save more.
+                    <p class="text-dark-grey">Quality activities. Great prices. Plus, <br/> earn credits to save more.
                     </p>
                 </div>
                 <div class="text-center items">
                     <img src="{{ asset('assets/frontend/assets/images/features-03.webp') }}" alt=""
-                        class="w-[72px] h-auto mx-auto mb-6">
+                         class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Exploring made easy</h4>
-                    <p class="text-dark-grey">Book last minute, skip lines & get free <br /> cancellation for easier
+                    <p class="text-dark-grey">Book last minute, skip lines & get free <br/> cancellation for easier
                         exploring.</p>
                 </div>
                 <div class="text-center items">
                     <img src="{{ asset('assets/frontend/assets/images/features-04.webp') }}" alt=""
-                        class="w-[72px] h-auto mx-auto mb-6">
+                         class="w-[72px] h-auto mx-auto mb-6">
                     <h4 class="mb-2 text-xl font-semibold text-black">Travel you can trust</h4>
-                    <p class="text-dark-grey">Read reviews & get reliable customer <br /> support. We're with you at
+                    <p class="text-dark-grey">Read reviews & get reliable customer <br/> support. We're with you at
                         every step.</p>
                 </div>
             </div>
@@ -127,14 +127,14 @@
                                 : asset('assets/frontend/assets/images/inspire-01.png');
                         @endphp
                         <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
-                            style="background-image: url('{{ $offerCover }}');">
+                             style="background-image: url('{{ $offerCover }}');">
                             <div class="absolute inset-0 rounded-2xl md:rounded-3xl"
-                                style="background: linear-gradient(134deg, #8b7138 18%, rgba(139, 113, 56, 0) 100%);"></div>
+                                 style="background: linear-gradient(134deg, #8b7138 18%, rgba(139, 113, 56, 0) 100%);"></div>
                             <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
                                 <div>
                                     <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
                                         <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
-                                            class="hover:text-[#f9e600] transition duration-200">
+                                           class="hover:text-[#f9e600] transition duration-200">
                                             {!! $cruise->title !!}
                                         </a>
                                     </h2>
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
                                     <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
-                                        class="ml-auto border border-white text-sm text-white font-semibold py-2 px-4 rounded-[200px] transition duration-200 hover:bg-[#8b7138] hover:border-[#8b7138]">
+                                       class="ml-auto border border-white text-sm text-white font-semibold py-2 px-4 rounded-[200px] transition duration-200 hover:bg-[#8b7138] hover:border-[#8b7138]">
                                         View Details
                                     </a>
                                 </div>
@@ -170,9 +170,9 @@
                     </h2>
                     <div class="hidden sm:flex items-center gap-4">
                         <div class="swiper-button-prev top-destination-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                            style="--swiper-navigation-size: 20px"></div>
+                             style="--swiper-navigation-size: 20px"></div>
                         <div class="swiper-button-next top-destination-next !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                            style="--swiper-navigation-size: 20px"></div>
+                             style="--swiper-navigation-size: 20px"></div>
                     </div>
                 </div>
                 <div class="relative">
@@ -182,12 +182,12 @@
                                 <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
                                     @if ($category->image)
                                         <img src="{{ asset('uploads/categories/' . $category->image) }}"
-                                            alt="{{ $category->image_alt ?? $category->name }}"
-                                            class="absolute inset-0 z-0 object-cover w-full h-full" />
+                                             alt="{{ $category->image_alt ?? $category->name }}"
+                                             class="absolute inset-0 z-0 object-cover w-full h-full"/>
                                     @else
                                         <img src="{{ asset('assets/frontend/assets/images/destination-01.png') }}"
-                                            alt="{{ $category->name }}"
-                                            class="absolute inset-0 z-0 object-cover w-full h-full" />
+                                             alt="{{ $category->name }}"
+                                             class="absolute inset-0 z-0 object-cover w-full h-full"/>
                                     @endif
                                     <div
                                         class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
@@ -276,7 +276,7 @@
                                 <div class="relative overflow-hidden rounded-t-2xl">
                                     <a href="{{ route('tours.show', $tour->slug) }}">
                                         <img src="{{ $coverImage }}" alt="{{ $tour->title }}"
-                                            class="object-cover w-full h-auto transition duration-300 hover:scale-105">
+                                             class="object-cover w-full h-auto transition duration-300 hover:scale-105">
                                         @if ($isOnSale)
                                             <span
                                                 class="absolute top-4 right-4 bg-[#F51D35] rounded py-1 px-2 text-white text-sm font-semibold">On
@@ -287,7 +287,7 @@
                                 <div class="p-4">
                                     <div class="flex items-center gap-2 mb-2">
                                         <span class="iconify" data-icon="ep:location" data-width="14"
-                                            data-height="14"></span>
+                                              data-height="14"></span>
                                         <span class="text-sm text-dark-grey">{{ $location ?: 'Location' }}</span>
                                     </div>
 
@@ -308,12 +308,12 @@
                                     @if ($tour->category)
                                         <div class="flex flex-wrap items-center gap-2">
                                             <a href="#"
-                                                class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag transition hover:bg-green-zomp hover:text-white">
+                                               class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag transition hover:bg-green-zomp hover:text-white">
                                                 {{ $tour->category->name }}
                                             </a>
                                             @if ($tour->show_on_homepage)
                                                 <a href="#"
-                                                    class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">
+                                                   class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">
                                                     Featured
                                                 </a>
                                             @endif
@@ -335,7 +335,7 @@
                                         </span>
                                         <span class="flex items-center gap-1">
                                             <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular"
-                                                data-width="15" data-height="15"></span>
+                                                  data-width="15" data-height="15"></span>
                                             <div class="text-sm text-dark-grey">{{ $durationText }}</div>
                                         </span>
                                     </div>
@@ -358,7 +358,7 @@
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="bg-cover bg-center rounded-2xl px-6 py-12 lg:pl-[108px] lg:pr-10 lg:pt-[120px] lg:pb-[90px] text-white"
-                style="background-image: url('{{ asset('assets/frontend/assets/images/subscribe-bg.png') }}')">
+                 style="background-image: url('{{ asset('assets/frontend/assets/images/subscribe-bg.png') }}')">
                 <div class="p-6 md:p-10 bg-darker-grey bg-opacity-90 rounded-2xl w-full lg:w-fit">
                     <h2 class="text-2xl md:text-[40px] font-bold mb-4">Subscribe & Get 20% off</h2>
                     <p class="text-white-grey mb-8 max-w-full md:max-w-[540px] text-sm md:text-base">
@@ -367,12 +367,12 @@
                         online shop. Every week you’ll receive expert advice, tips, exclusive offers, and much more.
                     </p>
                     <form class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4"
-                        action="{{ route('subscribe') }}" method="POST">
+                          action="{{ route('subscribe') }}" method="POST">
                         @csrf
                         <input type="email" name="email" placeholder="Your email address" required
-                            class="flex-1 text-dark-grey font-normal py-3 px-6 rounded-full focus:outline-none" />
+                               class="flex-1 text-dark-grey font-normal py-3 px-6 rounded-full focus:outline-none"/>
                         <button type="submit"
-                            class="bg-green-zomp py-3 px-6 text-white font-semibold rounded-full whitespace-nowrap transition duration-200 hover:-translate-y-[5px] hover:bg-[#7a6230]">Sign
+                                class="bg-green-zomp py-3 px-6 text-white font-semibold rounded-full whitespace-nowrap transition duration-200 hover:-translate-y-[5px] hover:bg-[#7a6230]">Sign
                             Up
                         </button>
                     </form>
@@ -396,7 +396,7 @@
                         <div class="swiper-slide">
                             <a href="{{ route('galleries.show', $gallery->slug) }}">
                                 <img src="{{ $cover }}" alt="{{ $gallery->title }}"
-                                    class="object-cover w-full h-auto" />
+                                     class="object-cover w-full h-auto"/>
                             </a>
                         </div>
                     @endforeach
@@ -416,9 +416,9 @@
                     </h2>
                     <div class="hidden sm:flex items-center gap-4">
                         <div class="swiper-button-prev blog-index-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                            style="--swiper-navigation-size: 20px"></div>
+                             style="--swiper-navigation-size: 20px"></div>
                         <div class="swiper-button-next blog-index-next !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                            style="--swiper-navigation-size: 20px"></div>
+                             style="--swiper-navigation-size: 20px"></div>
                     </div>
                 </div>
                 <div class="relative">
@@ -437,7 +437,7 @@
                                     <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
                                         <div class="overflow-hidden rounded-t-2xl">
                                             <img src="{{ $blogCover }}" alt="{{ $blog->title }}"
-                                                class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
+                                                 class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
                                         </div>
                                         <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
                                             <h4
@@ -473,7 +473,7 @@
 
                 <div class="flex justify-center mt-14 sm:mt-10">
                     <a href="{{ route('blogs.index') }}"
-                        class="text-green-zomp py-4 px-6 rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp capitalize">
+                       class="text-green-zomp py-4 px-6 rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp capitalize">
                         Explore Travel Egypt Blog
                     </a>
                 </div>
