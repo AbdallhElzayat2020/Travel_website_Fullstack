@@ -30,9 +30,11 @@ Route::get('/category/{slug}', [TourController::class, 'byCategory'])
     ->name('tours.category');
 Route::get('/tours/{slug}', [TourController::class, 'show'])
     ->name('tours.show');
-Route::get('/dahbia-cruises', [CruiseExperienceController::class, 'index'])
+// Dahbia Cruises routes - slug will be handled dynamically via route helper
+$dahbiaSlug = \App\Models\Setting::get('dahbia_cruises_slug', 'dahbia-cruises');
+Route::get('/' . $dahbiaSlug, [CruiseExperienceController::class, 'index'])
     ->name('nile-cruises.index');
-Route::get('/dahbia-cruises/{slug}', [CruiseExperienceController::class, 'show'])
+Route::get('/' . $dahbiaSlug . '/{slug}', [CruiseExperienceController::class, 'show'])
     ->name('nile-cruises.show');
 Route::get('/about-us', [PageController::class, 'about'])
     ->name('about-us');

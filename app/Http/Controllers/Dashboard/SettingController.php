@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 
 class SettingController extends Controller
 {
@@ -15,6 +17,14 @@ class SettingController extends Controller
     public function edit()
     {
         $dahbiaCruisesName = Setting::get('dahbia_cruises_name', 'Dahbia Cruises');
+
+        // Generate slug if not exists
+        $dahbiaCruisesSlug = Setting::get('dahbia_cruises_slug');
+        if (!$dahbiaCruisesSlug) {
+            $dahbiaCruisesSlug = Str::slug($dahbiaCruisesName);
+            Setting::set('dahbia_cruises_slug', $dahbiaCruisesSlug);
+        }
+
         $phone = Setting::get('phone', '+20 101 515 7744 / +20 101 515 7746');
         $email = Setting::get('email', 'info@grandnilecruises.com');
         $address = Setting::get('address', 'Sarayah Zayed 2 Building, Apartment 1,<br>8th District<br>Sheikh Zayed City - Giza');
@@ -76,10 +86,22 @@ class SettingController extends Controller
         }
 
         // Save other settings
+        $oldSlug = Setting::get('dahbia_cruises_slug', 'dahbia-cruises');
         Setting::set('dahbia_cruises_name', $validated['dahbia_cruises_name']);
+
+        // Generate slug from name automatically
+        $slug = Str::slug($validated['dahbia_cruises_name']);
+        Setting::set('dahbia_cruises_slug', $slug);
+
         Setting::set('phone', $validated['phone']);
         Setting::set('email', $validated['email']);
         Setting::set('address', $validated['address']);
+
+        // Clear route cache if slug changed
+        if ($oldSlug !== $slug) {
+            Artisan::call('route:clear');
+            Artisan::call('route:cache');
+        }
 
         return redirect()->route('admin.settings.edit')
             ->with('success', 'Settings updated successfully');
