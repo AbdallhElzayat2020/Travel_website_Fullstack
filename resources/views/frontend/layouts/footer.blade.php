@@ -8,7 +8,6 @@
                     <img src="{{ asset('assets/frontend/assets/images/logo_white.webp') }}" alt="Logo"
                         class="h-[60px] w-auto mb-7" />
                 @endif
-                <p class="text-white-grey font-medium mb-10">Don't just get there, get there in style.</p>
                 <ul class="space-y-2 text-grey">
                     <li class="flex items-start gap-2">
                         <span class="iconify" data-icon="ep:location" data-width="20" data-height="20"></span>

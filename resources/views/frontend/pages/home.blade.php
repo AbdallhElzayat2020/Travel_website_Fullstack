@@ -22,22 +22,22 @@
                 @forelse($sliders as $slider)
                     <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative"
                         style="background-image: url('{{ asset('uploads/sliders/' . $slider->image) }}')">
-                        <!-- Blur Overlay -->
-                        <div class="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+                        <!-- Darker Overlay for better text visibility -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
                         <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-10">
-                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center"
-                                style="color: #8b7138 !important;">
+                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"
+                                style="text-shadow: 2px 2px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5);">
                                 {!! nl2br(e($slider->title)) !!}
                             </h1>
                             @if ($slider->description)
-                                <p class="mb-4 md:mb-10 text-lg font-semibold text-center"
-                                    style="color: #8b7138 !important;">
+                                <p class="mb-4 md:mb-10 text-lg md:text-xl font-semibold text-center text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                                    style="text-shadow: 1px 1px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.5);">
                                     {{ $slider->description }}
                                 </p>
                             @endif
                             @if ($slider->link && $slider->button_text)
                                 <a href="{{ $slider->link }}"
-                                    class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#7a6230] hover:-translate-y-1">
+                                    class="inline-block bg-green-zomp text-white font-semibold py-3 px-8 rounded-[200px] transition duration-200 hover:bg-[#7a6230] hover:-translate-y-1 shadow-lg">
                                     {{ $slider->button_text }}
                                 </a>
                             @endif
@@ -47,15 +47,16 @@
                     <!-- Default Slide if no sliders -->
                     <div class="swiper-slide bg-cover bg-center bg-no-repeat py-20 md:py-[130px] flex flex-col items-center w-full justify-center relative"
                         style="background-image: url('{{ asset('assets/frontend/assets/images/hero-banner.png') }}')">
-                        <!-- Blur Overlay -->
-                        <div class="absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm"></div>
+                        <!-- Darker Overlay for better text visibility -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
                         <div class="px-4 md:px-0 max-w-4xl mx-auto text-center relative z-10">
-                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center"
-                                style="color: #8b7138 !important;">
+                            <h1 class="text-[35px] sm:text-[45px] md:text-[56px] font-bold leading-[1.3em] mb-4 text-center text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"
+                                style="text-shadow: 2px 2px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.5);">
                                 Discover amazing destinations. <br />
                                 Create unforgettable memories.
                             </h1>
-                            <p class="mb-4 md:mb-10 text-lg font-semibold text-center" style="color: #8b7138 !important;">
+                            <p class="mb-4 md:mb-10 text-lg md:text-xl font-semibold text-center text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                                style="text-shadow: 1px 1px 4px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.5);">
                                 Your next adventure is just one click
                                 away</p>
                         </div>
