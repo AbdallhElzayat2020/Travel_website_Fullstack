@@ -45,7 +45,13 @@ class HomeController extends Controller
             ->get();
 
         $activeTours = Tour::active()
-            ->with(['category', 'subCategory', 'country', 'state'])
+            ->select('id', 'title', 'slug', 'category_id', 'sub_category_id', 'country_id', 'state_id', 'cover_image', 'price', 'sort_order', 'created_at')
+            ->with([
+                'category:id,name,slug',
+                'subCategory:id,name,slug',
+                'country:id,name',
+                'state:id,name'
+            ])
             ->orderBy('sort_order')
             ->latest()
             ->take(8)

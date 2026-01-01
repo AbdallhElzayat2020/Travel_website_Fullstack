@@ -1,17 +1,17 @@
 @extends('frontend.layouts.master')
 @php
-$homePage = \App\Models\Page::getBySlug('home');
-$metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home Page';
+    $homePage = \App\Models\Page::getBySlug('home');
+    $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home Page';
 @endphp
 @section('meta_title', $metaTitle)
-@if($homePage && $homePage->meta_description)
-@section('meta_description', $homePage->meta_description)
+@if ($homePage && $homePage->meta_description)
+    @section('meta_description', $homePage->meta_description)
 @endif
-@if($homePage && $homePage->meta_author)
-@section('meta_author', $homePage->meta_author)
+@if ($homePage && $homePage->meta_author)
+    @section('meta_author', $homePage->meta_author)
 @endif
-@if($homePage && $homePage->meta_keywords)
-@section('meta_keywords', $homePage->meta_keywords)
+@if ($homePage && $homePage->meta_keywords)
+    @section('meta_keywords', $homePage->meta_keywords)
 @endif
 
 @section('content')
@@ -55,8 +55,8 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
                                 Discover amazing destinations. <br />
                                 Create unforgettable memories.
                             </h1>
-                            <p class="mb-4 md:mb-10 text-lg font-semibold text-center"
-                                style="color: #8b7138 !important;">Your next adventure is just one click
+                            <p class="mb-4 md:mb-10 text-lg font-semibold text-center" style="color: #8b7138 !important;">
+                                Your next adventure is just one click
                                 away</p>
                         </div>
                     </div>
@@ -110,143 +110,13 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
     </section>
     {{-- icons section --}}
 
-   {{-- Top destination section --}}
-    <section class="mb-[60px] md:mb-24">
-        <div class="container">
-            <div class="flex items-center justify-between mb-10">
-                <h2 class="text-black font-bold text-[32px] leading-[1.1em]">Top Destination For Your Next Vacation
-                </h2>
-                <div class="hidden sm:flex items-center gap-4">
-                    <div class="swiper-button-prev top-destination-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                        style="--swiper-navigation-size: 20px"></div>
-                    <div class="swiper-button-next top-destination-next !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                        style="--swiper-navigation-size: 20px"></div>
-                </div>
-            </div>
-            <div class="relative">
-                <div class="swiper top-destination-swipper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
-                            <a href="tour-destination.html">
-                                <img src="{{ asset('assets/frontend/assets/images/destination-01.png') }}" alt=""
-                                    class="absolute inset-0 z-0 object-cover w-full h-full" />
-                            </a>
-                            <div
-                                class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                            </div>
-                            <h2
-                                class="text-white font-bold text-[32px] absolute bottom-6 left-6 z-10 transition duration-200 group-hover:-translate-y-28 hover:text-green-zomp">
-                                <a href="tour-destination.html">Tokyo</a>
-                            </h2>
-                            <div
-                                class="absolute z-10 transition-all duration-200 transform translate-y-6 opacity-0 bottom-6 left-6 right-6 group-hover:translate-y-0 group-hover:opacity-100">
-                                <p class="mb-6 text-white">Discover the Tokyo with our special tours</p>
-                                <a href="tour-destination.html"
-                                    class="border border-white text-sm text-white font-semibold py-3 px-4 rounded-[200px] transition duration-200 hover:bg-green-zomp hover:border-green-zomp">See
-                                    All Tours</a>
-                            </div>
-                        </div>
-                        <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
-                            <a href="tour-destination.html">
-                                <img src="{{ asset('assets/frontend/assets/images/destination-02.png') }}" alt=""
-                                    class="absolute inset-0 z-0 object-cover w-full h-full" />
-                            </a>
-                            <div
-                                class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                            </div>
-                            <h2
-                                class="text-white font-bold text-[32px] absolute bottom-6 left-6 z-10 transition duration-200 group-hover:-translate-y-28 hover:text-green-zomp">
-                                <a href="tour-destination.html">Bali</a>
-                            </h2>
-                            <div
-                                class="absolute z-10 transition-all duration-200 transform translate-y-6 opacity-0 bottom-6 left-6 right-6 group-hover:translate-y-0 group-hover:opacity-100">
-                                <p class="mb-6 text-white">Discover the Bali with our special tours</p>
-                                <a href="tour-destination.html"
-                                    class="border border-white text-sm text-white font-semibold py-3 px-4 rounded-[200px] transition duration-200 hover:bg-green-zomp hover:border-green-zomp">See
-                                    All Tours</a>
-                            </div>
-                        </div>
-                        <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
-                            <a href="tour-destination.html">
-                                <img src="{{ asset('assets/frontend/assets/images/destination-03.png') }}" alt=""
-                                    class="absolute inset-0 z-0 object-cover w-full h-full" />
-                            </a>
-                            <div
-                                class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                            </div>
-                            <h2
-                                class="text-white font-bold text-[32px] absolute bottom-6 left-6 z-10 transition duration-200 group-hover:-translate-y-28 hover:text-green-zomp">
-                                <a href="tour-destination.html">Bangkok</a>
-                            </h2>
-                            <div
-                                class="absolute z-10 transition-all duration-200 transform translate-y-6 opacity-0 bottom-6 left-6 right-6 group-hover:translate-y-0 group-hover:opacity-100">
-                                <p class="mb-6 text-white">Discover the Bali with our special tours</p>
-                                <a href="tour-destination.html"
-                                    class="border border-white text-sm text-white font-semibold py-3 px-4 rounded-[200px] transition duration-200 hover:bg-green-zomp hover:border-green-zomp">See
-                                    All Tours</a>
-                            </div>
-                        </div>
-                        <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
-                            <a href="tour-destination.html">
-                                <img src="{{ asset('assets/frontend/assets/images/destination-04.png') }}" alt=""
-                                    class="absolute inset-0 z-0 object-cover w-full h-full" />
-                            </a>
-                            <div
-                                class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                            </div>
-                            <h2
-                                class="text-white font-bold text-[32px] absolute bottom-6 left-6 z-10 transition duration-200 group-hover:-translate-y-28 hover:text-green-zomp">
-                                <a href="tour-destination.html">Cancun</a>
-                            </h2>
-                            <div
-                                class="absolute z-10 transition-all duration-200 transform translate-y-6 opacity-0 bottom-6 left-6 right-6 group-hover:translate-y-0 group-hover:opacity-100">
-                                <p class="mb-6 text-white">Discover the Bali with our special tours</p>
-                                <a href="tour-destination.html"
-                                    class="border border-white text-sm text-white font-semibold py-3 px-4 rounded-[200px] transition duration-200 hover:bg-green-zomp hover:border-green-zomp">See
-                                    All Tours</a>
-                            </div>
-                        </div>
-                        <div class="swiper-slide group relative min-h-[400px] rounded-2xl overflow-hidden">
-                            <a href="tour-destination.html">
-                                <img src="{{ asset('assets/frontend/assets/images/destination-05.png') }}" alt=""
-                                    class="absolute inset-0 z-0 object-cover w-full h-full" />
-                            </a>
-                            <div
-                                class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                            </div>
-                            <h2
-                                class="text-white font-bold text-[32px] absolute bottom-6 left-6 z-10 transition duration-200 group-hover:-translate-y-28 hover:text-green-zomp">
-                                <a href="tour-destination.html">Phuket</a>
-                            </h2>
-                            <div
-                                class="absolute z-10 transition-all duration-200 transform translate-y-6 opacity-0 bottom-6 left-6 right-6 group-hover:translate-y-0 group-hover:opacity-100">
-                                <p class="mb-6 text-white">Discover the Bali with our special tours</p>
-                                <a href="tour-destination.html"
-                                    class="border border-white text-sm text-white font-semibold py-3 px-4 rounded-[200px] transition duration-200 hover:bg-green-zomp hover:border-green-zomp">See
-                                    All Tours</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination top-destination-pagination !-bottom-11 sm:hidden"></div>
-            </div>
-            <div class="flex justify-center mt-14 sm:mt-10">
-                <a href="destinations.html"
-                    class="text-green-zomp py-4 px-6 rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp capitalize">See
-                    All Destination</a>
-            </div>
-        </div>
-    </section>
-    {{-- Top destination section --}}
-
-
- 
-
     {{-- Offers section --}}
     @if (isset($cruiseExperiences) && $cruiseExperiences->count())
         <section class="mb-[60px] md:mb-24">
             <div class="container">
-                <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Offers to inspire you</h2>
+                <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">
+                    Dahabiya Cruises
+                </h2>
                 <div class="grid md:grid-cols-2 gap-4 md:gap-6">
                     @foreach ($cruiseExperiences as $cruise)
                         @php
@@ -288,54 +158,122 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
     @endif
     {{-- Offers section --}}
 
+
+    {{-- Top destination section --}}
+    @if (isset($sharedCategories) && $sharedCategories->count())
+        <section class="mb-[60px] md:mb-24">
+            <div class="container">
+                <div class="flex items-center justify-between mb-10">
+                    <h2 class="text-black font-bold text-[32px] leading-[1.1em]">
+                        Top Destination For Your Next Vacation
+                    </h2>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <div class="swiper-button-prev top-destination-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
+                            style="--swiper-navigation-size: 20px"></div>
+                        <div class="swiper-button-next top-destination-next !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
+                            style="--swiper-navigation-size: 20px"></div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="swiper top-destination-swipper">
+                        <div class="swiper-wrapper">
+                            @forelse($sharedCategories as $category)
+                                <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
+                                    @if ($category->image)
+                                        <img src="{{ asset('uploads/categories/' . $category->image) }}"
+                                            alt="{{ $category->image_alt ?? $category->name }}"
+                                            class="absolute inset-0 z-0 object-cover w-full h-full" />
+                                    @else
+                                        <img src="{{ asset('assets/frontend/assets/images/destination-01.png') }}"
+                                            alt="{{ $category->name }}"
+                                            class="absolute inset-0 z-0 object-cover w-full h-full" />
+                                    @endif
+                                    <div
+                                        class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
+                                    </div>
+                                    <a href="{{ route('tours.category', $category->slug) }}" class="absolute inset-0 z-10">
+                                        <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
+                                            {{ $category->name }}
+                                        </h2>
+                                    </a>
+                                </div>
+                            @empty
+                                <div class="swiper-slide">
+                                    <div class="text-center py-12">
+                                        <p class="text-gray-500">No categories available</p>
+                                    </div>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                    <div class="swiper-pagination top-destination-pagination !-bottom-11 sm:hidden"></div>
+                </div>
+                {{-- <div class="flex justify-center mt-14 sm:mt-10">
+                <a href="destinations.html"
+                    class="text-green-zomp py-4 px-6 rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp capitalize">See
+                    All Destination
+                </a>
+            </div> --}}
+            </div>
+        </section>
+    @endif
+    {{-- Top destination section --}}
+
+
+
+
+
+
     {{-- Popular activities Section --}}
     @if (isset($activeTours) && $activeTours->count() > 0)
         <section class="mb-[60px] md:mb-24">
             <div class="container">
-                <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">Popular activities</h2>
+                <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">
+                    Best Egypt Tours
+                </h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     @forelse($activeTours as $tour)
                         @php
-        $coverImage = $tour->cover_image
-            ? asset('uploads/tours/' . $tour->cover_image)
-            : asset('assets/frontend/assets/images/blogs/01.png');
+                            $coverImage = $tour->cover_image
+                                ? asset('uploads/tours/' . $tour->cover_image)
+                                : asset('assets/frontend/assets/images/blogs/01.png');
 
-        $isOnSale = $tour->has_offer && $tour->isOfferActive();
-        $currentPrice =
-            $isOnSale && $tour->price_after_discount ? $tour->price_after_discount : $tour->price;
-        $oldPrice = $isOnSale && $tour->price_before_discount ? $tour->price_before_discount : null;
+                            $isOnSale = $tour->has_offer && $tour->isOfferActive();
+                            $currentPrice =
+                                $isOnSale && $tour->price_after_discount ? $tour->price_after_discount : $tour->price;
+                            $oldPrice = $isOnSale && $tour->price_before_discount ? $tour->price_before_discount : null;
 
-        // Location
-        $locationParts = [];
-        if ($tour->category) {
-            $locationParts[] = $tour->category->name;
-        }
-        if ($tour->country) {
-            $locationParts[] = $tour->country->name;
-        }
-        $location = implode(', ', $locationParts);
+                            // Location
+                            $locationParts = [];
+                            if ($tour->category) {
+                                $locationParts[] = $tour->category->name;
+                            }
+                            if ($tour->country) {
+                                $locationParts[] = $tour->country->name;
+                            }
+                            $location = implode(', ', $locationParts);
 
-        // Duration
-        $durationText =
-            $tour->duration .
-            ' ' .
-            ($tour->duration_type === 'days'
-                ? ($tour->duration == 1
-                    ? 'day'
-                    : 'days')
-                : ($tour->duration == 1
-                    ? 'hour'
-                    : 'hours'));
-        if ($tour->duration_type === 'days' && $tour->duration > 1) {
-            $nights = $tour->duration - 1;
-            $durationText =
-                $tour->duration . ' days ' . $nights . ' ' . ($nights == 1 ? 'night' : 'nights');
-        }
+                            // Duration
+                            $durationText =
+                                $tour->duration .
+                                ' ' .
+                                ($tour->duration_type === 'days'
+                                    ? ($tour->duration == 1
+                                        ? 'day'
+                                        : 'days')
+                                    : ($tour->duration == 1
+                                        ? 'hour'
+                                        : 'hours'));
+                            if ($tour->duration_type === 'days' && $tour->duration > 1) {
+                                $nights = $tour->duration - 1;
+                                $durationText =
+                                    $tour->duration . ' days ' . $nights . ' ' . ($nights == 1 ? 'night' : 'nights');
+                            }
                         @endphp
                         <article class="relative overflow-hidden transition duration-200">
                             <div class="bg-white border rounded-2xl border-light-grey">
                                 <div class="relative overflow-hidden rounded-t-2xl">
-                                    <a href="#">
+                                    <a href="{{ route('tours.show', $tour->slug) }}">
                                         <img src="{{ $coverImage }}" alt="{{ $tour->title }}"
                                             class="object-cover w-full h-auto transition duration-300 hover:scale-105">
                                         @if ($isOnSale)
@@ -347,7 +285,8 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
                                 </div>
                                 <div class="p-4">
                                     <div class="flex items-center gap-2 mb-2">
-                                        <span class="iconify" data-icon="ep:location" data-width="14" data-height="14"></span>
+                                        <span class="iconify" data-icon="ep:location" data-width="14"
+                                            data-height="14"></span>
                                         <span class="text-sm text-dark-grey">{{ $location ?: 'Location' }}</span>
                                     </div>
 
@@ -394,8 +333,8 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
                                                 class="text-base font-bold text-green-zomp">${{ number_format($currentPrice, 2) }}</span>
                                         </span>
                                         <span class="flex items-center gap-1">
-                                            <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular" data-width="15"
-                                                data-height="15"></span>
+                                            <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular"
+                                                data-width="15" data-height="15"></span>
                                             <div class="text-sm text-dark-grey">{{ $durationText }}</div>
                                         </span>
                                     </div>
@@ -449,13 +388,14 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
                 <div class="swiper-wrapper">
                     @foreach ($homeGalleries as $gallery)
                         @php
-        $cover = $gallery->cover_image
-            ? asset('uploads/galleries/' . $gallery->cover_image)
-            : asset('assets/frontend/assets/images/gallery-placeholder.png');
+                            $cover = $gallery->cover_image
+                                ? asset('uploads/galleries/' . $gallery->cover_image)
+                                : asset('assets/frontend/assets/images/gallery-placeholder.png');
                         @endphp
                         <div class="swiper-slide">
                             <a href="{{ route('galleries.show', $gallery->slug) }}">
-                                <img src="{{ $cover }}" alt="{{ $gallery->title }}" class="object-cover w-full h-auto" />
+                                <img src="{{ $cover }}" alt="{{ $gallery->title }}"
+                                    class="object-cover w-full h-auto" />
                             </a>
                         </div>
                     @endforeach
@@ -466,75 +406,79 @@ $metaTitle = $homePage && $homePage->meta_title ? $homePage->meta_title : 'Home 
     {{-- Gallery Section --}}
 
     {{-- Blogs section --}}
-    <section class="mb-[60px] md:mb-24">
-        <div class="container">
-            <div class="flex items-center justify-between mb-10">
-                <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize">Inspiration, guides, stories
-                </h2>
-                <div class="hidden sm:flex items-center gap-4">
-                    <div class="swiper-button-prev blog-index-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                        style="--swiper-navigation-size: 20px"></div>
-                    <div class="swiper-button-next blog-index-next !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                        style="--swiper-navigation-size: 20px"></div>
-                </div>
-            </div>
-            <div class="relative">
-                <div class="swiper blog-index-swiper">
-                    <div class="swiper-wrapper">
-                        @forelse($blogs as $blog)
-                            @php
-    $blogCover = $blog->cover_image
-        ? asset('uploads/blogs/' . $blog->cover_image)
-        : asset('assets/frontend/assets/images/blogs/01.png');
-    $blogDate = $blog->published_at
-        ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y')
-        : '';
-                            @endphp
-                            <div class="swiper-slide">
-                                <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
-                                    <div class="overflow-hidden rounded-t-2xl">
-                                        <img src="{{ $blogCover }}" alt="{{ $blog->title }}"
-                                            class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
-                                    </div>
-                                    <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
-                                        <h4
-                                            class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
-                                            <a href="{{ route('blogs.show', $blog->slug) }}" class="block">
-                                                {{ $blog->title }}
-                                            </a>
-                                        </h4>
-                                        @if ($blogDate)
-                                            <span class="block text-dark-grey text-sm mb-2">{{ $blogDate }}</span>
-                                        @endif
-                                        @if ($blog->short_description)
-                                            <p class="text-dark-grey text-sm line-clamp-2">
-                                                {{ \Illuminate\Support\Str::limit(strip_tags($blog->short_description), 140) }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </article>
-                            </div>
-                        @empty
-                            <div class="swiper-slide">
-                                <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
-                                    <div class="p-6 text-center text-dark-grey">
-                                        No blog posts available yet.
-                                    </div>
-                                </article>
-                            </div>
-                        @endforelse
+    @if (isset($blogs) && $blogs->count())
+        <section class="mb-[60px] md:mb-24">
+            <div class="container">
+                <div class="flex items-center justify-between mb-10">
+                    <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize">
+                        Travel to Egypt Blog
+                    </h2>
+                    <div class="hidden sm:flex items-center gap-4">
+                        <div class="swiper-button-prev blog-index-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
+                            style="--swiper-navigation-size: 20px"></div>
+                        <div class="swiper-button-next blog-index-next !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
+                            style="--swiper-navigation-size: 20px"></div>
                     </div>
                 </div>
-                <div class="swiper-pagination blog-index-pagination !-bottom-11 sm:hidden"></div>
-            </div>
+                <div class="relative">
+                    <div class="swiper blog-index-swiper">
+                        <div class="swiper-wrapper">
+                            @forelse($blogs as $blog)
+                                @php
+                                    $blogCover = $blog->cover_image
+                                        ? asset('uploads/blogs/' . $blog->cover_image)
+                                        : asset('assets/frontend/assets/images/blogs/01.png');
+                                    $blogDate = $blog->published_at
+                                        ? \Carbon\Carbon::parse($blog->published_at)->format('M d, Y')
+                                        : '';
+                                @endphp
+                                <div class="swiper-slide">
+                                    <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
+                                        <div class="overflow-hidden rounded-t-2xl">
+                                            <img src="{{ $blogCover }}" alt="{{ $blog->title }}"
+                                                class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
+                                        </div>
+                                        <div class="border border-light-grey border-t-0 rounded-b-2xl p-4 pb-9">
+                                            <h4
+                                                class="text-black line-clamp-2 font-bold mb-2 transition duration-200 hover:text-green-zomp">
+                                                <a href="{{ route('blogs.show', $blog->slug) }}" class="block">
+                                                    {{ $blog->title }}
+                                                </a>
+                                            </h4>
+                                            @if ($blogDate)
+                                                <span class="block text-dark-grey text-sm mb-2">{{ $blogDate }}</span>
+                                            @endif
+                                            @if ($blog->short_description)
+                                                <p class="text-dark-grey text-sm line-clamp-2">
+                                                    {{ \Illuminate\Support\Str::limit(strip_tags($blog->short_description), 140) }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </article>
+                                </div>
+                            @empty
+                                <div class="swiper-slide">
+                                    <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
+                                        <div class="p-6 text-center text-dark-grey">
+                                            No blog posts available yet.
+                                        </div>
+                                    </article>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                    <div class="swiper-pagination blog-index-pagination !-bottom-11 sm:hidden"></div>
+                </div>
 
-            <div class="flex justify-center mt-14 sm:mt-10">
-                <a href="{{ route('blogs.index') }}"
-                    class="text-green-zomp py-4 px-6 rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp capitalize">See
-                    all stories</a>
+                <div class="flex justify-center mt-14 sm:mt-10">
+                    <a href="{{ route('blogs.index') }}"
+                        class="text-green-zomp py-4 px-6 rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp capitalize">
+                        Explore Travel Egypt Blog
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
     {{-- Blogs section --}}
 
 @endsection

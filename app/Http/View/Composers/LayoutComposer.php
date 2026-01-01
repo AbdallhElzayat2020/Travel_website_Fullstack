@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\CruiseExperience;
 use App\Models\Page;
 use App\Models\Setting;
+use App\Models\Tour;
 use Illuminate\View\View;
 
 class LayoutComposer
@@ -48,6 +49,44 @@ class LayoutComposer
         $navbarLogo = Setting::get('navbar_logo');
         $footerLogo = Setting::get('footer_logo');
 
+        // Get tours for each category (unified queries for navbar dropdowns)
+        $nileCruisesCategory = $categories->firstWhere('slug', 'nile-cruises');
+        $dahbiaToursCategory = $categories->firstWhere('slug', 'dahbia-tours');
+        $tourEgyptPackagesCategory = $categories->firstWhere('slug', 'tour-egypt-packages');
+
+        // Get tours for Nile Cruises category
+        $nileCruisesTours = $nileCruisesCategory
+            ? Tour::active()
+                ->where('category_id', $nileCruisesCategory->id)
+                ->select('id', 'title', 'slug', 'category_id')
+                ->orderBy('sort_order')
+                ->latest()
+                ->take(10)
+                ->get()
+            : collect();
+
+        // Get tours for Dahbia Tours category
+        $dahbiaToursTours = $dahbiaToursCategory
+            ? Tour::active()
+                ->where('category_id', $dahbiaToursCategory->id)
+                ->select('id', 'title', 'slug', 'category_id')
+                ->orderBy('sort_order')
+                ->latest()
+                ->take(10)
+                ->get()
+            : collect();
+
+        // Get tours for Tour Egypt Packages category
+        $tourEgyptPackagesTours = $tourEgyptPackagesCategory
+            ? Tour::active()
+                ->where('category_id', $tourEgyptPackagesCategory->id)
+                ->select('id', 'title', 'slug', 'category_id')
+                ->orderBy('sort_order')
+                ->latest()
+                ->take(10)
+                ->get()
+            : collect();
+
         // Share data with all views
         $view->with([
             'sharedCategories' => $categories,
@@ -55,6 +94,9 @@ class LayoutComposer
             'sharedAnnouncements' => $announcements,
             'sharedTermsPage' => $termsPage,
             'sharedPrivacyPage' => $privacyPage,
+            'sharedNileCruisesTours' => $nileCruisesTours,
+            'sharedDahbiaToursTours' => $dahbiaToursTours,
+            'sharedTourEgyptPackagesTours' => $tourEgyptPackagesTours,
             'dahbiaCruisesName' => $dahbiaCruisesName,
             'sitePhone' => $phone,
             'siteEmail' => $email,

@@ -163,12 +163,12 @@
             </li>
 
             {{-- FAQs --}}
-            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.faqs.*'], 'active') }}">
-                <a href="{{ route('admin.faqs.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-help"></i>
-                    <div data-i18n="FAQs">FAQs</div>
-                </a>
-            </li>
+        {{-- <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.faqs.*'], 'active') }}">
+            <a href="{{ route('admin.faqs.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-help"></i>
+                <div data-i18n="FAQs">FAQs</div>
+            </a>
+        </li> --}}
 
             {{-- Pages SEO --}}
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.pages.*'], 'active') }}">

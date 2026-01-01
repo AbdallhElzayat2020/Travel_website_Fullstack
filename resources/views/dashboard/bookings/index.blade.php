@@ -8,14 +8,18 @@
             <h5 class="mb-0">Booked Tours</h5>
             <div class="d-flex gap-2">
                 <a href="{{ route('admin.bookings.index', ['status' => 'pending']) }}" class="btn btn-sm btn-label-warning">
-                    <i class="ti ti-clock me-1"></i>Pending ({{ \App\Models\Booking::pending()->count() }})
+                    <i class="ti ti-clock me-1"></i>Pending ({{ $pendingCount }})
                 </a>
                 <a href="{{ route('admin.bookings.index', ['status' => 'confirmed']) }}"
                     class="btn btn-sm btn-label-success">
-                    <i class="ti ti-check me-1"></i>Confirmed ({{ \App\Models\Booking::confirmed()->count() }})
+                    <i class="ti ti-check me-1"></i>Confirmed ({{ $confirmedCount }})
+                </a>
+                <a href="{{ route('admin.bookings.index', ['status' => 'cancelled']) }}"
+                    class="btn btn-sm btn-label-danger">
+                    <i class="ti ti-x me-1"></i>Cancelled ({{ $cancelledCount }})
                 </a>
                 <a href="{{ route('admin.bookings.index') }}" class="btn btn-sm btn-label-primary">
-                    <i class="ti ti-list me-1"></i>All ({{ \App\Models\Booking::count() }})
+                    <i class="ti ti-list me-1"></i>All ({{ $allCount }})
                 </a>
             </div>
         </div>
