@@ -36,7 +36,7 @@
                                 </p>
                             @endif
                             @if ($slider->link && $slider->button_text)
-                                <a href="{{ $slider->link }}"
+                                <a href="{{ $slider->link }}" style="color: #fff !important;"
                                    class="inline-block hero_button bg-green-zomp  font-semibold py-3 px-8 rounded-[200px] text-[#ffffff] transition duration-200">
                                     {{ $slider->button_text }}
                                 </a>
