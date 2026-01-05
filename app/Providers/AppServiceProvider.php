@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Contact;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,9 +26,15 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useTailwind();
         Paginator::useBootstrapFive();
 
-        // Share unread contacts count with dashboard sidebar
+        // Share unread contacts count with dashboard sidebar (using same cache key as HomeController)
         View::composer('dashboard.layouts.sidebar', function ($view) {
-            $unreadContactsCount = Contact::where('is_read', false)->count();
+            // Use the same cache key to avoid duplicate queries
+            $unreadContactsCount = Cache::get('unread_contacts_count');
+            if ($unreadContactsCount === null) {
+                $unreadContactsCount = Cache::remember('unread_contacts_count', 300, function () {
+                    return Contact::where('is_read', false)->count();
+                });
+            }
             $view->with('unreadContactsCount', $unreadContactsCount);
         });
     }

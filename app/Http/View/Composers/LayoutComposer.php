@@ -8,6 +8,7 @@ use App\Models\CruiseExperience;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Models\Tour;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class LayoutComposer
@@ -32,22 +33,27 @@ class LayoutComposer
             ->orderBy('sort_order')
             ->get();
 
-        // Get static pages for footer
-        $termsPage = Page::where('slug', 'terms-and-conditions')
-            ->where('status', 'active')
-            ->first();
+        // Get static pages for footer (cached, single query)
+        $staticPages = Cache::remember('static_pages', 3600, function () {
+            return Page::whereIn('slug', ['terms-and-conditions', 'privacy-policy'])
+                ->where('status', 'active')
+                ->get()
+                ->keyBy('slug');
+        });
 
-        $privacyPage = Page::where('slug', 'privacy-policy')
-            ->where('status', 'active')
-            ->first();
+        $termsPage = $staticPages->get('terms-and-conditions');
+        $privacyPage = $staticPages->get('privacy-policy');
 
-        // Get settings
-        $dahbiaCruisesName = Setting::get('dahbia_cruises_name', 'Dahbia Cruises');
-        $phone = Setting::get('phone', '+20 101 515 7744 / +20 101 515 7746');
-        $email = Setting::get('email', 'info@grandnilecruises.com');
-        $address = Setting::get('address', 'Sarayah Zayed 2 Building, Apartment 1,<br>8th District<br>Sheikh Zayed City - Giza');
-        $navbarLogo = Setting::get('navbar_logo');
-        $footerLogo = Setting::get('footer_logo');
+        // Get all settings in one query (cached)
+        $settings = Setting::getAll();
+
+        // Get settings from cached array
+        $dahbiaCruisesName = $settings['dahbia_cruises_name'] ?? 'Dahbia Cruises';
+        $phone = $settings['phone'] ?? '+20 101 515 7744 / +20 101 515 7746';
+        $email = $settings['email'] ?? 'info@grandnilecruises.com';
+        $address = $settings['address'] ?? 'Sarayah Zayed 2 Building, Apartment 1,<br>8th District<br>Sheikh Zayed City - Giza';
+        $navbarLogo = $settings['navbar_logo'] ?? null;
+        $footerLogo = $settings['footer_logo'] ?? null;
 
         // Get tours for each category (unified queries for navbar dropdowns)
         $nileCruisesCategory = $categories->firstWhere('slug', 'nile-cruises');

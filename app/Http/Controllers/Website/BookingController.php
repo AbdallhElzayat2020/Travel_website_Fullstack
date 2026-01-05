@@ -28,10 +28,11 @@ class BookingController extends Controller
 
         $validated = $request->validate([
             'tour_id' => 'required|exists:tours,id',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:255',
+            'nationality' => 'required|string|max:255',
+            'no_of_travellers' => 'required|integer|min:1',
             'accommodation_type_id' => 'nullable|exists:tour_seasonal_price_items,id',
             'selected_variants' => 'nullable|array',
             'selected_variants.*' => 'exists:tour_variants,id',
@@ -48,10 +49,11 @@ class BookingController extends Controller
 
         $booking = Booking::create([
             'tour_id' => $validated['tour_id'],
-            'first_name' => $validated['first_name'],
-            'last_name' => $validated['last_name'],
+            'full_name' => $validated['full_name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
+            'nationality' => $validated['nationality'],
+            'no_of_travellers' => $validated['no_of_travellers'],
             'accommodation_type_id' => $validated['accommodation_type_id'] ?? null,
             'selected_variants' => $selectedVariants,
             'total_price' => $validated['total_price'],

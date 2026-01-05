@@ -11,6 +11,7 @@ class CruiseExperience extends Model
 {
 
     protected $fillable = [
+        'group_key',
         'title',
         'slug',
         'short_description',
@@ -45,6 +46,14 @@ class CruiseExperience extends Model
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
+    }
+
+    /**
+     * Scope a query to filter by group key.
+     */
+    public function scopeByGroup($query, string $groupKey)
+    {
+        return $query->where('group_key', $groupKey);
     }
 
     /**

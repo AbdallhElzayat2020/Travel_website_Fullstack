@@ -17,14 +17,18 @@ class CruiseExperienceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $groupKey = $request->get('group_key', 'dahabiya');
+
         $experiences = CruiseExperience::with('tours')
+            ->byGroup($groupKey)
             ->orderBy('sort_order')
             ->latest()
-            ->paginate(15);
+            ->paginate(15)
+            ->appends(['group_key' => $groupKey]);
 
-        return view('dashboard.cruise-experiences.index', compact('experiences'));
+        return view('dashboard.cruise-experiences.index', compact('experiences', 'groupKey'));
     }
 
     /**
@@ -32,11 +36,12 @@ class CruiseExperienceController extends Controller
      */
     public function create(Request $request)
     {
+        $groupKey = $request->get('group_key', 'dahabiya');
         $tours = Tour::active()
             ->orderBy('title')
             ->paginate(15);
 
-        return view('dashboard.cruise-experiences.create', compact('tours'));
+        return view('dashboard.cruise-experiences.create', compact('tours', 'groupKey'));
     }
 
     /**
@@ -46,6 +51,7 @@ class CruiseExperienceController extends Controller
     {
         try {
             $validated = $request->validate([
+                'group_key' => 'required|in:dahabiya,ultra,grand',
                 'title' => 'required|string|max:255|unique:cruise_experiences,title',
                 'slug' => 'nullable|string|max:255|unique:cruise_experiences,slug|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 'short_description' => 'nullable|string',
@@ -120,10 +126,11 @@ class CruiseExperienceController extends Controller
     public function edit(Request $request, string $id)
     {
         $experience = CruiseExperience::with('images', 'tours')->findOrFail($id);
+        $groupKey = $request->get('group_key', $experience->group_key ?? 'dahabiya');
         $tours = Tour::active()->orderBy('title')->get();
         $selectedTourIds = $experience->tours->pluck('id')->toArray();
 
-        return view('dashboard.cruise-experiences.edit', compact('experience', 'tours', 'selectedTourIds'));
+        return view('dashboard.cruise-experiences.edit', compact('experience', 'tours', 'selectedTourIds', 'groupKey'));
     }
 
     /**
@@ -135,6 +142,7 @@ class CruiseExperienceController extends Controller
             $experience = CruiseExperience::with('images')->findOrFail($id);
 
             $validated = $request->validate([
+                'group_key' => 'required|in:dahabiya,ultra,grand',
                 'title' => 'required|string|max:255|unique:cruise_experiences,title,' . $id,
                 'slug' => 'nullable|string|max:255|unique:cruise_experiences,slug,' . $id . '|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 'short_description' => 'nullable|string',

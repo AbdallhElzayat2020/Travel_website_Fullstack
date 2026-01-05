@@ -125,6 +125,14 @@
                             $offerCover = $firstImage
                                 ? asset('uploads/cruise-experiences/' . $firstImage->image)
                                 : asset('assets/frontend/assets/images/inspire-01.png');
+
+                            // Determine route based on group_key
+                            $routeName = match($cruise->group_key ?? 'dahabiya') {
+                                'dahabiya' => 'cruise-group-1.show',
+                                'ultra' => 'cruise-group-2.show',
+                                'grand' => 'cruise-group-3.show',
+                                default => 'cruise-group-1.show',
+                            };
                         @endphp
                         <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
                              style="background-image: url('{{ $offerCover }}');">
@@ -133,7 +141,7 @@
                             <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
                                 <div>
                                     <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
-                                        <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
+                                        <a href="{{ route($routeName, $cruise->slug) }}"
                                            class="hover:text-[#f9e600] transition duration-200">
                                             {!! $cruise->title !!}
                                         </a>
@@ -145,7 +153,7 @@
                                     @endif
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
+                                    <a href="{{ route($routeName, $cruise->slug) }}"
                                        class="ml-auto border border-white text-sm text-white font-semibold py-2 px-4 rounded-[200px] transition duration-200 hover:bg-[#8b7138] hover:border-[#8b7138]">
                                         View Details
                                     </a>
@@ -161,54 +169,120 @@
 
 
     {{-- Top destination section --}}
-    @if (isset($sharedCategories) && $sharedCategories->count())
-        <section class="mb-[60px] md:mb-24">
-            <div class="container">
-                <div class="flex items-center justify-between mb-10">
-                    <h2 class="text-black font-bold text-[32px] leading-[1.1em]">
-                        The Luxury Nile Cruises & Egypt Tours
-                    </h2>
-                    <div class="hidden sm:flex items-center gap-4">
-                        <div class="swiper-button-prev top-destination-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                             style="--swiper-navigation-size: 20px"></div>
-                        <div class="swiper-button-next top-destination-next !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
-                             style="--swiper-navigation-size: 20px"></div>
+    <section class="mb-[60px] md:mb-24">
+        <div class="container">
+            <div class="flex items-center justify-between mb-10">
+                <h2 class="text-black font-bold text-[32px] leading-[1.1em]">
+                    The Luxury Nile Cruises & Egypt Tours
+                </h2>
+                <div class="hidden sm:flex items-center gap-4">
+                    <div class="swiper-button-prev top-destination-prev !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
+                         style="--swiper-navigation-size: 20px"></div>
+                    <div class="swiper-button-next top-destination-next !relative !w-12 !h-12 !text-dark-grey !mt-0 !left-0 !right-0 rounded-full p-2 bg-white-grey transition duration-200 hover:!text-white hover:bg-green-zomp"
+                         style="--swiper-navigation-size: 20px"></div>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="swiper top-destination-swipper">
+                    <div class="swiper-wrapper">
+                        {{-- Group 1: Dahabiya Cruises --}}
+                        @if ($sharedCruiseGroup1Experiences->count())
+                            @php
+                                $group1FirstImage = $sharedCruiseGroup1Experiences->first()->images->first();
+                                $group1Cover = $group1FirstImage
+                                    ? asset('uploads/cruise-experiences/' . $group1FirstImage->image)
+                                    : asset('assets/frontend/assets/images/destination-01.png');
+                            @endphp
+                            <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
+                                <img src="{{ $group1Cover }}"
+                                     alt="{{ $cruiseGroup1Name }}"
+                                     class="absolute inset-0 z-0 object-cover w-full h-full"/>
+                                <div
+                                    class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
+                                </div>
+                                <a href="{{ route('cruise-group-1.index') }}" class="absolute inset-0 z-10">
+                                    <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
+                                        {{ $cruiseGroup1Name }}
+                                    </h2>
+                                </a>
+                            </div>
+                        @endif
+
+                        {{-- Group 2: Ultra Deluxe Dahabiya --}}
+                        @if ($sharedCruiseGroup2Experiences->count())
+                            @php
+                                $group2FirstImage = $sharedCruiseGroup2Experiences->first()->images->first();
+                                $group2Cover = $group2FirstImage
+                                    ? asset('uploads/cruise-experiences/' . $group2FirstImage->image)
+                                    : asset('assets/frontend/assets/images/destination-01.png');
+                            @endphp
+                            <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
+                                <img src="{{ $group2Cover }}"
+                                     alt="{{ $cruiseGroup2Name }}"
+                                     class="absolute inset-0 z-0 object-cover w-full h-full"/>
+                                <div
+                                    class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
+                                </div>
+                                <a href="{{ route('cruise-group-2.index') }}" class="absolute inset-0 z-10">
+                                    <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
+                                        {{ $cruiseGroup2Name }}
+                                    </h2>
+                                </a>
+                            </div>
+                        @endif
+
+                        {{-- Group 3: Grand Nile Cruises --}}
+                        @if ($sharedCruiseGroup3Experiences->count())
+                            @php
+                                $group3FirstImage = $sharedCruiseGroup3Experiences->first()->images->first();
+                                $group3Cover = $group3FirstImage
+                                    ? asset('uploads/cruise-experiences/' . $group3FirstImage->image)
+                                    : asset('assets/frontend/assets/images/destination-01.png');
+                            @endphp
+                            <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
+                                <img src="{{ $group3Cover }}"
+                                     alt="{{ $cruiseGroup3Name }}"
+                                     class="absolute inset-0 z-0 object-cover w-full h-full"/>
+                                <div
+                                    class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
+                                </div>
+                                <a href="{{ route('cruise-group-3.index') }}" class="absolute inset-0 z-10">
+                                    <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
+                                        {{ $cruiseGroup3Name }}
+                                    </h2>
+                                </a>
+                            </div>
+                        @endif
+
+                        {{-- Tour Egypt Packages Category --}}
+                        @php
+                            $tourEgyptCategory = $sharedCategories->firstWhere('slug', 'tour-egypt-packages');
+                        @endphp
+                        @if ($tourEgyptCategory)
+                            <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
+                                @if ($tourEgyptCategory->image)
+                                    <img src="{{ asset('uploads/categories/' . $tourEgyptCategory->image) }}"
+                                         alt="{{ $tourEgyptCategory->image_alt ?? $tourEgyptCategory->name }}"
+                                         class="absolute inset-0 z-0 object-cover w-full h-full"/>
+                                @else
+                                    <img src="{{ asset('assets/frontend/assets/images/destination-01.png') }}"
+                                         alt="{{ $tourEgyptCategory->name }}"
+                                         class="absolute inset-0 z-0 object-cover w-full h-full"/>
+                                @endif
+                                <div
+                                    class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
+                                </div>
+                                <a href="{{ route('tours.category', $tourEgyptCategory->slug) }}" class="absolute inset-0 z-10">
+                                    <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
+                                        {{ $tourEgyptCategory->name }}
+                                    </h2>
+                                </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
-                <div class="relative">
-                    <div class="swiper top-destination-swipper">
-                        <div class="swiper-wrapper">
-                            @forelse($sharedCategories as $category)
-                                <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
-                                    @if ($category->image)
-                                        <img src="{{ asset('uploads/categories/' . $category->image) }}"
-                                             alt="{{ $category->image_alt ?? $category->name }}"
-                                             class="absolute inset-0 z-0 object-cover w-full h-full"/>
-                                    @else
-                                        <img src="{{ asset('assets/frontend/assets/images/destination-01.png') }}"
-                                             alt="{{ $category->name }}"
-                                             class="absolute inset-0 z-0 object-cover w-full h-full"/>
-                                    @endif
-                                    <div
-                                        class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                                    </div>
-                                    <a href="{{ route('tours.category', $category->slug) }}" class="absolute inset-0 z-10">
-                                        <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
-                                            {{ $category->name }}
-                                        </h2>
-                                    </a>
-                                </div>
-                            @empty
-                                <div class="swiper-slide">
-                                    <div class="text-center py-12">
-                                        <p class="text-gray-500">No categories available</p>
-                                    </div>
-                                </div>
-                            @endforelse
-                        </div>
-                    </div>
-                    <div class="swiper-pagination top-destination-pagination !-bottom-11 sm:hidden"></div>
-                </div>
+                <div class="swiper-pagination top-destination-pagination !-bottom-11 sm:hidden"></div>
+            </div>
                 {{-- <div class="flex justify-center mt-14 sm:mt-10">
                 <a href="destinations.html"
                     class="text-green-zomp py-4 px-6 rounded-[200px] border border-green-zomp font-semibold transition duration-200 hover:text-white hover:bg-green-zomp capitalize">See
@@ -217,7 +291,6 @@
             </div> --}}
             </div>
         </section>
-    @endif
     {{-- Top destination section --}}
 
 

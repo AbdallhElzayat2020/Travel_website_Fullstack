@@ -66,12 +66,12 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">First Name</label>
-                        <p class="form-control-plaintext">{{ $booking->first_name }}</p>
+                        <label class="form-label fw-bold">Full Name</label>
+                        <p class="form-control-plaintext">{{ $booking->full_name }}</p>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Last Name</label>
-                        <p class="form-control-plaintext">{{ $booking->last_name }}</p>
+                        <label class="form-label fw-bold">Nationality</label>
+                        <p class="form-control-plaintext">{{ $booking->nationality ?? 'N/A' }}</p>
                     </div>
                 </div>
 
@@ -92,6 +92,12 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">No. of Travellers</label>
+                        <p class="form-control-plaintext">
+                            <strong>{{ $booking->no_of_travellers ?? 1 }}</strong>
+                        </p>
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold">Accommodation Type</label>
                         <p class="form-control-plaintext">
                             @if($booking->accommodationType)
@@ -103,10 +109,16 @@
                             @endif
                         </p>
                     </div>
-                    <div class="col-md-6 mb-3">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label fw-bold">Total Price</label>
                         <p class="form-control-plaintext">
                             <strong class="text-success">${{ number_format($booking->total_price, 2) }}</strong>
+                            @if($booking->no_of_travellers > 1)
+                                <span class="text-muted">({{ $booking->no_of_travellers }} travellers)</span>
+                            @endif
                         </p>
                     </div>
                 </div>

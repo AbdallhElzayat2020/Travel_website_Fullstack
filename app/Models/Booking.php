@@ -9,10 +9,11 @@ class Booking extends Model
 
     protected $fillable = [
         'tour_id',
-        'first_name',
-        'last_name',
+        'full_name',
         'email',
         'phone',
+        'nationality',
+        'no_of_travellers',
         'accommodation_type_id',
         'selected_variants',
         'total_price',
@@ -23,6 +24,7 @@ class Booking extends Model
     protected $casts = [
         'selected_variants' => 'array',
         'total_price' => 'decimal:2',
+        'no_of_travellers' => 'integer',
         'status' => 'string',
     ];
 
@@ -43,13 +45,6 @@ class Booking extends Model
     }
 
 
-    /**
-     * Get full name attribute.
-     */
-    public function getFullNameAttribute()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
 
     /**
      * Scope a query to only include pending bookings.

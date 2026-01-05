@@ -19,7 +19,6 @@
             </div>
             @php
                 $activeCategories = $sharedCategories;
-                $dahbiaCruiseExperiences = $sharedCruiseExperiences;
             @endphp
             <ul
                 class="flex flex-wrap lg:flex-nowrap items-center justify-end gap-4 lg:gap-8 xl:gap-10 text-sm sm:text-base font-semibold text-black">
@@ -30,22 +29,20 @@
                     </a>
                 </li>
 
-                {{-- Dahbia Cruises dropdown with cruise experiences (from settings) --}}
-                <li class="relative group nav-father">
-                    <div class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
-                        <a href="{{ route('nile-cruises.index') }}"
-                            class="hover:text-green-zomp">{{ $dahbiaCruisesName }}</a>
-                        @if ($dahbiaCruiseExperiences->count())
+                {{-- Group 1: Dahabiya Cruises --}}
+                @if ($sharedCruiseGroup1Experiences->count())
+                    <li class="relative group nav-father">
+                        <div class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
+                            <a href="{{ route('cruise-group-1.index') }}"
+                                class="hover:text-green-zomp">{{ $cruiseGroup1Name }}</a>
                             <i class="fa-solid fa-chevron-down text-xs text-dark-grey"></i>
-                        @endif
-                    </div>
-                    @if ($dahbiaCruiseExperiences->count())
+                        </div>
                         <div
                             class="nav-wrapper lg:absolute lg:w-80 lg:left-0 lg:top-8 bg-white lg:shadow-custom lg:rounded-custom lg:opacity-0 lg:invisible lg:transition-all lg:group-hover:opacity-100 lg:group-hover:visible z-[999] border border-light-grey lg:border-none mt-2 lg:mt-0">
                             <ul class="nav-menu nav-dropdown divide-y divide-light-grey">
-                                @foreach ($dahbiaCruiseExperiences as $cruise)
+                                @foreach ($sharedCruiseGroup1Experiences as $cruise)
                                     <li class="nav-items">
-                                        <a href="{{ route('nile-cruises.show', $cruise->slug) }}"
+                                        <a href="{{ route('cruise-group-1.show', $cruise->slug) }}"
                                             class="block px-5 py-3 bg-white hover:bg-light-grey hover:text-green-zomp transition-all duration-200">
                                             {{ $cruise->title }}
                                         </a>
@@ -53,9 +50,56 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
-                </li>
-                {{-- Dahbia Cruises dropdown with cruise experiences (from settings) --}}
+                    </li>
+                @endif
+
+                {{-- Group 2: Ultra Deluxe Dahabiya --}}
+                @if ($sharedCruiseGroup2Experiences->count())
+                    <li class="relative group nav-father">
+                        <div class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
+                            <a href="{{ route('cruise-group-2.index') }}"
+                                class="hover:text-green-zomp">{{ $cruiseGroup2Name }}</a>
+                            <i class="fa-solid fa-chevron-down text-xs text-dark-grey"></i>
+                        </div>
+                        <div
+                            class="nav-wrapper lg:absolute lg:w-80 lg:left-0 lg:top-8 bg-white lg:shadow-custom lg:rounded-custom lg:opacity-0 lg:invisible lg:transition-all lg:group-hover:opacity-100 lg:group-hover:visible z-[999] border border-light-grey lg:border-none mt-2 lg:mt-0">
+                            <ul class="nav-menu nav-dropdown divide-y divide-light-grey">
+                                @foreach ($sharedCruiseGroup2Experiences as $cruise)
+                                    <li class="nav-items">
+                                        <a href="{{ route('cruise-group-2.show', $cruise->slug) }}"
+                                            class="block px-5 py-3 bg-white hover:bg-light-grey hover:text-green-zomp transition-all duration-200">
+                                            {{ $cruise->title }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+
+                {{-- Group 3: Grand Nile Cruises --}}
+                @if ($sharedCruiseGroup3Experiences->count())
+                    <li class="relative group nav-father">
+                        <div class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
+                            <a href="{{ route('cruise-group-3.index') }}"
+                                class="hover:text-green-zomp">{{ $cruiseGroup3Name }}</a>
+                            <i class="fa-solid fa-chevron-down text-xs text-dark-grey"></i>
+                        </div>
+                        <div
+                            class="nav-wrapper lg:absolute lg:w-80 lg:left-0 lg:top-8 bg-white lg:shadow-custom lg:rounded-custom lg:opacity-0 lg:invisible lg:transition-all lg:group-hover:opacity-100 lg:group-hover:visible z-[999] border border-light-grey lg:border-none mt-2 lg:mt-0">
+                            <ul class="nav-menu nav-dropdown divide-y divide-light-grey">
+                                @foreach ($sharedCruiseGroup3Experiences as $cruise)
+                                    <li class="nav-items">
+                                        <a href="{{ route('cruise-group-3.show', $cruise->slug) }}"
+                                            class="block px-5 py-3 bg-white hover:bg-light-grey hover:text-green-zomp transition-all duration-200">
+                                            {{ $cruise->title }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </li>
+                @endif
 
                 {{-- Display all active categories dynamically --}}
                 @foreach ($activeCategories as $category)

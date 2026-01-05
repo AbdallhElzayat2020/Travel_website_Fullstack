@@ -42,11 +42,19 @@
                                 ? \Illuminate\Support\Str::limit(strip_tags($experience->short_description), 140)
                                 : null;
                             $relatedToursCount = $experience->tours()->active()->count();
+
+                            // Determine route based on group_key
+                            $showRoute = match($experience->group_key ?? 'dahabiya') {
+                                'dahabiya' => 'cruise-group-1.show',
+                                'ultra' => 'cruise-group-2.show',
+                                'grand' => 'cruise-group-3.show',
+                                default => 'cruise-group-1.show',
+                            };
                         @endphp
                         <article
                             class="group bg-white overflow-hidden rounded-2xl shadow-sm border border-light-grey flex flex-col">
                             <div class="relative overflow-hidden">
-                                <a href="{{ route('nile-cruises.show', $experience->slug) }}">
+                                <a href="{{ route($showRoute, $experience->slug) }}">
                                     <img src="{{ $cover }}" alt="{{ $experience->title }}"
                                          class="w-full h-56 object-cover transition duration-300 group-hover:scale-105">
                                 </a>
@@ -54,7 +62,7 @@
                             <div class="p-4 flex flex-col flex-1">
                                 <h3
                                     class="text-lg font-bold text-black mb-2 leading-snug group-hover:text-green-zomp transition">
-                                    <a href="{{ route('nile-cruises.show', $experience->slug) }}">
+                                    <a href="{{ route($showRoute, $experience->slug) }}">
                                         {{ $experience->title }}
                                     </a>
                                 </h3>
@@ -69,7 +77,7 @@
                                     <span class="text-xs font-medium text-grey uppercase tracking-wide">
                                         {{ $relatedToursCount }} {{ \Illuminate\Support\Str::plural('Tour', $relatedToursCount) }}
                                     </span>
-                                    <a href="{{ route('nile-cruises.show', $experience->slug) }}"
+                                    <a href="{{ route($showRoute, $experience->slug) }}"
                                        class="text-green-zomp text-sm font-semibold inline-flex items-center gap-1">
                                         View details
                                         <span class="iconify" data-icon="mdi:arrow-right" data-width="16"

@@ -8,11 +8,14 @@ use App\Models\CruiseExperience;
 class CruiseExperienceController extends Controller
 {
     /**
-     * Show main Nile cruise page (first active cruise experience).
+     * Show main cruise page (first active cruise experience for the group).
      */
     public function index(\Illuminate\Http\Request $request)
     {
+        $groupKey = $request->route('group_key', 'dahabiya');
+
         $experience = CruiseExperience::active()
+            ->byGroup($groupKey)
             ->with(['images'])
             ->orderBy('sort_order')
             ->firstOrFail();
@@ -25,7 +28,7 @@ class CruiseExperienceController extends Controller
             ->latest()
             ->paginate(15);
 
-        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours'));
+        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours', 'groupKey'));
     }
 
     /**
@@ -33,7 +36,10 @@ class CruiseExperienceController extends Controller
      */
     public function show(\Illuminate\Http\Request $request, string $slug)
     {
+        $groupKey = $request->route('group_key', 'dahabiya');
+
         $experience = CruiseExperience::active()
+            ->byGroup($groupKey)
             ->with(['images'])
             ->where('slug', $slug)
             ->firstOrFail();
@@ -46,6 +52,6 @@ class CruiseExperienceController extends Controller
             ->latest()
             ->paginate(15);
 
-        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours'));
+        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours', 'groupKey'));
     }
 }

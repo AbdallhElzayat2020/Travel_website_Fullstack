@@ -504,6 +504,7 @@
                                 @else
                                     ${{ number_format($tour->price, 2) }}
                                 @endif
+                                <span class="text-dark-grey text-base font-medium ml-2">per person</span>
                             </h4>
                             <div class="col-span-8">
                                 @php
@@ -539,24 +540,16 @@
                                         @csrf
                                         <input type="hidden" name="tour_id" value="{{ $tour->id }}">
                                         <div class="mb-5">
-                                            <input type="text" id="first_name" name="first_name" placeholder="First name"
-                                                value="{{ old('first_name') }}"
-                                                class="w-full border {{ $errors->has('first_name') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
-                                            @error('first_name')
-                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                        <div class="mb-5">
-                                            <input type="text" id="last_name" name="last_name" placeholder="Last name"
-                                                value="{{ old('last_name') }}"
-                                                class="w-full border {{ $errors->has('last_name') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
-                                            @error('last_name')
+                                            <input type="text" id="full_name" name="full_name" placeholder="Full Name"
+                                                value="{{ old('full_name') }}" required
+                                                class="w-full border {{ $errors->has('full_name') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
+                                            @error('full_name')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
                                         <div class="mb-5">
                                             <input type="email" id="email" name="email" placeholder="Email"
-                                                value="{{ old('email') }}"
+                                                value="{{ old('email') }}" required
                                                 class="w-full border {{ $errors->has('email') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
                                             @error('email')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -564,9 +557,26 @@
                                         </div>
                                         <div class="mb-5">
                                             <input type="tel" id="phone" name="phone" placeholder="Phone"
-                                                value="{{ old('phone') }}"
+                                                value="{{ old('phone') }}" required
                                                 class="w-full border {{ $errors->has('phone') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
                                             @error('phone')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-5">
+                                            <input type="text" id="nationality" name="nationality" placeholder="Nationality"
+                                                value="{{ old('nationality') }}" required
+                                                class="w-full border {{ $errors->has('nationality') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
+                                            @error('nationality')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-5">
+                                            <label for="no_of_travellers" class="block mb-2 text-dark-grey font-semibold">No. of Travellers</label>
+                                            <input type="number" id="no_of_travellers" name="no_of_travellers"
+                                                placeholder="Number of Travellers" min="1" value="{{ old('no_of_travellers', 1) }}" required
+                                                class="w-full border {{ $errors->has('no_of_travellers') ? 'border-red-500' : 'border-light-grey' }} rounded-lg py-2.5 px-4 outline-none">
+                                            @error('no_of_travellers')
                                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -1477,26 +1487,34 @@
             const accommodationSelect = document.getElementById('accommodation_type');
             const totalPriceElement = document.getElementById('total-price');
 
+            // Get number of travellers input
+            const noOfTravellersInput = document.getElementById('no_of_travellers');
+
             // Calculate total price
             function calculateTotal() {
-                // Start with base tour price
-                let total = baseTourPrice;
+                // Get number of travellers
+                const noOfTravellers = parseInt(noOfTravellersInput?.value || 1) || 1;
 
-                // Add accommodation price if selected
+                // Start with base tour price per person
+                let pricePerPerson = baseTourPrice;
+
+                // Add accommodation price if selected (per person)
                 if (accommodationSelect && accommodationSelect.value) {
                     const selectedOption = accommodationSelect.options[accommodationSelect.selectedIndex];
                     const accommodationPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
-                    total += accommodationPrice;
+                    pricePerPerson += accommodationPrice;
                 }
 
-
-                // Add variant prices
+                // Add variant prices (per person)
                 variantCheckboxes.forEach(function (checkbox) {
                     if (checkbox.checked) {
                         const variantPrice = parseFloat(checkbox.getAttribute('data-price')) || 0;
-                        total += variantPrice;
+                        pricePerPerson += variantPrice;
                     }
                 });
+
+                // Calculate total: price per person × number of travellers
+                const total = pricePerPerson * noOfTravellers;
 
                 // Update total price display
                 if (totalPriceElement) {
@@ -1545,6 +1563,17 @@
                     if (accommodationTypeIdInput) {
                         accommodationTypeIdInput.value = accommodationSelect.value || '';
                     }
+                });
+            }
+
+            // Listen to number of travellers changes
+            if (noOfTravellersInput) {
+                noOfTravellersInput.addEventListener('input', function () {
+                    const value = parseInt(this.value) || 1;
+                    if (value < 1) {
+                        this.value = 1;
+                    }
+                    calculateTotal();
                 });
             }
 
@@ -1626,24 +1655,18 @@
                     calculateTotal();
 
                     // Validate required fields
-                    const firstName = document.getElementById('first_name');
-                    const lastName = document.getElementById('last_name');
+                    const fullName = document.getElementById('full_name');
                     const email = document.getElementById('email');
                     const phone = document.getElementById('phone');
+                    const nationality = document.getElementById('nationality');
+                    const noOfTravellers = document.getElementById('no_of_travellers');
 
                     let isValid = true;
 
-                    if (!firstName || !firstName.value.trim()) {
+                    if (!fullName || !fullName.value.trim()) {
                         isValid = false;
-                        if (firstName) {
-                            firstName.classList.add('border-red-500');
-                        }
-                    }
-
-                    if (!lastName || !lastName.value.trim()) {
-                        isValid = false;
-                        if (lastName) {
-                            lastName.classList.add('border-red-500');
+                        if (fullName) {
+                            fullName.classList.add('border-red-500');
                         }
                     }
 
@@ -1658,6 +1681,20 @@
                         isValid = false;
                         if (phone) {
                             phone.classList.add('border-red-500');
+                        }
+                    }
+
+                    if (!nationality || !nationality.value.trim()) {
+                        isValid = false;
+                        if (nationality) {
+                            nationality.classList.add('border-red-500');
+                        }
+                    }
+
+                    if (!noOfTravellers || !noOfTravellers.value || parseInt(noOfTravellers.value) < 1) {
+                        isValid = false;
+                        if (noOfTravellers) {
+                            noOfTravellers.classList.add('border-red-500');
                         }
                     }
 

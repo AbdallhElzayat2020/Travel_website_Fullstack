@@ -2,18 +2,17 @@
 <script src="{{ asset('assets/frontend/assets/js/main.min.js') }}"></script>
 
 <script>
-    // Announcement scrolling effect
+    // Announcement scrolling effect (single run, no inline repetition)
     document.addEventListener('DOMContentLoaded', function () {
         const announcementBar = document.getElementById('announcement-bar');
-        if (announcementBar) {
-            const scrollContent = announcementBar.querySelector('.announcement-scroll');
-            if (scrollContent) {
-                // Duplicate content once for seamless loop (original + one copy)
-                const originalContent = scrollContent.innerHTML;
-                // Duplicate only once to ensure content finishes before repeating
-                scrollContent.innerHTML = originalContent + originalContent;
-            }
-        }
+        if (!announcementBar) return;
+
+        const scrollContent = announcementBar.querySelector('.announcement-scroll');
+        if (!scrollContent) return;
+
+        // We keep the original content only.
+        // CSS animation in head.blade.php handles the infinite loop,
+        // so the text appears once and repeats only after it fully leaves the screen.
     });
 </script>
 

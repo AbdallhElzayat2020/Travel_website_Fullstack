@@ -40,6 +40,8 @@
                             <th>Customer</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Nationality</th>
+                            <th>Travellers</th>
                             <th>Total Price</th>
                             <th>Status</th>
                             <th>Date</th>
@@ -58,7 +60,10 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <strong>{{ $booking->first_name }} {{ $booking->last_name }}</strong>
+                                    <strong>{{ $booking->full_name }}</strong>
+                                    @if($booking->no_of_travellers > 1)
+                                        <span class="badge bg-label-info ms-1">{{ $booking->no_of_travellers }} travellers</span>
+                                    @endif
                                 </td>
                                 <td>
                                     <a href="mailto:{{ $booking->email }}">{{ $booking->email }}</a>
@@ -66,6 +71,8 @@
                                 <td>
                                     <a href="tel:{{ $booking->phone }}">{{ $booking->phone }}</a>
                                 </td>
+                                <td>{{ $booking->nationality ?? 'N/A' }}</td>
+                                <td>{{ $booking->no_of_travellers ?? 1 }}</td>
                                 <td><strong class="text-success">${{ number_format($booking->total_price, 2) }}</strong></td>
                                 <td>
                                     @if($booking->status == 'pending')
@@ -103,7 +110,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="9" class="text-center py-4">
+                                <td colspan="11" class="text-center py-4">
                                     <div class="text-muted">
                                         <i class="ti ti-inbox" style="font-size: 48px;"></i>
                                         <p class="mt-2">No bookings found</p>

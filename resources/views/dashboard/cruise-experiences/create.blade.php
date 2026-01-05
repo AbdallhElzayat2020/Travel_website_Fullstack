@@ -139,6 +139,25 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="mb-3">
+                            <label for="group_key" class="form-label">Cruise Group <span class="text-danger">*</span></label>
+                            <select name="group_key" id="group_key"
+                                class="form-select @error('group_key') is-invalid @enderror" required>
+                                <option value="dahabiya" {{ old('group_key', $groupKey ?? 'dahabiya') == 'dahabiya' ? 'selected' : '' }}>
+                                    Dahabiya Cruises
+                                </option>
+                                <option value="ultra" {{ old('group_key', $groupKey ?? 'dahabiya') == 'ultra' ? 'selected' : '' }}>
+                                    Ultra Deluxe Dahabiya
+                                </option>
+                                <option value="grand" {{ old('group_key', $groupKey ?? 'dahabiya') == 'grand' ? 'selected' : '' }}>
+                                    Grand Nile Cruises
+                                </option>
+                            </select>
+                            @error('group_key')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
                             <label for="title" class="form-label">Title <span class="text-danger">*</span></label>
                             <input type="text" name="title" id="title"
                                 class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}"

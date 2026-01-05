@@ -28,7 +28,15 @@
                     </li>
                     <span class="mx-1">/</span>
                     <li>
-                        <a href="{{ route('nile-cruises.index') }}"
+                        @php
+                            $indexRoute = match($groupKey ?? $experience->group_key ?? 'dahabiya') {
+                                'dahabiya' => 'cruise-group-1.index',
+                                'ultra' => 'cruise-group-2.index',
+                                'grand' => 'cruise-group-3.index',
+                                default => 'cruise-group-1.index',
+                            };
+                        @endphp
+                        <a href="{{ route($indexRoute) }}"
                             class="transition duration-200 hover:text-green-zomp">Nile Cruises</a>
                     </li>
                     <span class="mx-1">/</span>
@@ -94,7 +102,7 @@
     @if(isset($relatedTours) && $relatedTours->count())
         <section class="mb-[60px] md:mb-24">
             <div class="container">
-                <h2 class="text-black text-3xl font-bold leading-[1.1] mb-8">Related Tours</h2>
+                <h2 class="text-black text-3xl font-bold leading-[1.1] mb-8">{{ $experience->title }} Tours</h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     @foreach($relatedTours as $tour)
                         @php

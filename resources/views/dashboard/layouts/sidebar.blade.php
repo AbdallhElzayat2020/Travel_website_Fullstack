@@ -28,100 +28,126 @@
 
         {{-- Tours Management Section --}}
         @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('dashboard.access'))
-                            <li class="menu-header small text-uppercase">
-                                <span class="menu-header-text">Tours Management</span>
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Tours Management</span>
+            </li>
+
+            {{-- Categories & Sub Categories --}}
+            @if (auth()->user()->isAdmin() ||
+                    auth()->user()->hasPermission('categories.view') ||
+                    auth()->user()->hasPermission('sub-categories.view'))
+                <li
+                    class="menu-item {{ \App\Helpers\setSidebarActive(['admin.categories.*', 'admin.sub-categories.*'], 'active open') }}">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons ti ti-category"></i>
+                        <div data-i18n="Categories">Categories</div>
+                    </a>
+                    <ul class="menu-sub">
+                        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('categories.view'))
+                            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.categories.*'], 'active') }}">
+                                <a href="{{ route('admin.categories.index') }}" class="menu-link">
+                                    <div data-i18n="All Categories">All Categories</div>
+                                </a>
                             </li>
-
-                            {{-- Categories & Sub Categories --}}
-                            @if (
-                auth()->user()->isAdmin() ||
-                auth()->user()->hasPermission('categories.view') ||
-                auth()->user()->hasPermission('sub-categories.view')
-            )
-                                <li
-                                    class="menu-item {{ \App\Helpers\setSidebarActive(['admin.categories.*', 'admin.sub-categories.*'], 'active open') }}">
-                                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                        <i class="menu-icon tf-icons ti ti-category"></i>
-                                        <div data-i18n="Categories">Categories</div>
-                                    </a>
-                                    <ul class="menu-sub">
-                                        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('categories.view'))
-                                            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.categories.*'], 'active') }}">
-                                                <a href="{{ route('admin.categories.index') }}" class="menu-link">
-                                                    <div data-i18n="All Categories">All Categories</div>
-                                                </a>
-                                            </li>
-                                        @endif
-                                        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('sub-categories.view'))
-                                            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.sub-categories.*'], 'active') }}">
-                                                <a href="{{ route('admin.sub-categories.index') }}" class="menu-link">
-                                                    <div data-i18n="Sub Categories">Sub Categories</div>
-                                                </a>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </li>
-                            @endif
-
-                            {{-- Tours & Related --}}
+                        @endif
+                        @if (auth()->user()->isAdmin() || auth()->user()->hasPermission('sub-categories.view'))
                             <li
-                                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*', 'admin.tour-variants.*'], 'active open') }}">
-                                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                    <i class="menu-icon tf-icons ti ti-plane"></i>
-                                    <div data-i18n="Tours">Tours</div>
+                                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.sub-categories.*'], 'active') }}">
+                                <a href="{{ route('admin.sub-categories.index') }}" class="menu-link">
+                                    <div data-i18n="Sub Categories">Sub Categories</div>
                                 </a>
-                                <ul class="menu-sub">
-                                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*'], 'active') }}">
-                                        <a href="{{ route('admin.tours.index') }}" class="menu-link">
-                                            <div data-i18n="All Tours">All Tours</div>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tour-variants.*'], 'active') }}">
-                                        <a href="{{ route('admin.tour-variants.index') }}" class="menu-link">
-                                            <div data-i18n="Optional Excursions">
-                                                Optional Excursions
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
 
-                            {{-- Cruise Experiences --}}
-                            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.cruise-experiences.*'], 'active') }}">
-                                <a href="{{ route('admin.cruise-experiences.index') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons ti ti-ship"></i>
-                                    <div data-i18n="Dahabiya Cruises">Dahabiya Cruises</div>
-                                </a>
-                            </li>
+            {{-- Tours & Related --}}
+            <li
+                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*', 'admin.tour-variants.*'], 'active open') }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons ti ti-plane"></i>
+                    <div data-i18n="Tours">Tours</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tours.*'], 'active') }}">
+                        <a href="{{ route('admin.tours.index') }}" class="menu-link">
+                            <div data-i18n="All Tours">All Tours</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.tour-variants.*'], 'active') }}">
+                        <a href="{{ route('admin.tour-variants.index') }}" class="menu-link">
+                            <div data-i18n="Optional Excursions">
+                                Optional Excursions
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-                            {{-- Locations --}}
-                            <li
-                                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.countries.*', 'admin.states.*'], 'active open') }}">
-                                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                    <i class="menu-icon tf-icons ti ti-map-pin"></i>
-                                    <div data-i18n="Locations">Locations</div>
-                                </a>
-                                <ul class="menu-sub">
-                                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.countries.*'], 'active') }}">
-                                        <a href="{{ route('admin.countries.index') }}" class="menu-link">
-                                            <div data-i18n="Countries">Countries</div>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.states.*'], 'active') }}">
-                                        <a href="{{ route('admin.states.index') }}" class="menu-link">
-                                            <div data-i18n="States">States</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+            {{-- Cruise Experiences Groups --}}
+            @php
+                $currentGroupKey = request()->get('group_key', 'dahabiya');
+                $isCruiseExperiencesActive = request()->routeIs('admin.cruise-experiences.*');
+            @endphp
+            <li class="menu-item {{ $isCruiseExperiencesActive ? 'active open' : '' }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons ti ti-ship"></i>
+                    <div data-i18n="Dahabiya & Cruises">Dahabiya & Cruises</div>
+                </a>
+                <ul class="menu-sub">
+                    <li
+                        class="menu-item {{ $isCruiseExperiencesActive && $currentGroupKey == 'dahabiya' ? 'active' : '' }}">
+                        <a href="{{ route('admin.cruise-experiences.index', ['group_key' => 'dahabiya']) }}"
+                            class="menu-link">
+                            <div data-i18n="Dahabiya Cruises">Dahabiya Cruises</div>
+                        </a>
+                    </li>
+                    <li
+                        class="menu-item {{ $isCruiseExperiencesActive && $currentGroupKey == 'ultra' ? 'active' : '' }}">
+                        <a href="{{ route('admin.cruise-experiences.index', ['group_key' => 'ultra']) }}"
+                            class="menu-link">
+                            <div data-i18n="Ultra Deluxe Dahabiya">Ultra Deluxe Dahabiya</div>
+                        </a>
+                    </li>
+                    <li
+                        class="menu-item {{ $isCruiseExperiencesActive && $currentGroupKey == 'grand' ? 'active' : '' }}">
+                        <a href="{{ route('admin.cruise-experiences.index', ['group_key' => 'grand']) }}"
+                            class="menu-link">
+                            <div data-i18n="Grand Nile Cruises">Grand Nile Cruises</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-                            {{-- Bookings --}}
-                            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.bookings.*'], 'active') }}">
-                                <a href="{{ route('admin.bookings.index') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons ti ti-calendar-event"></i>
-                                    <div data-i18n="Booked Tours">Bookings</div>
-                                </a>
-                            </li>
+            {{-- Locations --}}
+            <li
+                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.countries.*', 'admin.states.*'], 'active open') }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons ti ti-map-pin"></i>
+                    <div data-i18n="Locations">Locations</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.countries.*'], 'active') }}">
+                        <a href="{{ route('admin.countries.index') }}" class="menu-link">
+                            <div data-i18n="Countries">Countries</div>
+                        </a>
+                    </li>
+                    <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.states.*'], 'active') }}">
+                        <a href="{{ route('admin.states.index') }}" class="menu-link">
+                            <div data-i18n="States">States</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            {{-- Bookings --}}
+            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.bookings.*'], 'active') }}">
+                <a href="{{ route('admin.bookings.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-calendar-event"></i>
+                    <div data-i18n="Booked Tours">Bookings</div>
+                </a>
+            </li>
         @endif
 
         {{-- Content Management Section --}}
@@ -149,7 +175,7 @@
             {{-- Galleries --}}
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.galleries.*'], 'active') }}">
                 <a href="{{ route('admin.galleries.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-photo-scan"></i>
+                    <i class="menu-icon tf-icons ti ti-slideshow"></i>
                     <div data-i18n="Galleries">Galleries</div>
                 </a>
             </li>
@@ -163,7 +189,7 @@
             </li>
 
             {{-- FAQs --}}
-        {{-- <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.faqs.*'], 'active') }}">
+            {{-- <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.faqs.*'], 'active') }}">
             <a href="{{ route('admin.faqs.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-help"></i>
                 <div data-i18n="FAQs">FAQs</div>
@@ -208,6 +234,9 @@
                     <div data-i18n="Contacts">Contact Messages</div>
                     @if (isset($unreadContactsCount) && $unreadContactsCount > 0)
                         <span class="badge rounded-pill bg-label-danger ms-auto">{{ $unreadContactsCount }}</span>
+                    @elseif(isset($sidebarStats['contacts']))
+                        <span
+                            class="badge rounded-pill bg-label-primary ms-auto">{{ $sidebarStats['contacts'] }}</span>
                     @endif
                 </a>
             </li>
@@ -215,24 +244,23 @@
             {{-- Subscribers --}}
             <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.subscribers.*'], 'active') }}">
                 <a href="{{ route('admin.subscribers.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-mail-star"></i>
+                    <i class="ti ti-users ti-md"></i>
                     <div data-i18n="Subscribers">Newsletter Subscribers</div>
                 </a>
             </li>
         @endif
 
         {{-- System Section --}}
-        @if (
-    auth()->user()->isAdmin() ||
-    auth()->user()->hasPermission('users.manage') ||
-    auth()->user()->hasPermission('roles.manage')
-)
+        @if (auth()->user()->isAdmin() ||
+                auth()->user()->hasPermission('users.manage') ||
+                auth()->user()->hasPermission('roles.manage'))
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">System</span>
             </li>
 
             {{-- Users & Roles --}}
-            <li class="menu-item {{ \App\Helpers\setSidebarActive(['admin.users.*', 'admin.roles.*'], 'active open') }}">
+            <li
+                class="menu-item {{ \App\Helpers\setSidebarActive(['admin.users.*', 'admin.roles.*'], 'active open') }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons ti ti-shield-lock"></i>
                     <div data-i18n="Users & Roles">Users & Roles</div>

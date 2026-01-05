@@ -14,17 +14,106 @@
 
                 {{-- Navbar Settings --}}
                 <div class="mb-4">
-                    <h6 class="mb-3">Navbar Settings</h6>
+                    <h6 class="mb-3">Cruises Menu Settings</h6>
+
+                    {{-- Main Menu Name --}}
                     <div class="mb-3">
-                        <label for="dahbia_cruises_name" class="form-label">Dahbia Cruises Menu Name <span
+                        <label for="main_cruises_menu_name" class="form-label">Main Cruises Menu Name <span
                                 class="text-danger">*</span></label>
-                        <input type="text" class="form-control @error('dahbia_cruises_name') is-invalid @enderror"
-                            id="dahbia_cruises_name" name="dahbia_cruises_name"
-                            value="{{ old('dahbia_cruises_name', $dahbiaCruisesName) }}" required>
-                        <small class="text-muted">This name will appear in the navbar menu</small>
-                        @error('dahbia_cruises_name')
+                        <input type="text" class="form-control @error('main_cruises_menu_name') is-invalid @enderror"
+                            id="main_cruises_menu_name" name="main_cruises_menu_name"
+                            value="{{ old('main_cruises_menu_name', $mainCruisesMenuName) }}" required>
+                        <small class="text-muted">This name will appear as the main menu item (e.g., "Dahabiya & Cruises")</small>
+                        @error('main_cruises_menu_name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                    </div>
+
+                    {{-- Group 1: Dahabiya Cruises --}}
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h6 class="mb-0">Group 1: Dahabiya Cruises</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="cruise_group_1_name" class="form-label">Group 1 Name <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('cruise_group_1_name') is-invalid @enderror"
+                                    id="cruise_group_1_name" name="cruise_group_1_name"
+                                    value="{{ old('cruise_group_1_name', $group1Name) }}" required>
+                                @error('cruise_group_1_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="cruise_group_1_slug" class="form-label">Group 1 Slug</label>
+                                <input type="text" class="form-control @error('cruise_group_1_slug') is-invalid @enderror"
+                                    id="cruise_group_1_slug" name="cruise_group_1_slug"
+                                    value="{{ old('cruise_group_1_slug', $group1Slug) }}">
+                                <small class="text-muted">Leave empty to auto-generate from name. Current: <code>{{ $group1Slug }}</code></small>
+                                @error('cruise_group_1_slug')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Group 2: Ultra Deluxe Dahabiya --}}
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h6 class="mb-0">Group 2: Ultra Deluxe Dahabiya</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="cruise_group_2_name" class="form-label">Group 2 Name <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('cruise_group_2_name') is-invalid @enderror"
+                                    id="cruise_group_2_name" name="cruise_group_2_name"
+                                    value="{{ old('cruise_group_2_name', $group2Name) }}" required>
+                                @error('cruise_group_2_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="cruise_group_2_slug" class="form-label">Group 2 Slug</label>
+                                <input type="text" class="form-control @error('cruise_group_2_slug') is-invalid @enderror"
+                                    id="cruise_group_2_slug" name="cruise_group_2_slug"
+                                    value="{{ old('cruise_group_2_slug', $group2Slug) }}">
+                                <small class="text-muted">Leave empty to auto-generate from name. Current: <code>{{ $group2Slug }}</code></small>
+                                @error('cruise_group_2_slug')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Group 3: Grand Nile Cruises --}}
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h6 class="mb-0">Group 3: Grand Nile Cruises</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="cruise_group_3_name" class="form-label">Group 3 Name <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('cruise_group_3_name') is-invalid @enderror"
+                                    id="cruise_group_3_name" name="cruise_group_3_name"
+                                    value="{{ old('cruise_group_3_name', $group3Name) }}" required>
+                                @error('cruise_group_3_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3">
+                                <label for="cruise_group_3_slug" class="form-label">Group 3 Slug</label>
+                                <input type="text" class="form-control @error('cruise_group_3_slug') is-invalid @enderror"
+                                    id="cruise_group_3_slug" name="cruise_group_3_slug"
+                                    value="{{ old('cruise_group_3_slug', $group3Slug) }}">
+                                <small class="text-muted">Leave empty to auto-generate from name. Current: <code>{{ $group3Slug }}</code></small>
+                                @error('cruise_group_3_slug')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-3">
