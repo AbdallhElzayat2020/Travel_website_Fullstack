@@ -22,12 +22,15 @@ class HomeController extends Controller
             ->orderBy('sort_order')
             ->get();
 
-        $cruiseExperiences = CruiseExperience::active()
-            ->with('images', 'cruiseGroup')
-            ->orderBy('sort_order')
-            ->latest()
+        // Get cruise experiences from shared data (already loaded by SharedDataServiceProvider)
+        // Take first 2, ordered by sort_order then latest created_at
+        $sharedCruiseExperiences = app('shared.data')['cruiseExperiences'];
+        $cruiseExperiences = $sharedCruiseExperiences
+            ->sortBy(function ($cruise) {
+                return [$cruise->sort_order, -$cruise->created_at->timestamp];
+            })
             ->take(2)
-            ->get();
+            ->values();
 
         $blogs = Blog::active()
             ->published()
