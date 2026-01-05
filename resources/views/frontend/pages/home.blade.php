@@ -136,6 +136,11 @@
                                  style="background: linear-gradient(134deg, #8b7138 18%, rgba(139, 113, 56, 0) 100%);"></div>
                             <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
                                 <div>
+                                    @if($cruise->cruiseGroup)
+                                        <p class="text-white text-xs md:text-sm opacity-80 mb-1">
+                                            {{ $cruise->cruiseGroup->name }}
+                                        </p>
+                                    @endif
                                     <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
                                         <a href="{{ $cruiseUrl }}"
                                            class="hover:text-[#f9e600] transition duration-200">
