@@ -126,13 +126,9 @@
                                 ? asset('uploads/cruise-experiences/' . $firstImage->image)
                                 : asset('assets/frontend/assets/images/inspire-01.png');
 
-                            // Determine route based on group_key
-                            $routeName = match($cruise->group_key ?? 'dahabiya') {
-                                'dahabiya' => 'cruise-group-1.show',
-                                'ultra' => 'cruise-group-2.show',
-                                'grand' => 'cruise-group-3.show',
-                                default => 'cruise-group-1.show',
-                            };
+                            // Determine URL based on cruiseGroup relationship
+                            $cruiseGroupSlug = $cruise->cruiseGroup ? $cruise->cruiseGroup->slug : ($cruise->group_key ?? 'dahabiya-cruises');
+                            $cruiseUrl = '/' . $cruiseGroupSlug . '/' . $cruise->slug;
                         @endphp
                         <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
                              style="background-image: url('{{ $offerCover }}');">
@@ -141,7 +137,7 @@
                             <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
                                 <div>
                                     <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
-                                        <a href="{{ route($routeName, $cruise->slug) }}"
+                                        <a href="{{ $cruiseUrl }}"
                                            class="hover:text-[#f9e600] transition duration-200">
                                             {!! $cruise->title !!}
                                         </a>
@@ -153,7 +149,7 @@
                                     @endif
                                 </div>
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <a href="{{ route($routeName, $cruise->slug) }}"
+                                    <a href="{{ $cruiseUrl }}"
                                        class="ml-auto border border-white text-sm text-white font-semibold py-2 px-4 rounded-[200px] transition duration-200 hover:bg-[#8b7138] hover:border-[#8b7138]">
                                         View Details
                                     </a>
@@ -185,73 +181,35 @@
             <div class="relative">
                 <div class="swiper top-destination-swipper">
                     <div class="swiper-wrapper">
-                        {{-- Group 1: Dahabiya Cruises --}}
-                        @if ($sharedCruiseGroup1Experiences->count())
-                            @php
-                                $group1FirstImage = $sharedCruiseGroup1Experiences->first()->images->first();
-                                $group1Cover = $group1FirstImage
-                                    ? asset('uploads/cruise-experiences/' . $group1FirstImage->image)
-                                    : asset('assets/frontend/assets/images/destination-01.png');
-                            @endphp
-                            <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
-                                <img src="{{ $group1Cover }}"
-                                     alt="{{ $cruiseGroup1Name }}"
-                                     class="absolute inset-0 z-0 object-cover w-full h-full"/>
-                                <div
-                                    class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                                </div>
-                                <a href="{{ route('cruise-group-1.index') }}" class="absolute inset-0 z-10">
-                                    <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
-                                        {{ $cruiseGroup1Name }}
-                                    </h2>
-                                </a>
-                            </div>
-                        @endif
-
-                        {{-- Group 2: Ultra Deluxe Dahabiya --}}
-                        @if ($sharedCruiseGroup2Experiences->count())
-                            @php
-                                $group2FirstImage = $sharedCruiseGroup2Experiences->first()->images->first();
-                                $group2Cover = $group2FirstImage
-                                    ? asset('uploads/cruise-experiences/' . $group2FirstImage->image)
-                                    : asset('assets/frontend/assets/images/destination-01.png');
-                            @endphp
-                            <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
-                                <img src="{{ $group2Cover }}"
-                                     alt="{{ $cruiseGroup2Name }}"
-                                     class="absolute inset-0 z-0 object-cover w-full h-full"/>
-                                <div
-                                    class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                                </div>
-                                <a href="{{ route('cruise-group-2.index') }}" class="absolute inset-0 z-10">
-                                    <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
-                                        {{ $cruiseGroup2Name }}
-                                    </h2>
-                                </a>
-                            </div>
-                        @endif
-
-                        {{-- Group 3: Grand Nile Cruises --}}
-                        @if ($sharedCruiseGroup3Experiences->count())
-                            @php
-                                $group3FirstImage = $sharedCruiseGroup3Experiences->first()->images->first();
-                                $group3Cover = $group3FirstImage
-                                    ? asset('uploads/cruise-experiences/' . $group3FirstImage->image)
-                                    : asset('assets/frontend/assets/images/destination-01.png');
-                            @endphp
-                            <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
-                                <img src="{{ $group3Cover }}"
-                                     alt="{{ $cruiseGroup3Name }}"
-                                     class="absolute inset-0 z-0 object-cover w-full h-full"/>
-                                <div
-                                    class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
-                                </div>
-                                <a href="{{ route('cruise-group-3.index') }}" class="absolute inset-0 z-10">
-                                    <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
-                                        {{ $cruiseGroup3Name }}
-                                    </h2>
-                                </a>
-                            </div>
+                        {{-- Cruise Groups (Dynamic) --}}
+                        @if(isset($sharedCruiseGroupsWithExperiences) && count($sharedCruiseGroupsWithExperiences) > 0)
+                            @foreach($sharedCruiseGroupsWithExperiences as $groupData)
+                                @php
+                                    $group = $groupData['group'];
+                                    $experiences = $groupData['experiences'];
+                                @endphp
+                                @if($experiences->count() > 0)
+                                    @php
+                                        $firstImage = $experiences->first()->images->first();
+                                        $groupCover = $firstImage
+                                            ? asset('uploads/cruise-experiences/' . $firstImage->image)
+                                            : asset('assets/frontend/assets/images/destination-01.png');
+                                    @endphp
+                                    <div class="swiper-slide relative min-h-[400px] rounded-2xl overflow-hidden">
+                                        <img src="{{ $groupCover }}"
+                                             alt="{{ $group->name }}"
+                                             class="absolute inset-0 z-0 object-cover w-full h-full"/>
+                                        <div
+                                            class="absolute inset-0 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b before:from-[#00000008] before:to-[#000] before:z-[1] opacity-60">
+                                        </div>
+                                        <a href="/{{ $group->slug }}" class="absolute inset-0 z-10">
+                                            <h2 class="text-white font-bold text-[32px] absolute bottom-6 left-6">
+                                                {{ $group->name }}
+                                            </h2>
+                                        </a>
+                                    </div>
+                                @endif
+                            @endforeach
                         @endif
 
                         {{-- Tour Egypt Packages Category --}}

@@ -33,7 +33,8 @@ class DatabaseSeeder extends Seeder
             BlogSeeder::class,
             GallerySeeder::class,
             PageSeeder::class,
-            CruiseExperienceSeeder::class,
+            CruiseGroupSeeder::class, // Must be before CruiseExperienceSeeder
+        // CruiseExperienceSeeder::class,
         ]);
     }
 }

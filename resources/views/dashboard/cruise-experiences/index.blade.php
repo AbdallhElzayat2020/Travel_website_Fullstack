@@ -10,31 +10,12 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">Cruises Page</h5>
-            <a href="{{ route('admin.cruise-experiences.create', ['group_key' => $groupKey ?? 'dahabiya']) }}" class="btn btn-primary">
+            <a href="{{ route('admin.cruise-experiences.create', $cruiseGroupId ? ['cruise_group_id' => $cruiseGroupId] : []) }}" class="btn btn-primary">
                 <i class="ti ti-plus me-1"></i>
                 Add New Cruise Page
             </a>
         </div>
         <div class="card-body">
-            {{-- Filter by Group --}}
-            <div class="mb-3">
-                <form method="GET" action="{{ route('admin.cruise-experiences.index') }}" class="d-flex gap-2 align-items-end">
-                    <div class="flex-grow-1">
-                        <label for="group_key" class="form-label">Filter by Group</label>
-                        <select name="group_key" id="group_key" class="form-select" onchange="this.form.submit()">
-                            <option value="dahabiya" {{ ($groupKey ?? 'dahabiya') == 'dahabiya' ? 'selected' : '' }}>
-                                Dahabiya Cruises
-                            </option>
-                            <option value="ultra" {{ ($groupKey ?? 'dahabiya') == 'ultra' ? 'selected' : '' }}>
-                                Ultra Deluxe Dahabiya
-                            </option>
-                            <option value="grand" {{ ($groupKey ?? 'dahabiya') == 'grand' ? 'selected' : '' }}>
-                                Grand Nile Cruises
-                            </option>
-                        </select>
-                    </div>
-                </form>
-            </div>
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible" role="alert">
                     {{ session('success') }}
@@ -68,14 +49,10 @@
                             <tr>
                                 <td>{{ $experience->id }}</td>
                                 <td>
-                                    @if($experience->group_key == 'dahabiya')
-                                        <span class="badge bg-label-info">Dahabiya</span>
-                                    @elseif($experience->group_key == 'ultra')
-                                        <span class="badge bg-label-warning">Ultra</span>
-                                    @elseif($experience->group_key == 'grand')
-                                        <span class="badge bg-label-success">Grand</span>
+                                    @if($experience->cruiseGroup)
+                                        <span class="badge bg-label-info">{{ $experience->cruiseGroup->name }}</span>
                                     @else
-                                        <span class="badge bg-label-secondary">{{ $experience->group_key }}</span>
+                                        <span class="badge bg-label-secondary">{{ $experience->group_key ?? 'N/A' }}</span>
                                     @endif
                                 </td>
                                 <td>{{ Str::limit($experience->title, 60) }}</td>
@@ -101,7 +78,7 @@
                                             class="btn btn-sm btn-label-info">
                                             <i class="ti ti-eye"></i>
                                         </a>
-                                        <a href="{{ route('admin.cruise-experiences.edit', $experience->id) }}?group_key={{ $experience->group_key }}"
+                                        <a href="{{ route('admin.cruise-experiences.edit', $experience->id) }}"
                                             class="btn btn-sm btn-label-primary">
                                             <i class="ti ti-edit"></i>
                                         </a>

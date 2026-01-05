@@ -148,20 +148,17 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="mb-3">
-                            <label for="group_key" class="form-label">Cruise Group <span class="text-danger">*</span></label>
-                            <select name="group_key" id="group_key"
-                                class="form-select @error('group_key') is-invalid @enderror" required>
-                                <option value="dahabiya" {{ old('group_key', $experience->group_key ?? 'dahabiya') == 'dahabiya' ? 'selected' : '' }}>
-                                    Dahabiya Cruises
-                                </option>
-                                <option value="ultra" {{ old('group_key', $experience->group_key ?? 'dahabiya') == 'ultra' ? 'selected' : '' }}>
-                                    Ultra Deluxe Dahabiya
-                                </option>
-                                <option value="grand" {{ old('group_key', $experience->group_key ?? 'dahabiya') == 'grand' ? 'selected' : '' }}>
-                                    Grand Nile Cruises
-                                </option>
+                            <label for="cruise_group_id" class="form-label">Cruise Group <span class="text-danger">*</span></label>
+                            <select name="cruise_group_id" id="cruise_group_id"
+                                class="form-select @error('cruise_group_id') is-invalid @enderror" required>
+                                <option value="">Select a Cruise Group</option>
+                                @foreach($cruiseGroups as $cruiseGroup)
+                                    <option value="{{ $cruiseGroup->id }}" {{ old('cruise_group_id', $experience->cruise_group_id) == $cruiseGroup->id ? 'selected' : '' }}>
+                                        {{ $cruiseGroup->name }}
+                                    </option>
+                                @endforeach
                             </select>
-                            @error('group_key')
+                            @error('cruise_group_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

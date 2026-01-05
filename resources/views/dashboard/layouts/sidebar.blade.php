@@ -85,38 +85,55 @@
                 </ul>
             </li>
 
-            {{-- Cruise Experiences Groups --}}
+            {{-- Dahabiya & Cruises --}}
             @php
-                $currentGroupKey = request()->get('group_key', 'dahabiya');
+                $currentCruiseGroupId = request()->get('cruise_group_id');
+                $currentGroupKey = request()->get('group_key');
                 $isCruiseExperiencesActive = request()->routeIs('admin.cruise-experiences.*');
+                $isCruiseGroupsActive = request()->routeIs('admin.cruise-groups.*');
+                $isDahabiyaCruisesActive = $isCruiseExperiencesActive || $isCruiseGroupsActive;
+
+                // Determine current active group
+                if ($currentCruiseGroupId) {
+                    $currentGroup = isset($cruiseGroups) ? $cruiseGroups->firstWhere('id', $currentCruiseGroupId) : null;
+                    $currentGroupKey = $currentGroup ? $currentGroup->group_key : null;
+                } elseif ($currentGroupKey && isset($cruiseGroups)) {
+                    $currentGroup = $cruiseGroups->firstWhere('group_key', $currentGroupKey);
+                } else {
+                    $currentGroup = isset($cruiseGroups) ? $cruiseGroups->first() : null;
+                    $currentGroupKey = $currentGroup ? $currentGroup->group_key : null;
+                }
             @endphp
-            <li class="menu-item {{ $isCruiseExperiencesActive ? 'active open' : '' }}">
+            <li class="menu-item {{ $isDahabiyaCruisesActive ? 'active open' : '' }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="menu-icon tf-icons ti ti-ship"></i>
                     <div data-i18n="Dahabiya & Cruises">Dahabiya & Cruises</div>
                 </a>
                 <ul class="menu-sub">
-                    <li
-                        class="menu-item {{ $isCruiseExperiencesActive && $currentGroupKey == 'dahabiya' ? 'active' : '' }}">
-                        <a href="{{ route('admin.cruise-experiences.index', ['group_key' => 'dahabiya']) }}"
-                            class="menu-link">
-                            <div data-i18n="Dahabiya Cruises">Dahabiya Cruises</div>
+                    {{-- Cruise Groups Management --}}
+                    <li class="menu-item {{ $isCruiseGroupsActive ? 'active' : '' }}">
+                        <a href="{{ route('admin.cruise-groups.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-folder me-2"></i>
+                            <div data-i18n="Cruise Groups">Cruise Groups</div>
                         </a>
                     </li>
-                    <li
-                        class="menu-item {{ $isCruiseExperiencesActive && $currentGroupKey == 'ultra' ? 'active' : '' }}">
-                        <a href="{{ route('admin.cruise-experiences.index', ['group_key' => 'ultra']) }}"
-                            class="menu-link">
-                            <div data-i18n="Ultra Deluxe Dahabiya">Ultra Deluxe Dahabiya</div>
-                        </a>
-                    </li>
-                    <li
-                        class="menu-item {{ $isCruiseExperiencesActive && $currentGroupKey == 'grand' ? 'active' : '' }}">
-                        <a href="{{ route('admin.cruise-experiences.index', ['group_key' => 'grand']) }}"
-                            class="menu-link">
-                            <div data-i18n="Grand Nile Cruises">Grand Nile Cruises</div>
-                        </a>
-                    </li>
+
+                    {{-- Cruise Experiences by Group --}}
+                    @if(isset($cruiseGroups) && $cruiseGroups->count() > 0)
+                        @foreach($cruiseGroups as $group)
+                            @php
+                                $isActive = $isCruiseExperiencesActive &&
+                                    (($currentGroupKey && $currentGroupKey == $group->group_key) ||
+                                     ($currentCruiseGroupId && $currentCruiseGroupId == $group->id));
+                            @endphp
+                            <li class="menu-item {{ $isActive ? 'active' : '' }}">
+                                <a href="{{ route('admin.cruise-experiences.index', ['cruise_group_id' => $group->id]) }}"
+                                    class="menu-link">
+                                    <div data-i18n="{{ $group->name }}">{{ $group->name }}</div>
+                                </a>
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
             </li>
 

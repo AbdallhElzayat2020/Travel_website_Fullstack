@@ -2,6 +2,7 @@
 
 namespace App\Http\View\Composers;
 
+use App\Models\CruiseGroup;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
@@ -15,8 +16,14 @@ class SidebarComposer
      */
     public function compose(View $view): void
     {
-        // No data needed for sidebar anymore
-        // Statistics are handled in Dashboard HomeController
+        // Load cruise groups dynamically from database (cached)
+        $cruiseGroups = Cache::remember('cruise_groups_sidebar', 3600, function () {
+            return CruiseGroup::active()
+                ->orderBy('sort_order')
+                ->get();
+        });
+
+        $view->with('cruiseGroups', $cruiseGroups);
     }
 }
 

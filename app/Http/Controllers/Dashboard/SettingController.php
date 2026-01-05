@@ -23,30 +23,6 @@ class SettingController extends Controller
         // Main menu name
         $mainCruisesMenuName = $settings['main_cruises_menu_name'] ?? 'Dahabiya & Cruises';
 
-        // Group 1: Dahabiya Cruises
-        $group1Name = $settings['cruise_group_1_name'] ?? 'Dahabiya Cruises';
-        $group1Slug = $settings['cruise_group_1_slug'] ?? null;
-        if (!$group1Slug) {
-            $group1Slug = Str::slug($group1Name);
-            Setting::set('cruise_group_1_slug', $group1Slug);
-        }
-
-        // Group 2: Ultra Deluxe Dahabiya
-        $group2Name = $settings['cruise_group_2_name'] ?? 'Ultra Deluxe Dahabiya';
-        $group2Slug = $settings['cruise_group_2_slug'] ?? null;
-        if (!$group2Slug) {
-            $group2Slug = Str::slug($group2Name);
-            Setting::set('cruise_group_2_slug', $group2Slug);
-        }
-
-        // Group 3: Grand Nile Cruises
-        $group3Name = $settings['cruise_group_3_name'] ?? 'Grand Nile Cruises';
-        $group3Slug = $settings['cruise_group_3_slug'] ?? null;
-        if (!$group3Slug) {
-            $group3Slug = Str::slug($group3Name);
-            Setting::set('cruise_group_3_slug', $group3Slug);
-        }
-
         $phone = $settings['phone'] ?? '+20 101 515 7744 / +20 101 515 7746';
         $email = $settings['email'] ?? 'info@grandnilecruises.com';
         $address = $settings['address'] ?? 'Sarayah Zayed 2 Building, Apartment 1,<br>8th District<br>Sheikh Zayed City - Giza';
@@ -55,12 +31,6 @@ class SettingController extends Controller
 
         return view('dashboard.settings.edit', compact(
             'mainCruisesMenuName',
-            'group1Name',
-            'group1Slug',
-            'group2Name',
-            'group2Slug',
-            'group3Name',
-            'group3Slug',
             'phone',
             'email',
             'address',
@@ -76,12 +46,6 @@ class SettingController extends Controller
     {
         $validated = $request->validate([
             'main_cruises_menu_name' => 'required|string|max:255',
-            'cruise_group_1_name' => 'required|string|max:255',
-            'cruise_group_1_slug' => 'nullable|string|max:255|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
-            'cruise_group_2_name' => 'required|string|max:255',
-            'cruise_group_2_slug' => 'nullable|string|max:255|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
-            'cruise_group_3_name' => 'required|string|max:255',
-            'cruise_group_3_slug' => 'nullable|string|max:255|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
             'phone' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'address' => 'required|string',
@@ -123,27 +87,6 @@ class SettingController extends Controller
 
         // Save cruise groups settings
         Setting::set('main_cruises_menu_name', $validated['main_cruises_menu_name']);
-
-        // Group 1
-        Setting::set('cruise_group_1_name', $validated['cruise_group_1_name']);
-        $group1Slug = !empty($validated['cruise_group_1_slug'])
-            ? Str::slug($validated['cruise_group_1_slug'])
-            : Str::slug($validated['cruise_group_1_name']);
-        Setting::set('cruise_group_1_slug', $group1Slug);
-
-        // Group 2
-        Setting::set('cruise_group_2_name', $validated['cruise_group_2_name']);
-        $group2Slug = !empty($validated['cruise_group_2_slug'])
-            ? Str::slug($validated['cruise_group_2_slug'])
-            : Str::slug($validated['cruise_group_2_name']);
-        Setting::set('cruise_group_2_slug', $group2Slug);
-
-        // Group 3
-        Setting::set('cruise_group_3_name', $validated['cruise_group_3_name']);
-        $group3Slug = !empty($validated['cruise_group_3_slug'])
-            ? Str::slug($validated['cruise_group_3_slug'])
-            : Str::slug($validated['cruise_group_3_name']);
-        Setting::set('cruise_group_3_slug', $group3Slug);
 
         Setting::set('phone', $validated['phone']);
         Setting::set('email', $validated['email']);

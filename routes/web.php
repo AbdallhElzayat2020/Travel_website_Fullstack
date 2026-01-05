@@ -30,34 +30,26 @@ Route::get('/category/{slug}', [TourController::class, 'byCategory'])
     ->name('tours.category');
 Route::get('/tours/{slug}', [TourController::class, 'show'])
     ->name('tours.show');
-// Cruise Groups routes - slugs will be handled dynamically via route helper
-$group1Slug = \App\Models\Setting::get('cruise_group_1_slug', 'dahabiya-cruises');
-$group2Slug = \App\Models\Setting::get('cruise_group_2_slug', 'ultra-deluxe-dahabiya');
-$group3Slug = \App\Models\Setting::get('cruise_group_3_slug', 'grand-nile-cruises');
-
-// Group 1: Dahabiya Cruises
-Route::get('/' . $group1Slug, [CruiseExperienceController::class, 'index'])
-    ->defaults('group_key', 'dahabiya')
-    ->name('cruise-group-1.index');
-Route::get('/' . $group1Slug . '/{slug}', [CruiseExperienceController::class, 'show'])
-    ->defaults('group_key', 'dahabiya')
-    ->name('cruise-group-1.show');
-
-// Group 2: Ultra Deluxe Dahabiya
-Route::get('/' . $group2Slug, [CruiseExperienceController::class, 'index'])
-    ->defaults('group_key', 'ultra')
-    ->name('cruise-group-2.index');
-Route::get('/' . $group2Slug . '/{slug}', [CruiseExperienceController::class, 'show'])
-    ->defaults('group_key', 'ultra')
-    ->name('cruise-group-2.show');
-
-// Group 3: Grand Nile Cruises
-Route::get('/' . $group3Slug, [CruiseExperienceController::class, 'index'])
-    ->defaults('group_key', 'grand')
-    ->name('cruise-group-3.index');
-Route::get('/' . $group3Slug . '/{slug}', [CruiseExperienceController::class, 'show'])
-    ->defaults('group_key', 'grand')
-    ->name('cruise-group-3.show');
+// Cruise Groups routes - dynamically loaded from database
+try {
+    $cruiseGroups = \App\Models\CruiseGroup::active()->orderBy('sort_order')->get();
+    foreach ($cruiseGroups as $group) {
+        Route::get('/' . $group->slug, [CruiseExperienceController::class, 'index'])
+            ->defaults('group_key', $group->group_key)
+            ->name('cruise-group-' . $group->id . '.index');
+        Route::get('/' . $group->slug . '/{slug}', [CruiseExperienceController::class, 'show'])
+            ->defaults('group_key', $group->group_key)
+            ->name('cruise-group-' . $group->id . '.show');
+    }
+} catch (\Exception $e) {
+    // Fallback routes if database is not ready
+    Route::get('/dahabiya-cruises', [CruiseExperienceController::class, 'index'])
+        ->defaults('group_key', 'dahabiya')
+        ->name('cruise-group-1.index');
+    Route::get('/dahabiya-cruises/{slug}', [CruiseExperienceController::class, 'show'])
+        ->defaults('group_key', 'dahabiya')
+        ->name('cruise-group-1.show');
+}
 Route::get('/about-us', [PageController::class, 'about'])
     ->name('about-us');
 Route::get('/faqs', [PageController::class, 'faqs'])

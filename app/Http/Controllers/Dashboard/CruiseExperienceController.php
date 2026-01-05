@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\CruiseExperience;
 use App\Models\CruiseExperienceImage;
+use App\Models\CruiseGroup;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -19,16 +20,41 @@ class CruiseExperienceController extends Controller
      */
     public function index(Request $request)
     {
-        $groupKey = $request->get('group_key', 'dahabiya');
+        // Support both cruise_group_id and group_key for backward compatibility
+        $cruiseGroupId = $request->get('cruise_group_id');
+        $groupKey = $request->get('group_key');
 
-        $experiences = CruiseExperience::with('tours')
-            ->byGroup($groupKey)
-            ->orderBy('sort_order')
+        $query = CruiseExperience::with('tours', 'cruiseGroup');
+
+        if ($cruiseGroupId) {
+            $query->where('cruise_group_id', $cruiseGroupId);
+            $cruiseGroup = \App\Models\CruiseGroup::find($cruiseGroupId);
+            $groupKey = $cruiseGroup ? $cruiseGroup->group_key : null;
+        } elseif ($groupKey) {
+            $query->byGroup($groupKey);
+            // Get cruise_group_id from group_key
+            $cruiseGroup = \App\Models\CruiseGroup::where('group_key', $groupKey)->first();
+            $cruiseGroupId = $cruiseGroup ? $cruiseGroup->id : null;
+        } else {
+            // Default to first active group
+            $firstGroup = \App\Models\CruiseGroup::active()->orderBy('sort_order')->first();
+            if ($firstGroup) {
+                $query->where('cruise_group_id', $firstGroup->id);
+                $groupKey = $firstGroup->group_key;
+                $cruiseGroupId = $firstGroup->id;
+            } else {
+                $query->byGroup('dahabiya');
+                $groupKey = 'dahabiya';
+                $cruiseGroupId = null;
+            }
+        }
+
+        $experiences = $query->orderBy('sort_order')
             ->latest()
             ->paginate(15)
-            ->appends(['group_key' => $groupKey]);
+            ->appends($request->query());
 
-        return view('dashboard.cruise-experiences.index', compact('experiences', 'groupKey'));
+        return view('dashboard.cruise-experiences.index', compact('experiences', 'groupKey', 'cruiseGroupId'));
     }
 
     /**
@@ -36,12 +62,12 @@ class CruiseExperienceController extends Controller
      */
     public function create(Request $request)
     {
-        $groupKey = $request->get('group_key', 'dahabiya');
+        $cruiseGroups = CruiseGroup::active()->orderBy('sort_order')->get();
         $tours = Tour::active()
             ->orderBy('title')
-            ->paginate(15);
+            ->get();
 
-        return view('dashboard.cruise-experiences.create', compact('tours', 'groupKey'));
+        return view('dashboard.cruise-experiences.create', compact('tours', 'cruiseGroups'));
     }
 
     /**
@@ -51,7 +77,7 @@ class CruiseExperienceController extends Controller
     {
         try {
             $validated = $request->validate([
-                'group_key' => 'required|in:dahabiya,ultra,grand',
+                'cruise_group_id' => 'required|exists:cruise_groups,id',
                 'title' => 'required|string|max:255|unique:cruise_experiences,title',
                 'slug' => 'nullable|string|max:255|unique:cruise_experiences,slug|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 'short_description' => 'nullable|string',
@@ -73,6 +99,10 @@ class CruiseExperienceController extends Controller
             } else {
                 $validated['slug'] = Str::slug($validated['slug']);
             }
+
+            // Get group_key from cruise_group
+            $cruiseGroup = CruiseGroup::findOrFail($validated['cruise_group_id']);
+            $validated['group_key'] = $cruiseGroup->group_key;
 
             $experience = CruiseExperience::create($validated);
 
@@ -125,12 +155,12 @@ class CruiseExperienceController extends Controller
      */
     public function edit(Request $request, string $id)
     {
-        $experience = CruiseExperience::with('images', 'tours')->findOrFail($id);
-        $groupKey = $request->get('group_key', $experience->group_key ?? 'dahabiya');
+        $experience = CruiseExperience::with('images', 'tours', 'cruiseGroup')->findOrFail($id);
+        $cruiseGroups = CruiseGroup::active()->orderBy('sort_order')->get();
         $tours = Tour::active()->orderBy('title')->get();
         $selectedTourIds = $experience->tours->pluck('id')->toArray();
 
-        return view('dashboard.cruise-experiences.edit', compact('experience', 'tours', 'selectedTourIds', 'groupKey'));
+        return view('dashboard.cruise-experiences.edit', compact('experience', 'tours', 'selectedTourIds', 'cruiseGroups'));
     }
 
     /**
@@ -142,7 +172,7 @@ class CruiseExperienceController extends Controller
             $experience = CruiseExperience::with('images')->findOrFail($id);
 
             $validated = $request->validate([
-                'group_key' => 'required|in:dahabiya,ultra,grand',
+                'cruise_group_id' => 'required|exists:cruise_groups,id',
                 'title' => 'required|string|max:255|unique:cruise_experiences,title,' . $id,
                 'slug' => 'nullable|string|max:255|unique:cruise_experiences,slug,' . $id . '|regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/',
                 'short_description' => 'nullable|string',
@@ -164,6 +194,10 @@ class CruiseExperienceController extends Controller
             if (!empty($validated['slug'])) {
                 $validated['slug'] = Str::slug($validated['slug']);
             }
+
+            // Get group_key from cruise_group
+            $cruiseGroup = CruiseGroup::findOrFail($validated['cruise_group_id']);
+            $validated['group_key'] = $cruiseGroup->group_key;
 
             $experience->update($validated);
 

@@ -14,40 +14,12 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         // List of allowed category slugs (only these will be kept)
-        $allowedSlugs = ['nile-cruises', 'dahbia-tours', 'tour-egypt-packages'];
+        $allowedSlugs = [ 'tour-egypt-packages'];
 
         // Delete all categories that are not in the allowed list
         Category::whereNotIn('slug', $allowedSlugs)->delete();
 
         $categories = [
-            [
-                'name' => 'Nile Cruises',
-                'slug' => 'nile-cruises',
-                'description' => '<p>Discover the magic of Egypt with our luxurious Nile cruise experiences. Sail through history on the world\'s longest river, visiting ancient temples, tombs, and breathtaking landscapes.</p>',
-                'image' => 'destination-01.png',
-                'status' => 'active',
-                'sort_order' => 1,
-                'grid_columns' => '4',
-                'header_background_color' => '#f8f9fa',
-                'header_text_color' => '#000000',
-                'card_style' => 'default',
-                'show_breadcrumb' => true,
-                'show_description' => true,
-            ],
-            [
-                'name' => 'Dahbia Tours',
-                'slug' => 'dahbia-tours',
-                'description' => '<p>Explore Egypt\'s most beautiful destinations with our curated Dahbia tours. From historical sites to modern attractions, experience the best of what Egypt has to offer.</p>',
-                'image' => 'destination-02.png',
-                'status' => 'active',
-                'sort_order' => 2,
-                'grid_columns' => '3',
-                'header_background_color' => '#ffffff',
-                'header_text_color' => '#000000',
-                'card_style' => 'modern',
-                'show_breadcrumb' => true,
-                'show_description' => true,
-            ],
             [
                 'name' => 'Tour Egypt Packages',
                 'slug' => 'tour-egypt-packages',

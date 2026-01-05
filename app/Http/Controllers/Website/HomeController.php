@@ -23,7 +23,7 @@ class HomeController extends Controller
             ->get();
 
         $cruiseExperiences = CruiseExperience::active()
-            ->with('images')
+            ->with('images', 'cruiseGroup')
             ->orderBy('sort_order')
             ->latest()
             ->take(2)

@@ -21,6 +21,7 @@ use App\Http\Controllers\Dashboard\{
     TourVariantController,
     GalleryController,
     CruiseExperienceController,
+    CruiseGroupController,
     PageController,
     AnnouncementController,
     BookingController,
@@ -86,6 +87,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     // Blogs Routes
     Route::resource('blogs', BlogController::class);
+
+    // Cruise Groups Routes
+    Route::resource('cruise-groups', CruiseGroupController::class);
 
     // Cruise Experiences Routes
     Route::resource('cruise-experiences', CruiseExperienceController::class);

@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useTailwind();
         Paginator::useBootstrapFive();
 
-        // Share unread contacts count with dashboard sidebar (using same cache key as HomeController)
+        // Share data with dashboard sidebar
         View::composer('dashboard.layouts.sidebar', function ($view) {
             // Use the same cache key to avoid duplicate queries
             $unreadContactsCount = Cache::get('unread_contacts_count');
@@ -37,5 +37,8 @@ class AppServiceProvider extends ServiceProvider
             }
             $view->with('unreadContactsCount', $unreadContactsCount);
         });
+
+        // Use SidebarComposer for cruise groups
+        View::composer('dashboard.layouts.sidebar', \App\Http\View\Composers\SidebarComposer::class);
     }
 }

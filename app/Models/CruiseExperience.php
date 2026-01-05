@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
@@ -11,6 +12,7 @@ class CruiseExperience extends Model
 {
 
     protected $fillable = [
+        'cruise_group_id',
         'group_key',
         'title',
         'slug',
@@ -54,6 +56,14 @@ class CruiseExperience extends Model
     public function scopeByGroup($query, string $groupKey)
     {
         return $query->where('group_key', $groupKey);
+    }
+
+    /**
+     * The cruise group this experience belongs to.
+     */
+    public function cruiseGroup(): BelongsTo
+    {
+        return $this->belongsTo(CruiseGroup::class);
     }
 
     /**
