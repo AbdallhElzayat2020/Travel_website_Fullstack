@@ -31,17 +31,9 @@ Route::get('/category/{slug}', [TourController::class, 'byCategory'])
 Route::get('/tours/{slug}', [TourController::class, 'show'])
     ->name('tours.show');
 // Cruise Groups routes - slugs will be handled dynamically via route helper
-// Use try-catch to ensure routes are always registered even if settings are missing
-try {
-    $group1Slug = \App\Models\Setting::get('cruise_group_1_slug', 'dahabiya-cruises');
-    $group2Slug = \App\Models\Setting::get('cruise_group_2_slug', 'ultra-deluxe-dahabiya');
-    $group3Slug = \App\Models\Setting::get('cruise_group_3_slug', 'grand-nile-cruises');
-} catch (\Exception $e) {
-    // Fallback to defaults if settings table doesn't exist or query fails
-    $group1Slug = 'dahabiya-cruises';
-    $group2Slug = 'ultra-deluxe-dahabiya';
-    $group3Slug = 'grand-nile-cruises';
-}
+$group1Slug = \App\Models\Setting::get('cruise_group_1_slug', 'dahabiya-cruises');
+$group2Slug = \App\Models\Setting::get('cruise_group_2_slug', 'ultra-deluxe-dahabiya');
+$group3Slug = \App\Models\Setting::get('cruise_group_3_slug', 'grand-nile-cruises');
 
 // Group 1: Dahabiya Cruises
 Route::get('/' . $group1Slug, [CruiseExperienceController::class, 'index'])
