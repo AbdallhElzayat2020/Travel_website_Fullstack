@@ -26,8 +26,7 @@ class HomeController extends Controller
         // Get only those with sort_order = 1 or 2
         $sharedCruiseExperiences = app('shared.data')['cruiseExperiences'];
         $cruiseExperiences = $sharedCruiseExperiences
-            ->where('sort_order', 1)
-            ->merge($sharedCruiseExperiences->where('sort_order', 2))
+            ->whereIn('sort_order', [1, 2])
             ->sortBy('sort_order')
             ->values();
 
