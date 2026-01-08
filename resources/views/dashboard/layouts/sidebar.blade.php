@@ -87,13 +87,22 @@
                         </ul>
                     </li>
 
-                    {{-- Dahabiya & Cruises --}}
+                    {{-- Cruises Main Categories --}}
+                    @php
+            $isCruiseGroupsActive = request()->routeIs('admin.cruise-groups.*');
+                    @endphp
+                    <li class="menu-item {{ $isCruiseGroupsActive ? 'active' : '' }}">
+                        <a href="{{ route('admin.cruise-groups.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons ti ti-ship"></i>
+                            <div data-i18n="Cruises Main Categories">Cruises Main Categories</div>
+                        </a>
+                    </li>
+
+                    {{-- Cruises Sub Categories --}}
                     @php
             $currentCruiseGroupId = request()->get('cruise_group_id');
             $currentGroupKey = request()->get('group_key');
             $isCruiseExperiencesActive = request()->routeIs('admin.cruise-experiences.*');
-            $isCruiseGroupsActive = request()->routeIs('admin.cruise-groups.*');
-            $isDahabiyaCruisesActive = $isCruiseExperiencesActive || $isCruiseGroupsActive;
 
             // Determine current active group
             if ($currentCruiseGroupId) {
@@ -106,27 +115,18 @@
                 $currentGroupKey = $currentGroup ? $currentGroup->group_key : null;
             }
                     @endphp
-                    <li class="menu-item {{ $isDahabiyaCruisesActive ? 'active open' : '' }}">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons ti ti-ship"></i>
-                            <div data-i18n="Dahabiya & Cruises">Dahabiya & Cruises</div>
-                        </a>
-                        <ul class="menu-sub">
-                            {{-- Cruise Groups Management --}}
-                            <li class="menu-item {{ $isCruiseGroupsActive ? 'active' : '' }}">
-                                <a href="{{ route('admin.cruise-groups.index') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons ti ti-folder me-2"></i>
-                                    <div data-i18n="Cruises Main Categories">Cruises Main Categories</div>
-                                </a>
-                            </li>
-
-                            {{-- Cruise Experiences by Group --}}
-                            @if(isset($cruiseGroups) && $cruiseGroups->count() > 0)
+                    @if(isset($cruiseGroups) && $cruiseGroups->count() > 0)
+                        <li class="menu-item {{ $isCruiseExperiencesActive ? 'active open' : '' }}">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons ti ti-category"></i>
+                                <div data-i18n="Cruises Sub Categories">Cruises Sub Categories</div>
+                            </a>
+                            <ul class="menu-sub">
                                 @foreach($cruiseGroups as $group)
                                     @php
-                    $isActive = $isCruiseExperiencesActive &&
-                        (($currentGroupKey && $currentGroupKey == $group->group_key) ||
-                            ($currentCruiseGroupId && $currentCruiseGroupId == $group->id));
+                        $isActive = $isCruiseExperiencesActive &&
+                            (($currentGroupKey && $currentGroupKey == $group->group_key) ||
+                                ($currentCruiseGroupId && $currentCruiseGroupId == $group->id));
                                     @endphp
                                     <li class="menu-item {{ $isActive ? 'active' : '' }}">
                                         <a href="{{ route('admin.cruise-experiences.index', ['cruise_group_id' => $group->id]) }}"
@@ -135,9 +135,9 @@
                                         </a>
                                     </li>
                                 @endforeach
-                            @endif
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    @endif
 
                     {{-- Locations --}}
                     <li
