@@ -12,6 +12,8 @@ class CruiseGroup extends Model
         'name',
         'slug',
         'group_key',
+        'meta_title',
+        'meta_description',
         'sort_order',
         'status',
     ];

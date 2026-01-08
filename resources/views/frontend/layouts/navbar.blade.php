@@ -38,10 +38,10 @@
                         @endphp
                         @if($experiences->count() > 0)
                             <li class="relative group nav-father">
-                                <div class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp cursor-pointer">
+                                <a href="/{{ $group->slug }}" class="inline-flex items-center gap-1 py-2 transition-all duration-200 hover:text-green-zomp">
                                     <span class="hover:text-green-zomp">{{ $group->name }}</span>
                                     <i class="fa-solid fa-chevron-down text-xs text-dark-grey"></i>
-                                </div>
+                                </a>
                                 <div
                                     class="nav-wrapper lg:absolute lg:w-80 lg:left-0 lg:top-8 bg-white lg:shadow-custom lg:rounded-custom lg:opacity-0 lg:invisible lg:transition-all lg:group-hover:opacity-100 lg:group-hover:visible z-[999] border border-light-grey lg:border-none mt-2 lg:mt-0">
                                     <ul class="nav-menu nav-dropdown divide-y divide-light-grey">

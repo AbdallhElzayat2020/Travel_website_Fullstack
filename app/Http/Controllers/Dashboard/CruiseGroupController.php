@@ -41,6 +41,8 @@ class CruiseGroupController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:cruise_groups,slug',
             'group_key' => 'required|string|max:255|unique:cruise_groups,group_key|regex:/^[a-z0-9-]+$/',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:500',
             'sort_order' => 'nullable|integer|min:0',
             'status' => 'required|in:active,inactive',
         ]);
@@ -93,6 +95,8 @@ class CruiseGroupController extends Controller
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:cruise_groups,slug,' . $id,
             'group_key' => 'required|string|max:255|unique:cruise_groups,group_key,' . $id . '|regex:/^[a-z0-9-]+$/',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string|max:500',
             'sort_order' => 'nullable|integer|min:0',
             'status' => 'required|in:active,inactive',
         ]);

@@ -43,6 +43,26 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <label for="meta_title" class="form-label">Meta Title</label>
+                    <input type="text" class="form-control @error('meta_title') is-invalid @enderror" id="meta_title" name="meta_title"
+                        value="{{ old('meta_title', $group->meta_title) }}" maxlength="255" placeholder="SEO meta title for this cruise group">
+                    <small class="text-muted">Leave empty to use the group name as meta title</small>
+                    @error('meta_title')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="meta_description" class="form-label">Meta Description</label>
+                    <textarea class="form-control @error('meta_description') is-invalid @enderror" id="meta_description" name="meta_description"
+                        rows="3" maxlength="500" placeholder="SEO meta description for this cruise group">{{ old('meta_description', $group->meta_description) }}</textarea>
+                    <small class="text-muted">Recommended length: 150-160 characters for optimal SEO</small>
+                    @error('meta_description')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="status" class="form-label">Status <span class="text-danger">*</span></label>

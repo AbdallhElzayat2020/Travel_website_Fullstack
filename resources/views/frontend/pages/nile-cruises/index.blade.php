@@ -1,8 +1,8 @@
 @extends('frontend.layouts.master')
 
 @php
-    $metaTitle = 'Nile Cruises - ' . config('app.name', 'Travel Website');
-    $metaDescription = 'Discover our curated Nile cruise programs and experiences, with handpicked related tours for each cruise.';
+    $metaTitle = $cruiseGroup->meta_title ?? ($cruiseGroup->name . ' - ' . config('app.name', 'Travel Website'));
+    $metaDescription = $cruiseGroup->meta_description ?? ('Discover our curated ' . $cruiseGroup->name . ' programs and experiences, with handpicked related tours for each cruise.');
 @endphp
 
 @section('meta_title', $metaTitle)
@@ -17,72 +17,64 @@
                         <a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Home</a>
                     </li>
                     <span class="mx-1">/</span>
-                    <li><span class="text-dark-grey">Nile Cruises</span></li>
+                    <li><span class="text-dark-grey">{{ $cruiseGroup->name }}</span></li>
                 </ul>
             </nav>
-            <h1 class="text-black text-[32px] md:text-[40px] font-bold leading-[1.1em] mb-2">Nile Cruises</h1>
-            <p class="text-dark-grey max-w-2xl">
-                Explore our collection of Nile cruise journeys – each program comes with its own gallery, rich itinerary,
-                and carefully selected related tours.
-            </p>
+            <h1 class="text-black text-[32px] md:text-[40px] font-bold leading-[1.1em] mb-2">{{ $cruiseGroup->name }}</h1>
+            @if($cruiseGroup->description)
+                <div class="text-dark-grey max-w-2xl prose prose-sm">
+                    {!! $cruiseGroup->description !!}
+                </div>
+            @endif
         </div>
     </section>
 
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             @if($experiences->count())
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     @foreach($experiences as $experience)
                         @php
                             $firstImage = $experience->images->first();
-                            $cover = $firstImage
+                            $coverImage = $firstImage
                                 ? asset('uploads/cruise-experiences/' . $firstImage->image)
-                                : asset('assets/frontend/assets/images/destination-01.png');
-                            $short = $experience->short_description
-                                ? \Illuminate\Support\Str::limit(strip_tags($experience->short_description), 140)
+                                : asset('assets/frontend/assets/images/blogs/01.png');
+
+                            $shortDescription = $experience->short_description
+                                ? \Illuminate\Support\Str::limit(strip_tags($experience->short_description), 100)
                                 : null;
-                            $relatedToursCount = $experience->tours()->active()->count();
 
-                            // Determine route based on group_key
-                            $showRoute = match($experience->group_key ?? 'dahabiya') {
-                                'dahabiya' => 'cruise-group-1.show',
-                                'ultra' => 'cruise-group-2.show',
-                                'grand' => 'cruise-group-3.show',
-                                default => 'cruise-group-1.show',
-                            };
+                            // Generate URL using cruise group slug
+                            $cruiseUrl = '/' . $cruiseGroup->slug . '/' . $experience->slug;
                         @endphp
-                        <article
-                            class="group bg-white overflow-hidden rounded-2xl shadow-sm border border-light-grey flex flex-col">
-                            <div class="relative overflow-hidden">
-                                <a href="{{ route($showRoute, $experience->slug) }}">
-                                    <img src="{{ $cover }}" alt="{{ $experience->title }}"
-                                         class="w-full h-56 object-cover transition duration-300 group-hover:scale-105">
-                                </a>
-                            </div>
-                            <div class="p-4 flex flex-col flex-1">
-                                <h3
-                                    class="text-lg font-bold text-black mb-2 leading-snug group-hover:text-green-zomp transition">
-                                    <a href="{{ route($showRoute, $experience->slug) }}">
-                                        {{ $experience->title }}
+                        <article class="relative overflow-hidden transition duration-200">
+                            <div class="bg-white border rounded-2xl border-light-grey">
+                                <div class="relative overflow-hidden rounded-t-2xl">
+                                    <a href="{{ $cruiseUrl }}">
+                                        <img src="{{ $coverImage }}" alt="{{ $experience->title }}"
+                                            class="object-cover w-full h-auto transition duration-300 hover:scale-105">
                                     </a>
-                                </h3>
+                                </div>
+                                <div class="p-4">
+                                    <h4
+                                        class="mb-2 text-base font-bold text-black transition duration-200 line-clamp-2 hover:text-green-zomp">
+                                        <a href="{{ $cruiseUrl }}">{{ $experience->title }}</a>
+                                    </h4>
 
-                                @if($short)
-                                    <p class="text-sm text-dark-grey mb-4 flex-1">
-                                        {{ $short }}
-                                    </p>
-                                @endif
+                                    @if($shortDescription)
+                                        <p class="text-sm text-dark-grey mb-3 line-clamp-2">
+                                            {{ $shortDescription }}
+                                        </p>
+                                    @endif
 
-                                <div class="mt-auto flex items-center justify-between gap-2 pt-2 border-t border-light-grey">
-                                    <span class="text-xs font-medium text-grey uppercase tracking-wide">
-                                        {{ $relatedToursCount }} {{ \Illuminate\Support\Str::plural('Tour', $relatedToursCount) }}
-                                    </span>
-                                    <a href="{{ route($showRoute, $experience->slug) }}"
-                                       class="text-green-zomp text-sm font-semibold inline-flex items-center gap-1">
-                                        View details
-                                        <span class="iconify" data-icon="mdi:arrow-right" data-width="16"
-                                              data-height="16"></span>
-                                    </a>
+                                    <div class="h-px my-4 border-t border-light-grey"></div>
+
+                                    <div class="flex items-center justify-between gap-2">
+                                        <a href="{{ $cruiseUrl }}"
+                                            class="inline-flex items-center gap-1 text-sm font-semibold text-green-zomp transition duration-200 hover:text-green-zomp-hover">
+                                            View Details
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </article>
@@ -96,14 +88,13 @@
                             <span
                                 class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
                                 <span class="iconify text-dark-grey" data-icon="proicons:chevron-left" data-width="20"
-                                      data-height="20"></span>
+                                    data-height="20"></span>
                             </span>
                         @else
                             <a href="{{ $experiences->previousPageUrl() }}"
-                               class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">
-                                <span class="iconify text-dark-grey group-hover:!text-white"
-                                      data-icon="proicons:chevron-left" data-width="20"
-                                      data-height="20"></span>
+                                class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">
+                                <span class="iconify text-dark-grey group-hover:!text-white" data-icon="proicons:chevron-left"
+                                    data-width="20" data-height="20"></span>
                             </a>
                         @endif
 
@@ -118,7 +109,7 @@
                         {{-- First Page --}}
                         @if ($startPage > 1)
                             <a href="{{ $experiences->url(1) }}"
-                               class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">1</a>
+                                class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">1</a>
                             @if ($startPage > 2)
                                 <span
                                     class="text-dark-grey font-bold text-sm py-2 w-10 h-10 rounded-full flex items-center justify-center">...</span>
@@ -132,7 +123,7 @@
                                     class="font-bold text-sm bg-green-zomp text-white w-10 h-10 py-2 rounded-full flex items-center justify-center">{{ $page }}</span>
                             @else
                                 <a href="{{ $experiences->url($page) }}"
-                                   class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">{{ $page }}</a>
+                                    class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">{{ $page }}</a>
                             @endif
                         @endfor
 
@@ -143,33 +134,30 @@
                                     class="text-dark-grey font-bold text-sm py-2 w-10 h-10 rounded-full flex items-center justify-center">...</span>
                             @endif
                             <a href="{{ $experiences->url($lastPage) }}"
-                               class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">{{ $lastPage }}</a>
+                                class="border border-transparent text-dark-grey font-bold text-sm w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">{{ $lastPage }}</a>
                         @endif
 
                         {{-- Next Page Link --}}
                         @if ($experiences->hasMorePages())
                             <a href="{{ $experiences->nextPageUrl() }}"
-                               class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">
-                                <span class="iconify text-dark-grey group-hover:!text-white"
-                                      data-icon="proicons:chevron-right"
-                                      data-width="20" data-height="20"></span>
+                                class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center transition duration-200 hover:!border-green-zomp hover:!bg-green-zomp hover:!text-white">
+                                <span class="iconify text-dark-grey group-hover:!text-white" data-icon="proicons:chevron-right"
+                                    data-width="20" data-height="20"></span>
                             </a>
                         @else
                             <span
                                 class="group border border-grey text-grey w-10 h-10 py-2 rounded-full flex items-center justify-center opacity-50 cursor-not-allowed">
                                 <span class="iconify text-dark-grey" data-icon="proicons:chevron-right" data-width="20"
-                                      data-height="20"></span>
+                                    data-height="20"></span>
                             </span>
                         @endif
                     </nav>
                 @endif
             @else
                 <div class="p-6 text-center text-dark-grey bg-white rounded-2xl border border-light-grey">
-                    No Nile cruise programs are available at the moment.
+                    No cruise experiences are available in this group at the moment.
                 </div>
             @endif
         </div>
     </section>
 @endsection
-
-

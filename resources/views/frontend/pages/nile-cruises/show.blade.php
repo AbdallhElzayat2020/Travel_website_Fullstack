@@ -28,16 +28,11 @@
                     </li>
                     <span class="mx-1">/</span>
                     <li>
-                        @php
-                            $indexRoute = match($groupKey ?? $experience->group_key ?? 'dahabiya') {
-                                'dahabiya' => 'cruise-group-1.index',
-                                'ultra' => 'cruise-group-2.index',
-                                'grand' => 'cruise-group-3.index',
-                                default => 'cruise-group-1.index',
-                            };
-                        @endphp
-                        <a href="{{ route($indexRoute) }}"
-                            class="transition duration-200 hover:text-green-zomp">Nile Cruises</a>
+                        @if($cruiseGroup)
+                            <a href="/{{ $cruiseGroup->slug }}" class="transition duration-200 hover:text-green-zomp">{{ $cruiseGroup->name }}</a>
+                        @else
+                            <a href="{{ route('home') }}" class="transition duration-200 hover:text-green-zomp">Nile Cruises</a>
+                        @endif
                     </li>
                     <span class="mx-1">/</span>
                     <li>

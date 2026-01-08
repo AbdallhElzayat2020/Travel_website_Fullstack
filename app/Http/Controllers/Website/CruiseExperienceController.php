@@ -8,27 +8,26 @@ use App\Models\CruiseExperience;
 class CruiseExperienceController extends Controller
 {
     /**
-     * Show main cruise page (first active cruise experience for the group).
+     * Show all cruise experiences for a group in grid layout.
      */
     public function index(\Illuminate\Http\Request $request)
     {
         $groupKey = $request->route('group_key', 'dahabiya');
 
-        $experience = CruiseExperience::active()
-            ->byGroup($groupKey)
-            ->with(['images'])
-            ->orderBy('sort_order')
+        // Get the cruise group
+        $cruiseGroup = \App\Models\CruiseGroup::where('group_key', $groupKey)
+            ->where('status', 'active')
             ->firstOrFail();
 
-        // Get only the selected related tours
-        $relatedTours = $experience->tours()
-            ->active()
-            ->with(['category', 'country', 'state'])
+        // Get all active cruise experiences for this group with pagination
+        $experiences = CruiseExperience::active()
+            ->where('cruise_group_id', $cruiseGroup->id)
+            ->with(['images', 'cruiseGroup'])
             ->orderBy('sort_order')
             ->latest()
-            ->paginate(15);
+            ->paginate(12);
 
-        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours', 'groupKey'));
+        return view('frontend.pages.nile-cruises.index', compact('experiences', 'cruiseGroup'));
     }
 
     /**
@@ -38,9 +37,14 @@ class CruiseExperienceController extends Controller
     {
         $groupKey = $request->route('group_key', 'dahabiya');
 
+        // Get the cruise group
+        $cruiseGroup = \App\Models\CruiseGroup::where('group_key', $groupKey)
+            ->where('status', 'active')
+            ->firstOrFail();
+
         $experience = CruiseExperience::active()
-            ->byGroup($groupKey)
-            ->with(['images'])
+            ->where('cruise_group_id', $cruiseGroup->id)
+            ->with(['images', 'cruiseGroup'])
             ->where('slug', $slug)
             ->firstOrFail();
 
@@ -52,6 +56,6 @@ class CruiseExperienceController extends Controller
             ->latest()
             ->paginate(15);
 
-        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours', 'groupKey'));
+        return view('frontend.pages.nile-cruises.show', compact('experience', 'relatedTours', 'cruiseGroup'));
     }
 }
