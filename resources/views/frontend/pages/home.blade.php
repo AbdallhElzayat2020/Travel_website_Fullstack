@@ -120,7 +120,7 @@
                     Dahabiya Cruises
                 </h2>
                 <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-                    @foreach ($cruiseExperiences as $cruise)
+                    @foreach ($cruiseExperiences->take(2) as $cruise)
                         @php
                             $firstImage = $cruise->images->first();
                             $offerCover = $firstImage
