@@ -35,19 +35,15 @@ try {
     $cruiseGroups = \App\Models\CruiseGroup::active()->orderBy('sort_order')->get();
     foreach ($cruiseGroups as $group) {
         Route::get('/' . $group->slug, [CruiseExperienceController::class, 'index'])
-            ->defaults('group_key', $group->group_key)
             ->name('cruise-group-' . $group->id . '.index');
         Route::get('/' . $group->slug . '/{slug}', [CruiseExperienceController::class, 'show'])
-            ->defaults('group_key', $group->group_key)
             ->name('cruise-group-' . $group->id . '.show');
     }
 } catch (\Exception $e) {
     // Fallback routes if database is not ready
     Route::get('/dahabiya-cruises', [CruiseExperienceController::class, 'index'])
-        ->defaults('group_key', 'dahabiya')
         ->name('cruise-group-1.index');
     Route::get('/dahabiya-cruises/{slug}', [CruiseExperienceController::class, 'show'])
-        ->defaults('group_key', 'dahabiya')
         ->name('cruise-group-1.show');
 }
 Route::get('/about-us', [PageController::class, 'about'])

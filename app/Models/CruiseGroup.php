@@ -26,11 +26,19 @@ class CruiseGroup extends Model
             if (empty($group->slug)) {
                 $group->slug = Str::slug($group->name);
             }
+            // Auto-generate group_key from slug if not provided
+            if (empty($group->group_key)) {
+                $group->group_key = Str::slug($group->slug);
+            }
         });
 
         static::updating(function ($group) {
             if ($group->isDirty('name') && empty($group->slug)) {
                 $group->slug = Str::slug($group->name);
+            }
+            // Auto-generate group_key from slug if not provided and slug changed
+            if ($group->isDirty('slug') && empty($group->group_key)) {
+                $group->group_key = Str::slug($group->slug);
             }
         });
     }

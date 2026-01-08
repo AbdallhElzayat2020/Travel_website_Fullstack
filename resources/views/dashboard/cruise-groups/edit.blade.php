@@ -34,10 +34,10 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="group_key" class="form-label">Group Key <span class="text-danger">*</span></label>
+                    <label for="group_key" class="form-label">Group Key</label>
                     <input type="text" class="form-control @error('group_key') is-invalid @enderror" id="group_key" name="group_key"
-                        value="{{ old('group_key', $group->group_key) }}" required pattern="[a-z0-9-]+" placeholder="e.g., dahabiya, ultra, grand">
-                    <small class="text-muted">Unique identifier for this group (lowercase letters, numbers, and hyphens only)</small>
+                        value="{{ old('group_key', $group->group_key) }}" pattern="[a-z0-9-]+" placeholder="Auto-generated from slug if left empty">
+                    <small class="text-muted">Optional: Unique identifier for this group (lowercase letters, numbers, and hyphens only). Leave empty to auto-generate from slug.</small>
                     @error('group_key')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

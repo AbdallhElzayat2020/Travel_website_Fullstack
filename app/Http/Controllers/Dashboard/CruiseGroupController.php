@@ -40,7 +40,7 @@ class CruiseGroupController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:cruise_groups,slug',
-            'group_key' => 'required|string|max:255|unique:cruise_groups,group_key|regex:/^[a-z0-9-]+$/',
+            'group_key' => 'nullable|string|max:255|unique:cruise_groups,group_key',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:500',
             'sort_order' => 'nullable|integer|min:0',
@@ -49,6 +49,11 @@ class CruiseGroupController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        }
+
+        // Auto-generate group_key from slug if not provided
+        if (empty($validated['group_key'])) {
+            $validated['group_key'] = Str::slug($validated['slug']);
         }
 
         CruiseGroup::create($validated);
@@ -94,7 +99,7 @@ class CruiseGroupController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:cruise_groups,slug,' . $id,
-            'group_key' => 'required|string|max:255|unique:cruise_groups,group_key,' . $id . '|regex:/^[a-z0-9-]+$/',
+            'group_key' => 'nullable|string|max:255|unique:cruise_groups,group_key,' . $id,
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string|max:500',
             'sort_order' => 'nullable|integer|min:0',
@@ -103,6 +108,11 @@ class CruiseGroupController extends Controller
 
         if (empty($validated['slug'])) {
             $validated['slug'] = Str::slug($validated['name']);
+        }
+
+        // Auto-generate group_key from slug if not provided
+        if (empty($validated['group_key'])) {
+            $validated['group_key'] = Str::slug($validated['slug']);
         }
 
         $group->update($validated);

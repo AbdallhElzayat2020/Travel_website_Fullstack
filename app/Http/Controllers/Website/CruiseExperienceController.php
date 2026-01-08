@@ -12,10 +12,11 @@ class CruiseExperienceController extends Controller
      */
     public function index(\Illuminate\Http\Request $request)
     {
-        $groupKey = $request->route('group_key', 'dahabiya');
+        // Get slug from route (the first segment after /)
+        $slug = $request->segment(1);
 
-        // Get the cruise group
-        $cruiseGroup = \App\Models\CruiseGroup::where('group_key', $groupKey)
+        // Get the cruise group by slug
+        $cruiseGroup = \App\Models\CruiseGroup::where('slug', $slug)
             ->where('status', 'active')
             ->firstOrFail();
 
@@ -35,10 +36,11 @@ class CruiseExperienceController extends Controller
      */
     public function show(\Illuminate\Http\Request $request, string $slug)
     {
-        $groupKey = $request->route('group_key', 'dahabiya');
+        // Get group slug from route (the first segment after /)
+        $groupSlug = $request->segment(1);
 
-        // Get the cruise group
-        $cruiseGroup = \App\Models\CruiseGroup::where('group_key', $groupKey)
+        // Get the cruise group by slug
+        $cruiseGroup = \App\Models\CruiseGroup::where('slug', $groupSlug)
             ->where('status', 'active')
             ->firstOrFail();
 
