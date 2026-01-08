@@ -54,17 +54,17 @@
                 preferences and budget.</p>
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="items bg-green-light rounded-2xl py-5 px-8">
-                    <img src="{{ asset('assets/frontend/assets/images/our-vision.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/our-vision.png') }}" alt=""
                         class="w-[72px] h-auto mb-6">
-                    <h2 class="text-black font-bold text-[32px] leading-[1.1em] mb-6">Our Vision</h2>
-                    <p class="text-dark-grey">Our vision is to become a leading travel agency company that provides
+                    <h2 class="text-white font-bold text-[32px] leading-[1.1em] mb-6">Our Vision</h2>
+                    <p class="text-white">Our vision is to become a leading travel agency company that provides
                         high-quality services and inspiration for our customer.</p>
                 </div>
                 <div class="items bg-green-light rounded-2xl py-5 px-8">
-                    <img src="{{ asset('assets/frontend/assets/images/our-mission.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/our-mission.png') }}" alt=""
                         class="w-[72px] h-auto mb-6">
-                    <h2 class="text-black font-bold text-[32px] leading-[1.1em] mb-6">Our Mission</h2>
-                    <p class="text-dark-grey">Our mission is to provide travel packages that are unique, personalized,
+                    <h2 class="text-white font-bold text-[32px] leading-[1.1em] mb-6">Our Mission</h2>
+                    <p class="text-white">Our mission is to provide travel packages that are unique, personalized,
                         and cater to individual wants and needs.</p>
                 </div>
             </div>
@@ -148,7 +148,7 @@
         <div class="container">
             <div class="grid md:grid-cols-3 gap-10">
                 <div class="flex flex-col items-center text-center">
-                    <img src="{{ asset('assets/frontend/assets/images/email.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/email.png') }}" alt=""
                         class="w-[72px] h-auto mx-auto mb-6">
                     <h2 class="text-black font-bold text-[32px] leading-[1.1em] mb-6">Email</h2>
                     <p class="text-dark-grey min-h-[60px]">A wonderful serenity has taken possession of my entire soul,
@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="flex flex-col items-center text-center">
-                    <img src="{{ asset('assets/frontend/assets/images/phone.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/phone.png') }}" alt=""
                         class="w-[72px] h-auto mx-auto mb-6">
                     <h2 class="text-black font-bold text-[32px] leading-[1.1em] mb-6">Phone</h2>
                     <p class="text-dark-grey min-h-[60px]">A wonderful serenity has taken possession of my entire soul,
@@ -166,7 +166,7 @@
                 </div>
 
                 <div class="flex flex-col items-center text-center">
-                    <img src="{{ asset('assets/frontend/assets/images/location.svg') }}" alt=""
+                    <img src="{{ asset('assets/frontend/assets/images/location.png') }}" alt=""
                         class="w-[72px] h-auto mx-auto mb-6">
                     <h2 class="text-black font-bold text-[32px] leading-[1.1em] mb-6">Location</h2>
                     <p class="text-dark-grey min-h-[60px]">1901 Thornridge Cir. Shiloh, Hawaii 81063</p>
@@ -175,53 +175,4 @@
             </div>
         </div>
     </section>
-
-    <section class="relative py-[60px] xl:py-[120px] bg-[#f2f4f4] overflow-hidden">
-        <div class="absolute inset-0 z-0" style="background-image: url('{{ asset('assets/frontend/assets/images/about-us-bg-form.png') }}');
-                                                                    background-position: center center;
-                                                                    background-repeat: repeat;
-                                                                    opacity: 0.79;">
-        </div>
-        <div class="container relative z-10">
-            <div class="grid xl:grid-cols-2 gap-10 xl:gap-24 items-center justify-center xl:justify-between">
-                <div class="wrapper">
-                    <h2 class="text-black text-3xl sm:text-[40px] font-bold capitalize leading-[1.1em] mb-7">
-                        Let’s connect and talk about your travel dreams
-                    </h2>
-                    <p class="text-dark-grey">
-                        Talk about and plan what your travel dreams are this year, and we will help you to make your
-                        dreams come true
-                    </p>
-                </div>
-                <form action="" method="post">
-                    <div class="mb-6">
-                        <label for="name" class="block mb-2 text-dark-grey text-sm">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your name"
-                            class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none" required
-                            minlength="2">
-                    </div>
-
-                    <div class="mb-6">
-                        <label for="email" class="block mb-2 text-dark-grey text-sm">Email</label>
-                        <input type="email" id="email" name="email" placeholder="hello@email.com"
-                            class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none" required>
-                    </div>
-
-                    <div class="mb-6">
-                        <label for="destination" class="block mb-2 text-dark-grey text-sm">How can we help?</label>
-                        <textarea id="destination" name="destination"
-                            placeholder="Tell us a little bit about your destination dream" rows="6"
-                            class="w-full border border-light-grey rounded-lg py-2.5 px-4 outline-none" required
-                            minlength="10"></textarea>
-                    </div>
-
-                    <button type="submit"
-                        class="w-full bg-green-zomp text-white text-center font-semibold py-4 px-10 rounded-[200px]">
-                        Send
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
 @endsection()
