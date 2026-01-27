@@ -7,7 +7,6 @@ use App\Models\Tour;
 use App\Models\Slider;
 use App\Models\Subscriber;
 use App\Models\Gallery;
-use App\Models\CruiseExperience;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
