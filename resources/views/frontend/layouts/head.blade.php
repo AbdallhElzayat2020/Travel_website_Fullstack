@@ -3,8 +3,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{-- Favicon --}}
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/frontend/assets/images/logo.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/frontend/assets/images/logo.png') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/frontend/assets/images/logo_master.webp') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/frontend/assets/images/logo_master.webp') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/assets/css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/frontend/assets/css/style.css') }}">
     <!-- GoogleFonts -->
