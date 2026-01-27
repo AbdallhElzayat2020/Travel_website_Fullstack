@@ -251,12 +251,12 @@
                 <a href="{{ route('admin.contacts.index') }}" class="menu-link">
                     <i class="menu-icon tf-icons ti ti-mail"></i>
                     <div data-i18n="Contacts">Contact Messages</div>
-                    @if (isset($unreadContactsCount) && $unreadContactsCount > 0)
+                    {{-- @if (isset($unreadContactsCount) && $unreadContactsCount > 0)
                         <span class="badge rounded-pill bg-label-danger ms-auto">{{ $unreadContactsCount }}</span>
                     @elseif(isset($sidebarStats['contacts']))
                         <span
                             class="badge rounded-pill bg-label-primary ms-auto">{{ $sidebarStats['contacts'] }}</span>
-                    @endif
+                    @endif --}}
                 </a>
             </li>
 
