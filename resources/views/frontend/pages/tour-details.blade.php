@@ -100,66 +100,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-span-12 lg:col-span-4 flex justify-end items-end">
-                        <div class="relative inline-block group">
-                            <div
-                                class="cursor-pointer flex items-center gap-2 text-black font-semibold transition duration-200 hover:text-green-zomp">
-                                <span class="iconify" data-icon="solar:share-outline" data-width="24"
-                                    data-height="24"></span>
-                                Share
-                            </div>
-                            <div
-                                class="absolute shadow-shadow-custom left-auto right-0 py-6 px-4 mt-3 w-[350px] bg-white rounded-lg invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50">
-                                <h4 class=" text-darker-grey text-2xl font-semibold mb-4">Share</h4>
-                                <div class="border-b border-light-grey mb-4"></div>
-                                <ul class="grid grid-cols-4 gap-x-4">
-                                    <li class="flex flex-col items-center">
-                                        <a href="#"
-                                            class="bg-[#3C58A5] w-9 h-9 rounded-full flex items-center justify-center">
-                                            <span class="iconify text-white" data-icon="bxl:facebook" data-width="20"
-                                                data-height="20"></span>
-                                        </a>
-                                        <span class="block text-sm text-dark-grey mt-2">Facebook</span>
-                                    </li>
-
-                                    <li class="flex flex-col items-center">
-                                        <a href="#" class="bg-white w-9 h-9 rounded-full flex items-center justify-center">
-                                            <span class="iconify text-black" data-icon="ri:twitter-x-fill" data-width="20"
-                                                data-height="20"></span>
-                                        </a>
-                                        <span class="block text-sm text-dark-grey mt-2">Twitter</span>
-                                    </li>
-
-                                    <li class="flex flex-col items-center">
-                                        <a href="#"
-                                            class="bg-[#0077FF] w-9 h-9 rounded-full flex items-center justify-center">
-                                            <span class="iconify text-white" data-icon="ri:linkedin-fill" data-width="20"
-                                                data-height="20"></span>
-                                        </a>
-                                        <span class="block text-sm text-dark-grey mt-2">LinkedIn</span>
-                                    </li>
-
-                                    <li class="flex flex-col items-center">
-                                        <a href="#"
-                                            class="bg-[#F54848] w-9 h-9 rounded-full flex items-center justify-center">
-                                            <span class="iconify text-white" data-icon="jam:pinterest" data-width="20"
-                                                data-height="20"></span>
-                                        </a>
-                                        <span class="block text-sm text-dark-grey mt-2">Pinterest</span>
-                                    </li>
-                                </ul>
-                                <div class="mt-5 bg-white-grey rounded-lg py-2 px-3 flex items-center gap-2">
-                                    <input type="text"
-                                        class="copy-input text-grey bg-white-grey px-5 py-2 rounded-lg outline-none w-full"
-                                        value="{{ url()->current() }}" readonly>
-                                    <button
-                                        class="btn-copy-link bg-green-zomp text-white py-1.5 px-2 rounded-lg w-[80px] text-center">
-                                        Copy
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {{-- Share dropdown removed as requested --}}
                 </div>
                 <div class="grid grid-cols-12 gap-6 mb-8">
                     <div class="col-span-12 lg:col-span-8">
