@@ -1621,11 +1621,13 @@
                 if ($('#tourDaysContainer p').length > 0) {
                     $('#tourDaysContainer p').remove();
                 }
-                $('#tourDaysContainer').append(dayHtml);
+                // Append as jQuery object so we only init Summernote on this node (keeps existing days' content)
+                var $newDay = $(dayHtml);
+                $('#tourDaysContainer').append($newDay);
 
-                // Initialize Summernote for the new day details field
+                // Initialize Summernote only on the NEW day's textarea (do not touch existing editors)
                 if (typeof $.fn.summernote !== 'undefined') {
-                    $('.day-item').last().find('.summernote-day').summernote({
+                    $newDay.find('.summernote-day').summernote({
                         height: 200,
                         tooltip: false,
                         toolbar: [
