@@ -133,15 +133,23 @@ class TourController extends Controller
 
             // Handle tour days
             if ($request->has('tour_days') && is_array($request->tour_days)) {
+                $dayIndex = 0;
                 foreach ($request->tour_days as $index => $dayData) {
                     if (!empty($dayData['day_title'])) {
+                        $sortOrder = isset($dayData['sort_order']) && is_numeric($dayData['sort_order'])
+                            ? (int) $dayData['sort_order']
+                            : $dayIndex;
+                        $dayNumber = isset($dayData['day_number']) && is_numeric($dayData['day_number'])
+                            ? (int) $dayData['day_number']
+                            : ($dayIndex + 1);
                         TourDay::create([
                             'tour_id' => $tour->id,
-                            'day_number' => $dayData['day_number'] ?? ($index + 1),
+                            'day_number' => $dayNumber,
                             'day_title' => $dayData['day_title'],
                             'details' => $dayData['details'] ?? null,
-                            'sort_order' => $dayData['sort_order'] ?? $index,
+                            'sort_order' => $sortOrder,
                         ]);
+                        $dayIndex++;
                     }
                 }
             }
@@ -386,29 +394,37 @@ class TourController extends Controller
 
             // Handle tour days update/create
             if ($request->has('tour_days') && is_array($request->tour_days)) {
+                $dayIndex = 0;
                 foreach ($request->tour_days as $index => $dayData) {
                     if (!empty($dayData['day_title'])) {
+                        $sortOrder = isset($dayData['sort_order']) && is_numeric($dayData['sort_order'])
+                            ? (int) $dayData['sort_order']
+                            : $dayIndex;
+                        $dayNumber = isset($dayData['day_number']) && is_numeric($dayData['day_number'])
+                            ? (int) $dayData['day_number']
+                            : ($dayIndex + 1);
                         if (isset($dayData['id']) && $dayData['id']) {
                             // Update existing day
                             $day = TourDay::find($dayData['id']);
                             if ($day && $day->tour_id == $tour->id) {
                                 $day->update([
-                                    'day_number' => $dayData['day_number'] ?? ($index + 1),
+                                    'day_number' => $dayNumber,
                                     'day_title' => $dayData['day_title'],
                                     'details' => $dayData['details'] ?? null,
-                                    'sort_order' => $dayData['sort_order'] ?? $index,
+                                    'sort_order' => $sortOrder,
                                 ]);
                             }
                         } else {
                             // Create new day
                             TourDay::create([
                                 'tour_id' => $tour->id,
-                                'day_number' => $dayData['day_number'] ?? ($index + 1),
+                                'day_number' => $dayNumber,
                                 'day_title' => $dayData['day_title'],
                                 'details' => $dayData['details'] ?? null,
-                                'sort_order' => $dayData['sort_order'] ?? $index,
+                                'sort_order' => $sortOrder,
                             ]);
                         }
+                        $dayIndex++;
                     }
                 }
             }
