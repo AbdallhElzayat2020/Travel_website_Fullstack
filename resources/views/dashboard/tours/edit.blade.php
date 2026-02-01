@@ -1587,8 +1587,57 @@
             // Day counter - start from max day number + 1
             let dayCounter = {{ $tour->tourDays->max('day_number') ?? 0 }} + 1;
 
+            // Summernote options for day details (reused when adding/restoring days)
+            var summernoteDayOptions = {
+                height: 200,
+                tooltip: false,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                placeholder: 'Write day details here...',
+                tabsize: 2,
+                focus: false,
+                dialogsInBody: true,
+                popover: {
+                    image: [
+                        ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                        ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                        ['remove', ['removeMedia']]
+                    ],
+                    link: [['link', ['linkDialogShow', 'unlink']]],
+                    table: [
+                        ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                        ['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+                    ],
+                    air: [['color', ['color']], ['font', ['bold', 'underline', 'clear']]]
+                }
+            };
+
             // Add new day
             $('#addDayBtn').click(function () {
+                // 1) Save content of existing day editors so it is not lost when we append
+                var savedDetails = [];
+                $('#tourDaysContainer .day-item').each(function () {
+                    var $ed = $(this).find('.summernote-day');
+                    if ($ed.length && $ed.data('summernote')) {
+                        try {
+                            savedDetails.push($ed.summernote('code'));
+                        } catch (e) {
+                            savedDetails.push($ed.val() || '');
+                        }
+                    } else {
+                        savedDetails.push($ed.length ? $ed.val() || '' : '');
+                    }
+                });
+
                 const dayHtml = `
                                                                                                                                 <div class="card mb-3 day-item" data-day-index="new-${dayCounter}" style="border: 1px solid #3a3d4a; border-radius: 8px;">
                                                                                                                                     <div class="card-header d-flex justify-content-between align-items-center" style="background: #252836; border-bottom: 1px solid #3a3d4a;">
@@ -1621,53 +1670,28 @@
                 if ($('#tourDaysContainer p').length > 0) {
                     $('#tourDaysContainer p').remove();
                 }
-                // Append as jQuery object so we only init Summernote on this node (keeps existing days' content)
                 var $newDay = $(dayHtml);
                 $('#tourDaysContainer').append($newDay);
 
-                // Initialize Summernote only on the NEW day's textarea (do not touch existing editors)
+                // 2) Init Summernote only on the new day
                 if (typeof $.fn.summernote !== 'undefined') {
-                    $newDay.find('.summernote-day').summernote({
-                        height: 200,
-                        tooltip: false,
-                        toolbar: [
-                            ['style', ['style']],
-                            ['font', ['bold', 'italic', 'underline', 'clear']],
-                            ['fontname', ['fontname']],
-                            ['fontsize', ['fontsize']],
-                            ['color', ['color']],
-                            ['para', ['ul', 'ol', 'paragraph']],
-                            ['table', ['table']],
-                            ['insert', ['link', 'picture']],
-                            ['view', ['fullscreen', 'codeview', 'help']]
-                        ],
-                        placeholder: 'Write day details here...',
-                        tabsize: 2,
-                        focus: false,
-                        dialogsInBody: true,
-                        popover: {
-                            image: [
-                                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter',
-                                    'resizeNone'
-                                ]],
-                                ['float', ['floatLeft', 'floatRight', 'floatNone']],
-                                ['remove', ['removeMedia']]
-                            ],
-                            link: [
-                                ['link', ['linkDialogShow', 'unlink']]
-                            ],
-                            table: [
-                                ['add', ['addRowDown', 'addRowUp', 'addColLeft',
-                                    'addColRight']],
-                                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
-                            ],
-                            air: [
-                                ['color', ['color']],
-                                ['font', ['bold', 'underline', 'clear']]
-                            ]
-                        }
-                    });
+                    $newDay.find('.summernote-day').summernote(summernoteDayOptions);
                 }
+
+                // 3) Restore existing days' Details so the UI does not appear empty
+                $('#tourDaysContainer .day-item').each(function (i) {
+                    if (i >= savedDetails.length) return;
+                    if (savedDetails[i] === undefined || savedDetails[i] === null) return;
+                    var $ed = $(this).find('.summernote-day');
+                    if (!$ed.length) return;
+                    try {
+                        if ($ed.data('summernote')) {
+                            $ed.summernote('destroy');
+                        }
+                        $ed.val(savedDetails[i]);
+                        $ed.summernote(summernoteDayOptions);
+                    } catch (err) {}
+                });
 
                 dayCounter++;
             });
