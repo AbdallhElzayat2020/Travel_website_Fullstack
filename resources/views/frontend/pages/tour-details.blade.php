@@ -194,20 +194,20 @@
                             <div id="what-to-expect" class="border border-white-grey rounded-2xl p-6 mt-6 bg-white mb-6">
                                 <h3 class="text-black text-2xl font-semibold leading-[1.1] mb-6">What To Expect</h3>
                                 @if ($tour->tourDays->count() > 0)
-                                    <div class="flex flex-col relative">
+                                    <div class="flex flex-col relative pl-2 md:pl-0">
                                         @foreach ($tour->tourDays as $index => $day)
                                             <div
-                                                class="relative flex items-start md:before:content-[''] md:before:absolute md:before:top-11 md:before:left-[22px] md:before:w-px md:before:bg-green-zomp md:last:before:hidden md:before:h-full">
+                                                class="relative flex items-start before:content-[''] before:absolute before:top-10 md:before:top-11 before:left-[18px] md:before:left-[22px] before:w-0.5 md:before:w-px before:bg-green-zomp before:h-full last:before:hidden">
                                                 <div class="relative z-10 flex-shrink-0">
                                                     <div
-                                                        class="h-11 w-11 rounded-full border border-green-zomp bg-white flex items-center justify-center text-green-zomp font-bold">
+                                                        class="h-9 w-9 md:h-11 md:w-11 rounded-full border-2 border-green-zomp bg-white flex items-center justify-center text-green-zomp font-bold text-sm md:text-base shadow-sm">
                                                         {{ $day->day_number }}
                                                     </div>
                                                 </div>
-                                                <div class="ml-4 md:ml-6 flex-1 {{ !$loop->last ? 'mb-8' : '' }}">
-                                                    <h6 class="text-black font-bold mb-2">{{ $day->day_title }}</h6>
+                                                <div class="ml-3 md:ml-6 flex-1 {{ !$loop->last ? 'mb-6 md:mb-8' : '' }}">
+                                                    <h6 class="text-black font-bold text-lg md:text-xl mb-3">{{ $day->day_title }}</h6>
                                                     @if ($day->details)
-                                                        <div class="text-dark-grey">
+                                                        <div class="text-dark-grey text-sm md:text-base leading-relaxed">
                                                             {!! $day->details !!}
                                                         </div>
                                                     @endif
