@@ -156,8 +156,7 @@
                                     data-height="24"></span>
                                 <span class="text-dark-grey">
                                     <span>Duration:</span>
-                                    <span>{{ $tour->duration }}
-                                        {{ $tour->duration_type == 'days' ? ($tour->duration > 1 ? 'Days' : 'Day') : ($tour->duration > 1 ? 'Hours' : 'Hour') }}</span>
+                                    <span>{{ $tour->duration }} {{ $tour->duration == 1 ? 'Day' : 'Days' }}</span>
                                 </span>
                             </div>
                             @if ($tour->category)
@@ -688,8 +687,7 @@
                                                     <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular"
                                                         data-width="15" data-height="15"></span>
                                                     <div class="text-sm text-dark-grey">
-                                                        {{ $relatedTour->duration }}
-                                                        {{ $relatedTour->duration_type == 'days' ? ($relatedTour->duration > 1 ? 'days' : 'day') : ($relatedTour->duration > 1 ? 'hours' : 'hour') }}
+                                                        {{ $relatedTour->duration }} {{ $relatedTour->duration == 1 ? 'day' : 'days' }}
                                                     </div>
                                                 </span>
                                             </div>

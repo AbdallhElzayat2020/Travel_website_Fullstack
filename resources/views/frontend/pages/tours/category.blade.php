@@ -83,18 +83,9 @@
                             }
                             $location = implode(', ', $locationParts);
 
-                            // Duration
-                            $durationText =
-                                $tour->duration .
-                                ' ' .
-                                ($tour->duration_type === 'days'
-                                    ? ($tour->duration == 1
-                                        ? 'day'
-                                        : 'days')
-                                    : ($tour->duration == 1
-                                        ? 'hour'
-                                        : 'hours'));
-                            if ($tour->duration_type === 'days' && $tour->duration > 1) {
+                            // Duration - Always display as days
+                            $durationText = $tour->duration . ' ' . ($tour->duration == 1 ? 'day' : 'days');
+                            if ($tour->duration > 1) {
                                 $nights = $tour->duration - 1;
                                 $durationText =
                                     $tour->duration . ' days ' . $nights . ' ' . ($nights == 1 ? 'night' : 'nights');
