@@ -43,6 +43,15 @@
                         </li>
                     @endforeach
 
+                    {{-- Display Cruise Groups from shared data --}}
+                    @if(isset($sharedCruiseGroups) && $sharedCruiseGroups->count() > 0)
+                        @foreach($sharedCruiseGroups as $cruiseGroup)
+                            <li>
+                                <a href="/{{ $cruiseGroup->slug }}"
+                                    class="hover:text-green-zomp transition duration-200">{{ $cruiseGroup->name }}</a>
+                            </li>
+                        @endforeach
+                    @endif
 
                 </ul>
             </div>

@@ -53,34 +53,57 @@
 
     <section class="mb-[60px] md:mb-24">
         <div class="container">
-            {{-- Gallery full-width - عرض كل الصور --}}
+            {{-- Gallery - Tour style layout --}}
             @if($experience->images->count())
                 @php
-                    $galleryImages = $experience->images;
-                    $mainImage = $galleryImages->first()
-                        ? asset('uploads/cruise-experiences/' . $galleryImages->first()->image)
-                        : $coverImageUrl;
+                    $coverImage = $experience->images->first()
+                        ? asset('uploads/cruise-experiences/' . $experience->images->first()->image)
+                        : asset('assets/frontend/assets/images/destination-01.png');
+                    $firstImage = $experience->images->first();
+                    $mainImage = $firstImage ? asset('uploads/cruise-experiences/' . $firstImage->image) : $coverImage;
+                    // Get side images (skip first one if it's used as main)
+                    $sideImages = $experience->images->skip(1)->take(2);
                 @endphp
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8 items-stretch">
-                    <div class="md:col-span-2">
+                <div class="grid grid-cols-12 gap-6 mb-8">
+                    <div class="col-span-12 lg:col-span-8">
                         <a data-fancybox="cruise-gallery" href="{{ $mainImage }}">
-                            <div class="rounded-2xl overflow-hidden h-[260px] md:h-[360px] lg:h-[420px]">
-                                <img src="{{ $coverImageUrl }}" alt="{{ $experience->title }}"
-                                    class="w-full h-full object-cover" />
-                            </div>
+                            <img src="{{ $coverImage }}" alt="{{ $experience->title }}"
+                                class="w-full h-full object-cover rounded-xl" />
                         </a>
                     </div>
-                    <div class="grid grid-cols-2 md:grid-cols-1 gap-4 max-h-[420px] overflow-y-auto custom-scrollbar">
-                        @foreach($galleryImages as $index => $image)
-                            <a data-fancybox="cruise-gallery" href="{{ asset('uploads/cruise-experiences/' . $image->image) }}">
-                                <div class="rounded-2xl overflow-hidden h-[120px] md:h-[140px]">
-                                    <img src="{{ asset('uploads/cruise-experiences/' . $image->image) }}"
-                                        alt="Image {{ $index + 1 }}" class="w-full h-full object-cover" />
-                                </div>
-                            </a>
-                        @endforeach
+                    <div class="col-span-12 grid grid-cols-2 lg:col-span-4 lg:flex lg:flex-col gap-4">
+                        @if($sideImages->count() > 0)
+                            @foreach($sideImages as $index => $image)
+                                <a data-fancybox="cruise-gallery" href="{{ asset('uploads/cruise-experiences/' . $image->image) }}">
+                                    <img src="{{ asset('uploads/cruise-experiences/' . $image->image) }}" alt="Image {{ $index + 2 }}"
+                                        class="w-full h-full object-cover rounded-xl" />
+                                </a>
+                            @endforeach
+                        @endif
+                        @if($experience->images->count() > 3)
+                            <div class="relative">
+                                <a data-fancybox="cruise-gallery"
+                                    href="{{ asset('uploads/cruise-experiences/' . $experience->images->skip(3)->first()->image) }}">
+                                    <img src="{{ asset('uploads/cruise-experiences/' . $experience->images->skip(3)->first()->image) }}"
+                                        alt="Image 4" class="w-full h-full object-cover rounded-xl" />
+                                </a>
+                                @if($experience->images->count() > 4)
+                                    <button
+                                        class="absolute bottom-3 right-3 bg-white text-black px-4 py-2.5 rounded-full font-semibold flex items-center gap-2 transition duration-200 hover:bg-green-zomp hover:text-white"
+                                        data-fancybox="cruise-gallery" data-src="{{ asset('uploads/cruise-experiences/' . $experience->images->skip(4)->first()->image) }}">
+                                        <span class="iconify" data-icon="dashicons:grid-view" data-width="18"
+                                            data-height="18"></span>
+                                        Gallery
+                                    </button>
+                                @endif
+                            </div>
+                        @endif
                     </div>
                 </div>
+                {{-- Add all images to Fancybox gallery (hidden links for navigation) --}}
+                @foreach($experience->images as $image)
+                    <a data-fancybox="cruise-gallery" href="{{ asset('uploads/cruise-experiences/' . $image->image) }}" style="display: none;"></a>
+                @endforeach
             @endif
 
             {{-- Program Content full-width --}}

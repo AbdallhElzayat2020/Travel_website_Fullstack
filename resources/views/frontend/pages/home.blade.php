@@ -423,18 +423,27 @@
     {{-- Gallery Section --}}
     @if (isset($homeGalleries) && $homeGalleries->count())
         <section class="mb-[60px] md:mb-24">
-            <div class="swiper gallerySwiper">
-                <div class="swiper-wrapper">
+            <div class="container">
+                <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">
+                    Gallery
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                     @foreach ($homeGalleries as $gallery)
                         @php
                             $cover = $gallery->cover_image
                                 ? asset('uploads/galleries/' . $gallery->cover_image)
                                 : asset('assets/frontend/assets/images/gallery-placeholder.png');
                         @endphp
-                        <div class="swiper-slide">
-                            <a href="{{ route('galleries.show', $gallery->slug) }}">
+                        <div class="relative overflow-hidden rounded-2xl group">
+                            <a data-fancybox="home-gallery" href="{{ $cover }}" data-caption="{{ $gallery->title }}">
                                 <img src="{{ $cover }}" alt="{{ $gallery->title }}"
-                                    class="object-cover w-full h-auto" />
+                                    class="object-cover w-full h-full max-h-[260px] transition duration-300 group-hover:scale-105" />
+                                <div
+                                    class="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                                    <span
+                                        class="text-white font-semibold text-lg px-4 py-2 rounded-full bg-black bg-opacity-60">View
+                                        Photo</span>
+                                </div>
                             </a>
                         </div>
                     @endforeach
