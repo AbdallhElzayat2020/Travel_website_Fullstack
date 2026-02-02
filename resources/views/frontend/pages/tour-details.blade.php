@@ -198,13 +198,13 @@
                                         @foreach ($tour->tourDays as $index => $day)
                                             <div
                                                 class="relative flex items-start md:before:content-[''] md:before:absolute md:before:top-11 md:before:left-[22px] md:before:w-px md:before:bg-green-zomp md:last:before:hidden md:before:h-full">
-                                                <div class="relative z-10">
+                                                <div class="relative z-10 flex-shrink-0">
                                                     <div
-                                                        class="h-11 w-11 rounded-full border border-green-zomp bg-white hidden md:flex items-center justify-center text-green-zomp font-bold">
+                                                        class="h-11 w-11 rounded-full border border-green-zomp bg-white flex items-center justify-center text-green-zomp font-bold">
                                                         {{ $day->day_number }}
                                                     </div>
                                                 </div>
-                                                <div class="md:ml-6 flex-1 {{ !$loop->last ? 'mb-8' : '' }}">
+                                                <div class="ml-4 md:ml-6 flex-1 {{ !$loop->last ? 'mb-8' : '' }}">
                                                     <h6 class="text-black font-bold mb-2">{{ $day->day_title }}</h6>
                                                     @if ($day->details)
                                                         <div class="text-dark-grey">
