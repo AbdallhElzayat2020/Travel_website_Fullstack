@@ -27,13 +27,19 @@
             <div class="w-1/2 md:w-1/5 min-w-[150px] mb-10 md:mb-0">
                 <h6 class="text-white font-bold mb-6">Quick Links</h6>
                 <ul class="space-y-4 text-grey">
-                    {{-- Display Cruise Groups from shared data FIRST (if available) --}}
-                    @if(isset($sharedCruiseGroups) && $sharedCruiseGroups->count() > 0)
-                        @foreach($sharedCruiseGroups as $cruiseGroup)
-                            <li>
-                                <a href="/{{ $cruiseGroup->slug }}"
-                                    class="hover:text-green-zomp transition duration-200">{{ $cruiseGroup->name }}</a>
-                            </li>
+                    {{-- Display Cruise Groups from shared data FIRST (only if they have experiences) --}}
+                    @if(isset($sharedCruiseGroupsWithExperiences) && count($sharedCruiseGroupsWithExperiences) > 0)
+                        @foreach($sharedCruiseGroupsWithExperiences as $groupData)
+                            @php
+                                $group = $groupData['group'];
+                                $experiences = $groupData['experiences'];
+                            @endphp
+                            @if($experiences->count() > 0)
+                                <li>
+                                    <a href="/{{ $group->slug }}"
+                                        class="hover:text-green-zomp transition duration-200">{{ $group->name }}</a>
+                                </li>
+                            @endif
                         @endforeach
                     @endif
 
