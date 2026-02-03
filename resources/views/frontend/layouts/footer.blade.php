@@ -78,12 +78,20 @@
                 <h6 class="text-white font-bold mb-6">Follow Us</h6>
                 <ul class="space-x-4 sm:space-x-2 lg:space-x-4 flex items-center mb-8">
                     <li class="w-10 h-10 rounded-full flex items-center justify-center p-2.5 bg-[#1877F2]">
-                        <span class="iconify text-white" data-icon="bxl:facebook" data-width="22"
-                            data-height="22"></span>
+                        <a href="https://www.facebook.com/grandnilecruises" target="_blank" rel="noopener noreferrer"
+                            aria-label="Grand Nile Cruises on Facebook"
+                            class="flex items-center justify-center w-full h-full">
+                            <span class="iconify text-white" data-icon="bxl:facebook" data-width="22"
+                                data-height="22"></span>
+                        </a>
                     </li>
                     <li class="w-10 h-10 rounded-full flex items-center justify-center p-2.5 bg-[#CF3881]">
-                        <span class="iconify text-white" data-icon="mdi:instagram" data-width="22"
-                            data-height="22"></span>
+                        <a href="https://www.instagram.com/dahabiya_wellness_retreat" target="_blank"
+                            rel="noopener noreferrer" aria-label="Dahabiya Wellness Retreat on Instagram"
+                            class="flex items-center justify-center w-full h-full">
+                            <span class="iconify text-white" data-icon="mdi:instagram" data-width="22"
+                                data-height="22"></span>
+                        </a>
                     </li>
 
                 </ul>
