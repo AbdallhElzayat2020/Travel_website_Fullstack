@@ -169,7 +169,7 @@
                                             <span class="flex items-center gap-1">
                                                 <span>From</span>
                                                 <span class="text-base font-bold text-green-zomp">
-                                                    ${{ number_format($tourPrice, 2) }}
+                                                    ${{ number_format($tourPrice, 0) }}
                                                 </span>
                                             </span>
                                         </div>

@@ -268,7 +268,7 @@
                                                                         </td>
                                                                         <td
                                                                             class="border border-light-grey px-4 py-3 text-green-zomp font-bold accommodation-price group-hover:text-white">
-                                                                            ${{ number_format($item->price_value, 2) }}
+                                                                            ${{ number_format($item->price_value, 0) }}
                                                                         </td>
                                                                         @if ($item->description)
                                                                             <td
@@ -443,10 +443,10 @@
                                 <span class="text-dark-grey text-base font-medium mr-2">From</span>
                                 @if ($tour->has_offer && $tour->isOfferActive())
                                     <span
-                                        class="line-through text-grey text-lg mr-2">${{ number_format($tour->price_before_discount ?? $tour->price, 2) }}</span>
-                                    ${{ number_format($tour->price_after_discount ?? $tour->price, 2) }}
+                                        class="line-through text-grey text-lg mr-2">${{ number_format($tour->price_before_discount ?? $tour->price, 0) }}</span>
+                                    ${{ number_format($tour->price_after_discount ?? $tour->price, 0) }}
                                 @else
-                                    ${{ number_format($tour->price, 2) }}
+                                    ${{ number_format($tour->price, 0) }}
                                 @endif
                                 <span class="text-dark-grey text-base font-medium ml-2">per person</span>
                             </h4>
@@ -537,7 +537,7 @@
                                                                 data-season="{{ $seasonalPrice->season_name }}" {{ old('accommodation_type_id') == $item->id ? 'selected' : '' }}>
                                                                 {{ $item->price_name }} -
                                                                 {{ $seasonalPrice->season_name }}
-                                                                (${{ number_format($item->price_value, 2) }})
+                                                                (${{ number_format($item->price_value, 0) }})
                                                             </option>
                                                         @endforeach
                                                     @endforeach
@@ -569,7 +569,7 @@
                                                             data-price="{{ $variant->additional_price }}" value="{{ $variant->id }}"
                                                             {{ in_array($variant->id, $oldVariants) ? 'checked' : '' }}>
                                                         <span>{{ $variant->title }}
-                                                            (${{ number_format($variant->additional_price, 2) }})
+                                                            (${{ number_format($variant->additional_price, 0) }})
                                                         </span>
                                                     </label>
                                                 </div>
@@ -586,7 +586,7 @@
                                         @enderror
 
                                         <p class="mb-5 font-semibold text-black">Total: $<span
-                                                id="total-price">{{ number_format($basePrice, 2) }}</span>
+                                                id="total-price">{{ number_format($basePrice, 0) }}</span>
                                         </p>
                                         <input type="hidden" id="base-tour-price" value="{{ $basePrice }}">
                                         <input type="hidden" id="accommodation-type-id" name="accommodation_type_id"
@@ -672,7 +672,7 @@
 
                                             @if ($relatedTour->has_offer && $relatedTour->isOfferActive())
                                                 <div class="mb-1 text-sm font-bold line-through text-grey">
-                                                    ${{ number_format($relatedTour->price_before_discount ?? $relatedTour->price, 2) }}
+                                                    ${{ number_format($relatedTour->price_before_discount ?? $relatedTour->price, 0) }}
                                                 </div>
                                             @endif
 
@@ -681,9 +681,9 @@
                                                     <span>From</span>
                                                     <span class="text-base font-bold text-green-zomp">
                                                         @if ($relatedTour->has_offer && $relatedTour->isOfferActive())
-                                                            ${{ number_format($relatedTour->price_after_discount ?? $relatedTour->price, 2) }}
+                                                            ${{ number_format($relatedTour->price_after_discount ?? $relatedTour->price, 0) }}
                                                         @else
-                                                            ${{ number_format($relatedTour->price, 2) }}
+                                                            ${{ number_format($relatedTour->price, 0) }}
                                                         @endif
                                                     </span>
                                                 </span>
@@ -1465,13 +1465,13 @@
 
                 // Update total price display
                 if (totalPriceElement) {
-                    totalPriceElement.textContent = total.toFixed(2);
+                    totalPriceElement.textContent = Math.round(total).toLocaleString();
                 }
 
                 // Update hidden inputs for form submission
                 const totalPriceInput = document.getElementById('total-price-input');
                 if (totalPriceInput) {
-                    totalPriceInput.value = total.toFixed(2);
+                    totalPriceInput.value = total;
                 }
 
                 // Update accommodation type id

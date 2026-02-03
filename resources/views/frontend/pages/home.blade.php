@@ -349,14 +349,14 @@
 
                                     @if ($oldPrice)
                                         <div class="mb-1 text-sm font-bold line-through text-grey">
-                                            ${{ number_format($oldPrice, 2) }}</div>
+                                            ${{ number_format($oldPrice, 0) }}</div>
                                     @endif
 
                                     <div class="flex items-center justify-between gap-2">
                                         <span class="flex items-center gap-1">
                                             <span>From</span>
                                             <span
-                                                class="text-base font-bold text-green-zomp">${{ number_format($currentPrice, 2) }}</span>
+                                                class="text-base font-bold text-green-zomp">${{ number_format($currentPrice, 0) }}</span>
                                         </span>
                                         <span class="flex items-center gap-1">
                                             <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular"
