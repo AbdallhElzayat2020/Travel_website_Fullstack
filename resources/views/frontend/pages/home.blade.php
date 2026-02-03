@@ -268,7 +268,7 @@
         <section class="mb-[60px] md:mb-24">
             <div class="container">
                 <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">
-                    Best Egypt Tours
+                    Tour Egypt Packages
                 </h2>
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                     @forelse($activeTours as $tour)
