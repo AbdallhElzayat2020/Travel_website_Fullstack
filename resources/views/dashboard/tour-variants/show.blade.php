@@ -272,7 +272,7 @@
                                     <div class="info-label">Additional Price</div>
                                     <div class="info-value">
                                         @if($variant->additional_price > 0)
-                                            +{{ number_format($variant->additional_price, 2) }} EGP
+                                            +${{ number_format($variant->additional_price, 2) }}
                                         @else
                                             Free
                                         @endif

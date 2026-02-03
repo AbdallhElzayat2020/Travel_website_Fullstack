@@ -104,7 +104,7 @@
                                                 style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9);">
                                             <span class="badge bg-label-success position-absolute top-2 start-2"
                                                 style="backdrop-filter: blur(4px);">
-                                                {{ number_format($price, 2) }} EGP
+                                                ${{ number_format($price, 2) }}
                                             </span>
                                         </div>
                                         <div class="card-body d-flex flex-column" style="background: #1e2130;">

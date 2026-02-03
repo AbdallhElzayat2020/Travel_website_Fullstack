@@ -661,7 +661,7 @@
                                                                                 @endif
                                                                                 @if($variant->additional_price > 0)
                                                                                     <small class="text-muted">
-                                                                                        <i class="ti ti-currency-pound"></i> +{{ number_format($variant->additional_price, 2) }} EGP
+                                                                                        <i class="ti ti-currency-dollar"></i> +${{ number_format($variant->additional_price, 2) }}
                                                                                     </small>
                                                                                 @endif
                                                                             </div>

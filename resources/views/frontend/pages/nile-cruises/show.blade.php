@@ -169,7 +169,7 @@
                                             <span class="flex items-center gap-1">
                                                 <span>From</span>
                                                 <span class="text-base font-bold text-green-zomp">
-                                                    {{ number_format($tourPrice, 2) }} EGP
+                                                    ${{ number_format($tourPrice, 2) }}
                                                 </span>
                                             </span>
                                         </div>

@@ -266,7 +266,7 @@
 
                                     <div class="row">
                                         <div class="col-md-6 mb-3">
-                                            <label for="additional_price" class="form-label">Additional Price (EGP)</label>
+                                            <label for="additional_price" class="form-label">Additional Price ($)</label>
                                             <input type="number" step="0.01" class="form-control @error('additional_price') is-invalid @enderror" id="additional_price" name="additional_price"
                                                 value="{{ old('additional_price', $variant->additional_price) }}" min="0">
                                             @error('additional_price')

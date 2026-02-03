@@ -306,7 +306,7 @@
                                                                         <strong
                                                                             style="color:#e4e6eb;">{{ \Illuminate\Support\Str::limit($tour->title, 40) }}</strong>
                                                                         <span class="badge bg-label-success">
-                                                                            {{ number_format($price, 2) }} EGP
+                                                                            ${{ number_format($price, 2) }}
                                                                         </span>
                                                                     </div>
                                                                     @if ($tour->short_description)

@@ -65,7 +65,7 @@
                                 </td>
                                 <td>
                                     @if($variant->additional_price > 0)
-                                        +{{ number_format($variant->additional_price, 2) }} EGP
+                                        +${{ number_format($variant->additional_price, 2) }}
                                     @else
                                         <span class="text-muted">Free</span>
                                     @endif
