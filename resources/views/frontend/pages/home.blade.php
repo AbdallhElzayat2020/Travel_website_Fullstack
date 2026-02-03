@@ -117,7 +117,7 @@
         <section class="mb-[60px] md:mb-24">
             <div class="container">
                 <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">
-                    Dahabiya Cruises
+                    Ultra Deluxe Cruises
                 </h2>
                 <div class="grid md:grid-cols-2 gap-4 md:gap-6">
                     @foreach ($cruiseExperiences->take(2) as $cruise)
