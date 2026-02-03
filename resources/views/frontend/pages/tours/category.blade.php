@@ -83,13 +83,9 @@
                             }
                             $location = implode(', ', $locationParts);
 
-                            // Duration - Always display as days
-                            $durationText = $tour->duration . ' ' . ($tour->duration == 1 ? 'day' : 'days');
-                            if ($tour->duration > 1) {
-                                $nights = $tour->duration - 1;
-                                $durationText =
-                                    $tour->duration . ' days ' . $nights . ' ' . ($nights == 1 ? 'night' : 'nights');
-                            }
+                            // Duration - Always display as days, use DB value only
+                            $durationValue = (int) ($tour->duration ?? 0);
+                            $durationText = $durationValue . ' ' . ($durationValue == 1 ? 'day' : 'days');
                         @endphp
                         <article class="relative overflow-hidden transition duration-200">
                             <div class="bg-white border rounded-2xl border-light-grey">

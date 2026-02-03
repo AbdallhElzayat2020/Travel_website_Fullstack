@@ -292,13 +292,9 @@
                             }
                             $location = implode(', ', $locationParts);
 
-                            // Duration - Always display as days
-                            $durationText = $tour->duration . ' ' . ($tour->duration == 1 ? 'day' : 'days');
-                            if ($tour->duration > 1) {
-                                $nights = $tour->duration - 1;
-                                $durationText =
-                                    $tour->duration . ' days ' . $nights . ' ' . ($nights == 1 ? 'night' : 'nights');
-                            }
+                            // Duration - Always display as days, use DB value only
+                            $durationValue = (int) ($tour->duration ?? 0);
+                            $durationText = $durationValue . ' ' . ($durationValue == 1 ? 'day' : 'days');
                         @endphp
                         <article class="relative overflow-hidden transition duration-200">
                             <div class="bg-white border rounded-2xl border-light-grey">
@@ -336,12 +332,12 @@
 
                                     @if ($tour->category)
                                         <div class="flex flex-wrap items-center gap-2">
-                                            <a href="#"
+                                            <a href="javascript:void(0)"
                                                 class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag transition hover:bg-green-zomp hover:text-white">
                                                 {{ $tour->category->name }}
                                             </a>
                                             @if ($tour->show_on_homepage)
-                                                <a href="#"
+                                                <a href="javascript:void(0)"
                                                     class="inline-block px-2 py-1 text-sm font-semibold rounded text-darker-grey bg-white-grey category-tag category-featured transition hover:bg-green-zomp hover:text-white">
                                                     Featured
                                                 </a>

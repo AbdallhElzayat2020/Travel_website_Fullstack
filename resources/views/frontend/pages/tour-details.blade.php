@@ -151,12 +151,16 @@
                     <div class="col-span-12 lg:col-span-8">
                         <div
                             class="sm:flex flex-wrap items-center justify-center p-4 bg-white-grey sm:gap-3 md:gap-10 lg:gap-20 rounded-2xl">
+                            @php
+                                // Use DB duration value only for details
+                                $durationValue = (int) ($tour->duration ?? 0);
+                            @endphp
                             <div class="flex flex-1 items-center gap-2">
                                 <span class="iconify text-green-zomp" data-icon="solar:clock-circle-linear" data-width="24"
                                     data-height="24"></span>
                                 <span class="text-dark-grey">
                                     <span>Duration:</span>
-                                    <span>{{ $tour->duration }} {{ $tour->duration == 1 ? 'Day' : 'Days' }}</span>
+                                    <span>{{ $durationValue }} {{ $durationValue == 1 ? 'Day' : 'Days' }}</span>
                                 </span>
                             </div>
                             @if ($tour->category)
@@ -683,11 +687,15 @@
                                                         @endif
                                                     </span>
                                                 </span>
+                                                @php
+                                                    // Use DB duration for related tours as well
+                                                    $relatedDuration = (int) ($relatedTour->duration ?? 0);
+                                                @endphp
                                                 <span class="flex items-center gap-1">
                                                     <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular"
                                                         data-width="15" data-height="15"></span>
                                                     <div class="text-sm text-dark-grey">
-                                                        {{ $relatedTour->duration }} {{ $relatedTour->duration == 1 ? 'day' : 'days' }}
+                                                        {{ $relatedDuration }} {{ $relatedDuration == 1 ? 'day' : 'days' }}
                                                     </div>
                                                 </span>
                                             </div>
