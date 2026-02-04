@@ -113,58 +113,72 @@
     {{-- icons section --}}
 
     {{-- Offers section --}}
-    @if (isset($cruiseExperiences) && $cruiseExperiences->count())
+    @if (isset($sharedCruiseGroupsWithExperiences) && count($sharedCruiseGroupsWithExperiences) > 0)
         <section class="mb-[60px] md:mb-24">
             <div class="container">
                 <h2 class="text-black font-bold text-[32px] leading-[1.1em] capitalize mb-10">
                     Ultra Deluxe Dahabiya
                 </h2>
-                <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-                    @foreach ($cruiseExperiences->take(2) as $cruise)
-                        @php
-                            $firstImage = $cruise->images->first();
-                            $offerCover = $firstImage
-                                ? asset('uploads/cruise-experiences/' . $firstImage->image)
-                                : asset('assets/frontend/assets/images/inspire-01.png');
+                @foreach ($sharedCruiseGroupsWithExperiences as $groupData)
+                    @php
+                        $group = $groupData['group'];
+                        $experiences = $groupData['experiences'];
+                    @endphp
 
-                            // Determine URL based on cruiseGroup relationship
-                            $cruiseGroupSlug = $cruise->cruiseGroup
-                                ? $cruise->cruiseGroup->slug
-                                : $cruise->group_key ?? 'dahabiya-cruises';
-                            $cruiseUrl = '/' . $cruiseGroupSlug . '/' . $cruise->slug;
-                        @endphp
-                        <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
-                            style="background-image: url('{{ $offerCover }}');">
-                            <div class="absolute inset-0 rounded-2xl md:rounded-3xl"
-                                style="background: linear-gradient(134deg, #8b7138 18%, rgba(139, 113, 56, 0) 100%);"></div>
-                            <div class="relative p-[34px] lg:pr-[157px] h-full flex flex-col justify-between">
-                                <div>
-                                    @if ($cruise->cruiseGroup)
-                                        <p class="text-white text-xs md:text-sm opacity-80 mb-1">
-                                            {{ $cruise->cruiseGroup->name }}
-                                        </p>
-                                    @endif
-                                    <h2 class="text-white font-bold text-[28px] md:text-[32px] leading-[1.3] mb-4">
-                                        <a href="{{ $cruiseUrl }}" class="hover:text-[#f9e600] transition duration-200">
-                                            {!! $cruise->title !!}
-                                        </a>
-                                    </h2>
-                                    @if ($cruise->short_description)
-                                        <p class="text-white text-base mb-[40px] line-clamp-3">
-                                            {!! \Illuminate\Support\Str::limit(strip_tags($cruise->short_description), 150) !!}
-                                        </p>
-                                    @endif
-                                </div>
-                                <div class="flex flex-wrap items-center gap-3">
-                                    <a href="{{ $cruiseUrl }}"
-                                        class="ml-auto border border-white text-sm text-white font-semibold py-2 px-4 rounded-[200px] transition duration-200 hover:bg-[#8b7138] hover:border-[#8b7138]">
-                                        View Details
-                                    </a>
-                                </div>
+                    @if ($experiences->count() > 0)
+                        <div class="mb-10 last:mb-0">
+                            <h3 class="text-black font-bold text-[24px] md:text-[26px] leading-[1.1em] mb-6">
+                                {{ $group->name }}
+                            </h3>
+
+                            <div class="grid md:grid-cols-3 gap-5 md:gap-7">
+                                @foreach ($experiences as $cruise)
+                                    @php
+                                        $firstImage = $cruise->images->first();
+                                        $offerCover = $firstImage
+                                            ? asset('uploads/cruise-experiences/' . $firstImage->image)
+                                            : asset('assets/frontend/assets/images/inspire-01.png');
+
+                                        $cruiseGroupSlug = $group->slug ?? ($cruise->group_key ?? 'dahabiya-cruises');
+                                        $cruiseUrl = '/' . $cruiseGroupSlug . '/' . $cruise->slug;
+                                    @endphp
+                                    <div class="rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden shadow-[0_18px_45px_rgba(0,0,0,0.18)]"
+                                        style="background-image: url('{{ $offerCover }}');">
+                                        <div class="absolute inset-0 rounded-3xl"
+                                            style="background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0.7) 100%);">
+                                        </div>
+                                        <div
+                                            class="relative p-6 md:p-7 lg:p-8 h-full min-h-[230px] md:min-h-[260px] flex flex-col justify-between">
+                                            <div>
+                                                <p class="text-white text-[11px] md:text-xs uppercase tracking-[0.12em] opacity-80 mb-2">
+                                                    {{ $group->name }}
+                                                </p>
+                                                <h3
+                                                    class="text-white font-bold text-[22px] md:text-[24px] lg:text-[26px] leading-[1.25] mb-3 line-clamp-2">
+                                                    <a href="{{ $cruiseUrl }}"
+                                                        class="hover:text-[#f9e600] transition duration-200">
+                                                        {!! $cruise->title !!}
+                                                    </a>
+                                                </h3>
+                                                @if ($cruise->short_description)
+                                                    <p class="text-white text-sm md:text-[15px] mb-5 line-clamp-3">
+                                                        {!! \Illuminate\Support\Str::limit(strip_tags($cruise->short_description), 150) !!}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="flex flex-wrap items-center gap-3">
+                                                <a href="{{ $cruiseUrl }}"
+                                                    class="ml-auto border border-white/90 text-xs md:text-sm text-white font-semibold py-2 px-5 rounded-[999px] transition duration-200 hover:bg-white hover:text-[#8b7138] hover:border-white">
+                                                    View Details
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    @endif
+                @endforeach
             </div>
         </section>
     @endif
