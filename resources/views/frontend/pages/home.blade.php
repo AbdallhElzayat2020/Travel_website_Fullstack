@@ -38,7 +38,7 @@
                             @endif
                             @if ($slider->link && $slider->button_text)
                                 <a href="{{ $slider->link }}" style="color: #fff !important;"
-                                    class="inline-block hero_button bg-green-zomp  font-semibold py-3 px-8 rounded-[200px] text-[#ffffff] transition duration-200">
+                                    class="inline-block hero_button bg-green-zomp  font-semibold py-3 px-8 rounded-[200px] text-[#ffffff] transition duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:bg-[#7a6230]">
                                     {{ $slider->button_text }}
                                 </a>
                             @endif
@@ -79,32 +79,40 @@
     <section class="mb-[60px] md:mb-24">
         <div class="container">
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-                <div class="text-center items">
+                <div class="text-center items group transition-transform duration-300 hover:-translate-y-1">
                     <img src="{{ asset('assets/frontend/assets/images/features-01.webp') }}" alt=""
-                        class="w-[72px] h-auto mx-auto mb-6">
-                    <h4 class="mb-2 text-xl font-semibold text-black">Discover the possibilities</h4>
-                    <p class="text-dark-grey">With nearly half a million attractions, <br /> hotels & more, you're sure
+                        class="w-[72px] h-auto mx-auto mb-6 transition-transform duration-300 group-hover:-translate-y-1">
+                    <h4 class="mb-2 text-xl font-semibold text-black transition-colors duration-300 group-hover:text-green-zomp">
+                        Discover the possibilities</h4>
+                    <p class="text-dark-grey transition-colors duration-300 group-hover:text-darker-grey">With nearly
+                        half a million attractions, <br /> hotels & more, you're sure
                         to find joy.</p>
                 </div>
-                <div class="text-center items">
+                <div class="text-center items group transition-transform duration-300 hover:-translate-y-1">
                     <img src="{{ asset('assets/frontend/assets/images/features-02.webp') }}" alt=""
-                        class="w-[72px] h-auto mx-auto mb-6">
-                    <h4 class="mb-2 text-xl font-semibold text-black">Enjoy deals & delights</h4>
-                    <p class="text-dark-grey">Quality activities. Great prices. Plus, <br /> earn credits to save more.
+                        class="w-[72px] h-auto mx-auto mb-6 transition-transform duration-300 group-hover:-translate-y-1">
+                    <h4 class="mb-2 text-xl font-semibold text-black transition-colors duration-300 group-hover:text-green-zomp">
+                        Enjoy deals & delights</h4>
+                    <p class="text-dark-grey transition-colors duration-300 group-hover:text-darker-grey">Quality
+                        activities. Great prices. Plus, <br /> earn credits to save more.
                     </p>
                 </div>
-                <div class="text-center items">
+                <div class="text-center items group transition-transform duration-300 hover:-translate-y-1">
                     <img src="{{ asset('assets/frontend/assets/images/features-03.webp') }}" alt=""
-                        class="w-[72px] h-auto mx-auto mb-6">
-                    <h4 class="mb-2 text-xl font-semibold text-black">Exploring made easy</h4>
-                    <p class="text-dark-grey">Book last minute, skip lines & get free <br /> cancellation for easier
+                        class="w-[72px] h-auto mx-auto mb-6 transition-transform duration-300 group-hover:-translate-y-1">
+                    <h4 class="mb-2 text-xl font-semibold text-black transition-colors duration-300 group-hover:text-green-zomp">
+                        Exploring made easy</h4>
+                    <p class="text-dark-grey transition-colors duration-300 group-hover:text-darker-grey">Book last
+                        minute, skip lines & get free <br /> cancellation for easier
                         exploring.</p>
                 </div>
-                <div class="text-center items">
+                <div class="text-center items group transition-transform duration-300 hover:-translate-y-1">
                     <img src="{{ asset('assets/frontend/assets/images/features-04.webp') }}" alt=""
-                        class="w-[72px] h-auto mx-auto mb-6">
-                    <h4 class="mb-2 text-xl font-semibold text-black">Travel you can trust</h4>
-                    <p class="text-dark-grey">Read reviews & get reliable customer <br /> support. We're with you at
+                        class="w-[72px] h-auto mx-auto mb-6 transition-transform duration-300 group-hover:-translate-y-1">
+                    <h4 class="mb-2 text-xl font-semibold text-black transition-colors duration-300 group-hover:text-green-zomp">
+                        Travel you can trust</h4>
+                    <p class="text-dark-grey transition-colors duration-300 group-hover:text-darker-grey">Read reviews &
+                        get reliable customer <br /> support. We're with you at
                         every step.</p>
                 </div>
             </div>
@@ -140,32 +148,35 @@
                                         $cruiseGroupSlug = $group->slug ?? ($cruise->group_key ?? 'dahabiya-cruises');
                                         $cruiseUrl = '/' . $cruiseGroupSlug . '/' . $cruise->slug;
                                     @endphp
-                                    <div class="rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden"
+                                    <div
+                                        class="group rounded-2xl md:rounded-3xl bg-cover bg-center bg-no-repeat relative overflow-hidden transform transition-transform duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/25"
                                         style="background-image: url('{{ $offerCover }}');">
-                                        <div class="absolute inset-0 rounded-2xl md:rounded-3xl"
+                                        <div class="absolute inset-0 rounded-2xl md:rounded-3xl opacity-90 transition-opacity duration-300 group-hover:opacity-100"
                                             style="background: linear-gradient(134deg, #8b7138 18%, rgba(139, 113, 56, 0) 100%);">
                                         </div>
                                         <div
-                                            class="relative p-6 sm:p-7 md:p-8 h-full min-h-[260px] md:min-h-[320px] flex flex-col justify-between">
+                                            class="relative p-6 sm:p-7 md:p-8 h-full min-h-[260px] md:min-h-[320px] flex flex-col justify-between transition-transform duration-300 group-hover:translate-y-1">
                                             <div>
                                                 <p class="text-white text-[11px] sm:text-xs md:text-sm opacity-80 mb-1">
                                                     {{ $group->name }}
                                                 </p>
-                                                <h3 class="text-white font-bold text-[22px] sm:text-[24px] md:text-[28px] leading-[1.2] mb-3 sm:mb-4">
+                                                <h3
+                                                    class="text-white font-bold text-[22px] sm:text-[24px] md:text-[28px] leading-[1.2] mb-3 sm:mb-4 transition-colors duration-300 group-hover:text-[#f9e600]">
                                                     <a href="{{ $cruiseUrl }}"
-                                                        class="hover:text-[#f9e600] transition duration-200">
+                                                        class="transition-colors duration-200">
                                                         {!! $cruise->title !!}
                                                     </a>
                                                 </h3>
                                                 @if ($cruise->short_description)
-                                                    <p class="text-white text-sm sm:text-[15px] md:text-[16px] mb-4 sm:mb-5 md:mb-6 line-clamp-4">
+                                                    <p
+                                                        class="text-white text-sm sm:text-[15px] md:text-[16px] mb-4 sm:mb-5 md:mb-6 line-clamp-4 transition-colors duration-300 group-hover:text-white">
                                                         {!! \Illuminate\Support\Str::limit(strip_tags($cruise->short_description), 150) !!}
                                                     </p>
                                                 @endif
                                             </div>
                                             <div class="flex flex-wrap items-center gap-3">
                                                 <a href="{{ $cruiseUrl }}"
-                                                    class="inline-flex items-center justify-center border border-white text-xs sm:text-sm text-white font-semibold py-2 px-5 rounded-full transition duration-200 hover:bg-white hover:text-[#8b7138] hover:border-white">
+                                                    class="inline-flex items-center justify-center border border-white text-xs sm:text-sm text-white font-semibold py-2 px-5 rounded-full transition duration-200 transform hover:scale-105 hover:bg-white hover:text-[#8b7138] hover:border-white">
                                                     View Details
                                                 </a>
                                             </div>
@@ -307,7 +318,8 @@
                             $durationValue = (int) ($tour->duration ?? 0);
                             $durationText = $durationValue . ' ' . ($durationValue == 1 ? 'day' : 'days');
                         @endphp
-                        <article class="relative overflow-hidden transition duration-200">
+                        <article
+                            class="relative overflow-hidden transition duration-300 transform hover:-translate-y-2 hover:shadow-xl">
                             <div class="bg-white border rounded-2xl border-light-grey">
                                 <div class="relative overflow-hidden rounded-t-2xl">
                                     <a href="{{ route('tours.show', $tour->slug) }}">
@@ -448,7 +460,8 @@
                                         : '';
                                 @endphp
                                 <div class="swiper-slide">
-                                    <article class="bg-white overflow-hidden rounded-2xl shadow-sm">
+                                    <article
+                                        class="bg-white overflow-hidden rounded-2xl shadow-sm transition duration-300 transform hover:-translate-y-2 hover:shadow-xl">
                                         <div class="overflow-hidden rounded-t-2xl">
                                             <img src="{{ $blogCover }}" alt="{{ $blog->title }}"
                                                 class="w-full h-auto rounded-t-2xl object-cover hover:scale-105 transition duration-200">
