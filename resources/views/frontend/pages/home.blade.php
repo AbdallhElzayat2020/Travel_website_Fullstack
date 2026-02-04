@@ -165,7 +165,7 @@
                                             </div>
                                             <div class="flex flex-wrap items-center gap-3">
                                                 <a href="{{ $cruiseUrl }}"
-                                                    class="w-full sm:w-auto text-center border border-white text-sm text-white font-semibold py-2.5 px-6 rounded-[999px] transition duration-200 hover:bg-white hover:text-[#8b7138] hover:border-white">
+                                                    class="inline-flex items-center justify-center border border-white text-xs sm:text-sm text-white font-semibold py-2 px-5 rounded-full transition duration-200 hover:bg-white hover:text-[#8b7138] hover:border-white">
                                                     View Details
                                                 </a>
                                             </div>
