@@ -146,7 +146,7 @@
                                             style="background: linear-gradient(134deg, #8b7138 18%, rgba(139, 113, 56, 0) 100%);">
                                         </div>
                                         <div
-                                            class="relative p-5 sm:p-6 md:p-7 h-full min-h-[230px] md:min-h-[280px] flex flex-col justify-between">
+                                            class="relative p-6 sm:p-7 md:p-8 h-full min-h-[260px] md:min-h-[320px] flex flex-col justify-between">
                                             <div>
                                                 <p class="text-white text-[11px] sm:text-xs md:text-sm opacity-80 mb-1">
                                                     {{ $group->name }}
