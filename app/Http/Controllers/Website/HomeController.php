@@ -45,7 +45,25 @@ class HomeController extends Controller
             ->get();
 
         $activeTours = Tour::active()
-            ->select('id', 'title', 'slug', 'category_id', 'sub_category_id', 'country_id', 'state_id', 'cover_image', 'price', 'duration', 'sort_order', 'created_at')
+            ->select(
+                'id',
+                'title',
+                'slug',
+                'category_id',
+                'sub_category_id',
+                'country_id',
+                'state_id',
+                'cover_image',
+                'price',
+                'has_offer',
+                'price_before_discount',
+                'price_after_discount',
+                'offer_start_date',
+                'offer_end_date',
+                'duration',
+                'sort_order',
+                'created_at'
+            )
             ->with([
                 'category:id,name,slug',
                 'subCategory:id,name,slug',

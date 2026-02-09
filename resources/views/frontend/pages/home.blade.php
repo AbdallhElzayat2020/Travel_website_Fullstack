@@ -353,6 +353,14 @@
                                         <span class="iconify" data-icon="mdi:star"></span>
                                     </div>
 
+                                    @if ($tour->duration)
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="iconify" data-icon="mdi:clock-outline" data-width="14"
+                                                data-height="14"></span>
+                                            <span class="text-sm text-dark-grey">{{ $durationText }}</span>
+                                        </div>
+                                    @endif
+
                                     @if ($tour->category)
                                         <div class="flex flex-wrap items-center gap-2">
                                             <a href="javascript:void(0)"
@@ -376,16 +384,18 @@
                                     @endif
 
                                     <div class="flex items-center justify-between gap-2">
-                                        <span class="flex items-center gap-1">
-                                            <span>From</span>
-                                            <span
-                                                class="text-base font-bold text-green-zomp">${{ number_format($currentPrice, 0) }}</span>
-                                        </span>
-                                        <span class="flex items-center gap-1">
-                                            <span class="iconify text-dark-grey" data-icon="fluent:clock-24-regular"
-                                                data-width="15" data-height="15"></span>
-                                            <div class="text-sm text-dark-grey">{{ $durationText }}</div>
-                                        </span>
+                                        @if ($currentPrice !== null)
+                                            <span class="flex items-center gap-1">
+                                                <span class="text-sm text-dark-grey">From</span>
+                                                <span class="text-base font-bold text-green-zomp">
+                                                    ${{ number_format($currentPrice, 0) }}
+                                                </span>
+                                            </span>
+                                        @endif
+                                        <a href="{{ route('tours.show', $tour->slug) }}"
+                                            class="inline-flex items-center gap-1 text-sm font-semibold text-green-zomp transition duration-200 hover:text-green-zomp-hover">
+                                            View Details
+                                        </a>
                                     </div>
                                 </div>
                             </div>
