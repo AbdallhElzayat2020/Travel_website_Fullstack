@@ -96,7 +96,7 @@ class SettingController extends Controller
         Artisan::call('route:clear');
         Artisan::call('route:cache');
 
-        return redirect()->route('admin.settings.edit')
+        return redirect()->back()
             ->with('success', 'Settings updated successfully');
     }
 }

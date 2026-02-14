@@ -417,9 +417,10 @@
         <div class="container">
             <div class="bg-cover bg-center rounded-2xl px-6 py-12 lg:pl-[108px] lg:pr-10 lg:pt-[120px] lg:pb-[90px] text-white"
                 style="background-image: url('{{ asset('assets/frontend/assets/images/subscribe-bg.png') }}')">
-                <div class="p-6 md:p-10 bg-darker-grey bg-opacity-90 rounded-2xl w-full lg:w-fit">
+                <div class="p-6 md:p-10 rounded-2xl w-full lg:w-fit text-white"
+                    style="background: linear-gradient(135deg, #8b7138 0%, #7a6230 45%, #6b5529 100%); box-shadow: 0 10px 40px rgba(139, 113, 56, 0.35);">
                     <h2 class="text-2xl md:text-[40px] font-bold mb-4">Subscribe & Get 20% off</h2>
-                    <p class="text-white-grey mb-8 max-w-full md:max-w-[540px] text-sm md:text-base">
+                    <p class="text-white/90 mb-8 max-w-full md:max-w-[540px] text-sm md:text-base">
                         Join our newsletter and discover new destinations to inspire the traveler within. Plus, get 20%
                         off at our
                         online shop. Every week you’ll receive expert advice, tips, exclusive offers, and much more.
@@ -430,7 +431,7 @@
                         <input type="email" name="email" placeholder="Your email address" required
                             class="flex-1 text-dark-grey font-normal py-3 px-6 rounded-full focus:outline-none" />
                         <button type="submit"
-                            class="bg-green-zomp py-3 px-6 text-white font-semibold rounded-full whitespace-nowrap transition duration-200 hover:-translate-y-[5px] hover:bg-[#7a6230]">Sign
+                            class="bg-white/20 hover:bg-white text-white font-semibold py-3 px-6 rounded-full whitespace-nowrap transition duration-200 hover:-translate-y-[5px] hover:text-[#8b7138] border border-white/50 hover:border-white">Sign
                             Up
                         </button>
                     </form>

@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Mail\BookingFormMail;
 use App\Models\Booking;
 use App\Models\Tour;
+use App\Models\Setting;
+use App\Services\RecaptchaService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
     /**
      * Store a newly created booking.
      */
-    public function store(Request $request)
+    public function store(Request $request, RecaptchaService $recaptcha)
     {
         // Handle selected_variants if it comes as JSON string
         $selectedVariantsInput = $request->input('selected_variants');
@@ -26,7 +30,7 @@ class BookingController extends Controller
             }
         }
 
-        $validated = $request->validate([
+        $rules = [
             'tour_id' => 'required|exists:tours,id',
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
@@ -37,7 +41,21 @@ class BookingController extends Controller
             'selected_variants' => 'nullable|array',
             'selected_variants.*' => 'exists:tour_variants,id',
             'total_price' => 'required|numeric|min:0',
-        ]);
+        ];
+
+        if (RecaptchaService::isConfigured()) {
+            $rules['g-recaptcha-response'] = 'required';
+        }
+
+        $validated = $request->validate($rules);
+
+        if (RecaptchaService::isConfigured()) {
+            if (!$recaptcha->verify($request->input('g-recaptcha-response'), $request->ip())) {
+                return redirect()->back()
+                    ->withInput($request->except('g-recaptcha-response'))
+                    ->withErrors(['g-recaptcha-response' => 'reCAPTCHA verification failed. Please try again.']);
+            }
+        }
 
         $tour = Tour::findOrFail($validated['tour_id']);
 
@@ -59,6 +77,13 @@ class BookingController extends Controller
             'total_price' => $validated['total_price'],
             'status' => 'pending',
         ]);
+
+        $toEmail = trim((string) (Setting::get('email') ?? '')) ?: 'reservation@grandnilecruises.com';
+        try {
+            Mail::to($toEmail)->send(new BookingFormMail($booking, $tour));
+        } catch (\Throwable $e) {
+            Log::warning('Booking form email failed: ' . $e->getMessage(), ['exception' => $e]);
+        }
 
         return redirect()->route('tours.show', $tour->slug)
             ->with('success', 'Your booking has been submitted successfully! We will contact you soon.');

@@ -469,9 +469,9 @@
                                     @endif
 
                                     @if ($errors->any())
-                                        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
-                                            <strong class="block mb-2">Please fix the following errors:</strong>
-                                            <ul class="list-disc list-inside">
+                                        <div class="mb-4 p-4 rounded-lg" style="background-color: #fef2f2; border: 2px solid #dc2626;">
+                                            <strong class="block mb-2" style="color: #b91c1c;">Please fix the following errors:</strong>
+                                            <ul class="list-disc list-inside" style="color: #b91c1c;">
                                                 @foreach ($errors->all() as $error)
                                                     <li>{{ $error }}</li>
                                                 @endforeach
@@ -594,6 +594,14 @@
                                         <input type="hidden" id="selected-variants" name="selected_variants" value="">
                                         <input type="hidden" id="total-price-input" name="total_price"
                                             value="{{ old('total_price', $basePrice) }}">
+                                        @if(!empty($recaptchaSiteKey ?? null))
+                                        <div class="mb-5">
+                                            <div class="g-recaptcha" data-sitekey="{{ $recaptchaSiteKey }}"></div>
+                                            @error('g-recaptcha-response')
+                                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                        @endif
                                         <button type="submit"
                                             class="text-white font-semibold py-4 px-6 w-full bg-green-zomp rounded-[200px] transition duration-200 hover:bg-green-zomp-hover hover:-translate-y-[5px]">Booking
                                             Now</button>
@@ -1424,6 +1432,9 @@
 @endsection
 
 @push('js')
+    @if(!empty($recaptchaSiteKey ?? null))
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @endif
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Get base prices

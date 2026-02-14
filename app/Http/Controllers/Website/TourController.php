@@ -84,6 +84,8 @@ class TourController extends Controller
             ? round($testimonials->avg('rating'), 1)
             : 0;
 
-        return view('frontend.pages.tour-details', compact('tour', 'relatedTours', 'faqs', 'testimonials', 'averageRating'));
+        $recaptchaSiteKey = config('services.recaptcha.site_key');
+
+        return view('frontend.pages.tour-details', compact('tour', 'relatedTours', 'faqs', 'testimonials', 'averageRating', 'recaptchaSiteKey'));
     }
 }

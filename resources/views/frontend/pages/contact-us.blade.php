@@ -101,13 +101,13 @@
                         @endif
 
                         @if ($errors->any())
-                            <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
+                            <div class="mb-6 p-4 rounded-lg" style="background-color: #fef2f2; border: 2px solid #dc2626;">
                                 <div class="flex items-start gap-3">
-                                    <span class="iconify text-red-500 flex-shrink-0 mt-0.5" data-icon="mdi:alert-circle"
-                                        data-width="20" data-height="20"></span>
+                                    <span class="iconify flex-shrink-0 mt-0.5" data-icon="mdi:alert-circle"
+                                        data-width="20" data-height="20" style="color: #dc2626;"></span>
                                     <div>
-                                        <h4 class="text-red-800 font-semibold mb-2">Please fix the following errors:</h4>
-                                        <ul class="list-disc list-inside text-red-700 text-sm space-y-1">
+                                        <h4 class="font-semibold mb-2" style="color: #b91c1c;">Please fix the following errors:</h4>
+                                        <ul class="list-disc list-inside text-sm space-y-1" style="color: #b91c1c;">
                                             @foreach ($errors->all() as $error)
                                                 <li>{{ $error }}</li>
                                             @endforeach
@@ -175,6 +175,15 @@
                             @enderror
                         </div>
 
+                        @if(!empty($recaptchaSiteKey))
+                        <div class="mb-4">
+                            <div class="g-recaptcha" data-sitekey="{{ $recaptchaSiteKey }}"></div>
+                            @error('g-recaptcha-response')
+                                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        @endif
+
                         <button type="submit"
                             class="w-full bg-green-zomp text-white text-center font-semibold py-4 px-10 rounded-[200px] hover:bg-green-zomp-hover transition duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg">
                             Send Message
@@ -237,3 +246,9 @@
         </div>
     </section>
 @endsection
+
+@push('js')
+    @if(!empty($recaptchaSiteKey))
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @endif
+@endpush
